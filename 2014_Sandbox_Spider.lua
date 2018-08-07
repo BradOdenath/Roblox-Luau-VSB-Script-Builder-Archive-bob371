@@ -27,7 +27,7 @@ pcall(function() Player.Backpack.BNS:Remove() end)
 
 HoverCraft = Instance.new("Model")
 HoverCraft.Name = "£HoverCraft"
-HoverCraft.Parent = game.Workspce
+HoverCraft.Parent = game.Workspace
 
 Seat = Instance.new("VehicleSeat")
 Seat.Anchored = false
