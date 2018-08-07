@@ -16,9 +16,7 @@ movespeed = 40
 Player = game.Players.LocalPlayer
 Character = Player.Character
 
-Charater = nil
-
-Character.Torso.CFrame = Character.Torso.CFrame + Vector3.new(0,10,0)
+Character.Torso.CFrame = Character.Torso.CFrame + Vector3.new(0,20,0)
 
 Sit = Character.Humanoid.Sit
 
@@ -29,7 +27,7 @@ pcall(function() Player.Backpack.BNS:Remove() end)
 
 HoverCraft = Instance.new("Model")
 HoverCraft.Name = "£HoverCraft"
-HoverCraft.Parent = Character
+HoverCraft.Parent = game.Workspce
 
 Seat = Instance.new("VehicleSeat")
 Seat.Anchored = false
@@ -48,6 +46,8 @@ seatlight.Color = Color3.new(0.5,0.5,0.5)
 seatlight.Range = 30
 
 game.Workspace.CurrentCamera.CameraSubject = Seat
+Character.Humanoid.WalkSpeed = 0
+Character.Torso.CFrame = game.Workspace.Base.CFrame + CFrame.new(0,20,0)
 
 PartA = Instance.new("Part")
 PartA.Anchored = false
