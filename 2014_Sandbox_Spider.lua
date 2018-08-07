@@ -47,7 +47,7 @@ seatlight.Brightness = 0.5
 seatlight.Color = Color3.new(0.5,0.5,0.5)
 seatlight.Range = 30
 
-Player.Camera = Seat
+game.Workspace.CurrentCamera.CameraSubject = Seat
 
 PartA = Instance.new("Part")
 PartA.Anchored = false
