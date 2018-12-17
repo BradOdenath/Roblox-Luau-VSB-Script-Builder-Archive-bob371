@@ -2,9 +2,10 @@
 
 debugStance = true
 
+if debugStance then
+	wait(2) -- RStudio Delay
+end
 print(_VERSION)
-T = true
-F = false
 
 --[[ Notes:
 	1) CFrame.Angles.x/y/z is not real.  Use CFrame:toAxisAngles() to get a Vector3 of radians to access.
@@ -28,12 +29,12 @@ toys = { -- {Name, Active?}
 	}
 
 --References
-Player = game.Players.LocalPlayer
+Player = game.Players[op[1]]
 Character = Player.Character
 Torso = Character.Torso
 Lighting = game.Lighting
 
---Move it Move it
+--Move it Move it (SB move)
 script.Name = "_asdf"
 script.Parent = Character
 
@@ -147,31 +148,26 @@ function Anc(p,pa)
 	end)
 end
 
-function Pos(x,y,z)
-	return CFrame.new(x,y,z)
-end
-
 function Cfr(x,y,z)
 	return CFrame.new(x,y,z)
 end
 
+--CFrame.Angles
 function Ang(rX,rY,rZ)
 	return CFrame.Angles(rX,rY,rZ)
 end
 
+--Cframe.new * CFrame.Angles
 function CfrAng(x,y,z,rX,rY,rZ)
 	return Cfr(x,y,z) * Ang(rX,rY,rZ)
 end
 
+--Returns magnitude between two parts
 function CfrMagnitude(P1, P2)
-	return (
-		math.abs(
-			math.sqrt(
-				math.pow(P2.x-P1.x,2) +
-				math.pow(P2.y-P1.y,2) +
-				math.pow(P2.z-P1.z,2)
-			)
-		)
+	return math.abs(math.sqrt(
+		math.pow(P2.x-P1.x,2) +
+		math.pow(P2.y-P1.y,2) +
+		math.pow(P2.z-P1.z,2) ))
 end
 
 function AngMagnitude(A1, A2)
@@ -190,7 +186,7 @@ end
 --Animation Function.  Point A to Point B
 function ChangeCFrameTo(
 	p,		--Object<Part>
-	x,y,z	--CFrame.new(x,y,z)
+	x,y,z,	--CFrame.new(x,y,z)
 	xEuler, --CFrame.Angles.x
 	yEuler, --CFrame.Angles.y
 	zEuler	--CFrame.Angles.z
@@ -223,7 +219,7 @@ end
 
 function Trail(p)
 	coroutine.resume(coroutine.create(function()
-		if p == nil return end
+		if p == nil then return end
 		local shadow = Part(
 			"_TShadow",
 			"Really black",
@@ -240,10 +236,8 @@ end
 --TODO: Build Gui Building functions
 
 function PlrGui(plr)
-{
 	--TODO: build the gui with functions then return it.
-	
-}
+end
 
 ------------------------------------------------------------
 
@@ -259,8 +253,7 @@ ToyChest = Model("Toy Chest", nil)
 
 for i,v in pairs(toys) do
 	local m = Model(v[1], ToyChest)
-	v.insert(m)
-	print("Toy: "..v[1].." | Active: "..v[2].." | "..m.Name)
+	--print("Toy: "..v[1].." | Active: "..v[2].." | "..m.Name)
 end
 
 function Toy(ref)
@@ -271,6 +264,7 @@ end
 
 --Build the toys.
 function Fans(p)
+	print "Fans"
 	local weldAccess = {
 			{},	--Handle Weld :D	:[1][1]
 			{},	--FanArm Welds		:[2][1..	]
@@ -283,7 +277,7 @@ function Fans(p)
 	local h = Part("Handle","Really black","Metal",
 					yuge,yuge,yuge,_fans)
 	local hw = Weld(Torso,h,CfrAng(0,-1.5,0,math.pi/2,0,0))
-	weldAccess[1].insert(hw)
+	table.insert(weldAccess[1],hw)
 	--Fan Body (Note: All Arms Weld to the Handle (h))
 	for i = 1, 5 do
 		local faA = Part("FA_A","Really black","Metal",
@@ -295,14 +289,14 @@ end
 
 function DebugStance()
 	if (debugStance) then
-		Weld(Torso,['Right Arm'],CfrAng(0,.5,2,0,math.pi/2,math.pi/2)
-		Weld(Torso,['Left Arm'],CfrAng(0,.5,-2,0,math.pi/2,-math.pi/2)
+		Weld(Torso,Character['Right Arm'],CfrAng(0,.5,2,0,math.pi/2,math.pi/2))
+		Weld(Torso,Character['Left Arm'],CfrAng(0,.5,-2,0,math.pi/2,-math.pi/2))
 	end
 end
 
 function Run()
 	DebugStance()
-	Fan(plr)
+	Fans(Player)
 end
 
-Run()
+Run() --</fin>
