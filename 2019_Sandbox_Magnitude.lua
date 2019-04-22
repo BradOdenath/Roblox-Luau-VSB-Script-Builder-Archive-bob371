@@ -43,7 +43,6 @@ function ball()
 	)
 	b.Reflectance = 1
 	b.CFrame = CFrame.new(0,(OFFSET + b.Size.y),0)
-	b.Shape = 2
 	return b
 end
 
