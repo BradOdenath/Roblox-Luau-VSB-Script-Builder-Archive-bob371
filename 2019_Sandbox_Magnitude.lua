@@ -68,7 +68,10 @@ end
 function main()
 	local m = map()
 	local b = ball()
-	game:GetService("RunService").Heartbeat:connect(function() reflect(m,b) end)
+	b.Touched:connect(
+		function(h) if h.Parent:findFirstChild("Humanoid") ~= nil then
+			reflect(m,b)
+		end)
 end
 
 main()
