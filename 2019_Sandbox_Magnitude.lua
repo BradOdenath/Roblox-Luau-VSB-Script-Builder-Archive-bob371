@@ -66,10 +66,16 @@ end
 function main()
 	local m = map()
 	local b = ball()
+	blah = true
 	b.Touched:connect(
 		function(h) 
 			if h.Parent:findFirstChild("Humanoid") ~= nil then
-				reflect(m,b)
+				if blah == true then
+					blah = false
+					reflect(m,b)
+					wait(1)
+					blah = true
+				end
 			end
 		end
 	)
