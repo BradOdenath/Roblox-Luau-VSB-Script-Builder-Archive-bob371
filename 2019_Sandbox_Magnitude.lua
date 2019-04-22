@@ -1,5 +1,3 @@
-print('spongebob colors')
-
 function Part(anc, sz, pa) 
 	local p = Instance.new("Part")
 	p.Locked = anc -- easier to move in testing
