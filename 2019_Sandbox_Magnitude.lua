@@ -69,9 +69,12 @@ function main()
 	local m = map()
 	local b = ball()
 	b.Touched:connect(
-		function(h) if h.Parent:findFirstChild("Humanoid") ~= nil then
-			reflect(m,b)
-		end)
+		function(h) 
+			if h.Parent:findFirstChild("Humanoid") ~= nil then
+				reflect(m,b)
+			end
+		end
+	)
 end
 
 main()
