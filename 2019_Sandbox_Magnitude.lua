@@ -3,7 +3,7 @@ function Part(anc, sz, pa)
 	p.Locked = anc -- easier to move in testing
 	p.formFactor = "Custom"
 	p.BrickColor = BrickColor.Green()
-	--p.Material = "Plastic"
+	p.Material = "Grass"
 	p.TopSurface = 0
 	p.BottomSurface = 0
 	p.CanCollide = true
@@ -19,7 +19,7 @@ function Part(anc, sz, pa)
 	return p
 end
 
-OFFSET = 10
+OFFSET = 16
 
 thing = Part(true, Vector3.new(OFFSET/2,OFFSET/2,OFFSET/2), nil)
 
