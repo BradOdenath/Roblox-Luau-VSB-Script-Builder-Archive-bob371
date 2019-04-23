@@ -25,11 +25,11 @@ thing = Part(true, Vector3.new(OFFSET/2,OFFSET/2,OFFSET/2), nil)
 
 function map()
 	local chief = Instance.new("Model")
-	for i = 1, OFFSET do
-		for j = 1, OFFSET do
+	for i = 1, OFFSET*2 do
+		for j = 1, OFFSET*2 do
 			local g = thing:Clone()
 			g.Parent = chief
-			g.CFrame = CFrame.new( (i * OFFSET/2) - (math.pow(OFFSET, 2)/4) , 0, (math.pow(OFFSET, 2)/4) - (j * OFFSET/2) )
+			g.CFrame = CFrame.new( (i * OFFSET/2) - (math.pow(OFFSET, 2)/2) , 0, (math.pow(OFFSET, 2)/2) - (j * OFFSET/2) )
 		end
 	end
 	chief.Parent = game.Workspace
