@@ -55,7 +55,7 @@ function reflect(map, ball)
 		pcall(function()
 			v.Color = Color3.new(0,255-(100/c),0)
 			if ( c > OFFSET) then
-				v.Size = Vector3.new(OFFSET/2, 1+(OFFSET/2*math.sin(math.pi/2*c)), OFFSET/2)
+				v.Size = Vector3.new(OFFSET/2, 1+(OFFSET/4*math.pi*c), OFFSET/2)
 				v.CFrame = f
 			else
 				v.Size = Vector3.new(OFFSET/2, 1, OFFSET/2)
