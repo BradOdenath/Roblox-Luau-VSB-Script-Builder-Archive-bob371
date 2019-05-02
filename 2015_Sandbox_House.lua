@@ -482,10 +482,16 @@ end
 function Main()
 	if base then CreateLiteralBase() end
 	CreateBase()
-	OpenMD()
-	OpenMS()
-	OpenCD()
-	OpenFP()
+	while true do wait()		
+		OpenMD()
+		OpenMS()
+		OpenCD()
+		OpenFP()
+		CloseMD()
+		CloseMS()
+		CloseCD()
+		CloseFP()
+	end
 end
 
 Main()
