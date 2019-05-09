@@ -26,7 +26,6 @@ velo.maxForce = Vector3.new(math.huge,0,math.huge)
 velo.velocity = Vector3.new(0,0,0)
 local mesh = Instance.new("BlockMesh")
 mesh.Scale = Vector3.new(1.1,0.3,1.1)
-mesh.Bevel = 0.11
 mesh.Offset = Vector3.new(0,0.4,-0.45)
 mesh.Parent = seat
 
@@ -48,7 +47,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(0,-0.1,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 local mesh = Instance.new("BlockMesh")
 mesh.Scale = Vector3.new(1.2,0.3,1.2)
-mesh.Bevel = 0.05
 mesh.Offset = Vector3.new(0,0.4,-0.45)
 mesh.Parent = part
 
@@ -70,7 +68,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(0,1.8,0.6) * CFrame.fromEulerAnglesXYZ(3.14/2,0,0)
 local mesh = Instance.new("BlockMesh")
 mesh.Scale = Vector3.new(1.2,0.3,0.9)
-mesh.Bevel = 0.05
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -91,7 +88,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(0,1.8,0.5) * CFrame.fromEulerAnglesXYZ(3.14/2,0,0)
 local mesh = Instance.new("BlockMesh")
 mesh.Scale = Vector3.new(1.1,0.3,0.8)
-mesh.Bevel = 0.11
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -112,7 +108,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(1.1,1.5,0.6) * CFrame.fromEulerAnglesXYZ(0,0,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.3,1.3,0.3)
-mesh.Bevel = 0.08
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -133,7 +128,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(-1.1,1.5,0.6) * CFrame.fromEulerAnglesXYZ(0,0,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.3,1.3,0.3)
-mesh.Bevel = 0.08
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -154,7 +148,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(-1.1,1.7,-0.4) * CFrame.fromEulerAnglesXYZ(3.14/2,0,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.3,1.1,0.3)
-mesh.Bevel = 0.08
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -175,7 +168,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(1.1,1.7,-0.4) * CFrame.fromEulerAnglesXYZ(3.14/2,0,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.3,1.1,0.3)
-mesh.Bevel = 0.08
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -196,7 +188,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(1.1,0.95,-0.8) * CFrame.fromEulerAnglesXYZ(0,0,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.3,1.55,0.3)
-mesh.Bevel = 0.08
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -217,7 +208,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(-1.1,0.95,-0.8) * CFrame.fromEulerAnglesXYZ(0,0,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.3,1.55,0.3)
-mesh.Bevel = 0.08
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -238,7 +228,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(-1.1,2.6,1) * CFrame.fromEulerAnglesXYZ(3.14/2,0,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.3,0.8,0.3)
-mesh.Bevel = 0.08
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -259,7 +248,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(1.1,2.6,1) * CFrame.fromEulerAnglesXYZ(3.14/2,0,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.3,0.8,0.3)
-mesh.Bevel = 0.08
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -280,7 +268,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(0.6,1,1.1) * CFrame.fromEulerAnglesXYZ(0,0,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.8,1,0.8)
-mesh.Bevel = 0.2
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -321,7 +308,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(0.6,1.4,1.1) * CFrame.fromEulerAnglesXYZ(0,0,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.2,0.9,0.2)
-mesh.Bevel = 0.03
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -342,7 +328,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(0.6,1.6,1.1) * CFrame.fromEulerAnglesXYZ(0,0,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.1,0.9,0.1)
-mesh.Bevel = 0.03
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -363,7 +348,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(0.6,2.85,1.1) * CFrame.fromEulerAnglesXYZ(0,0,0)
 local mesh = Instance.new("BlockMesh")
 mesh.Scale = Vector3.new(0.15,0.1,0.4)
-mesh.Bevel = 0.03
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -384,7 +368,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(0.6,2.85,1.1) * CFrame.fromEulerAnglesXYZ(0,3.14/2,0)
 local mesh = Instance.new("BlockMesh")
 mesh.Scale = Vector3.new(0.15,0.1,0.4)
-mesh.Bevel = 0.03
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -405,7 +388,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(0.5,2.6,1.1) * CFrame.fromEulerAnglesXYZ(0,0,3.14/2)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.18,0.3,0.18)
-mesh.Bevel = 0.01
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -426,7 +408,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(0,0.07,0.6) * CFrame.fromEulerAnglesXYZ(-0.5,0,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.5,0.5,0.5)
-mesh.Bevel = 0.01
 mesh.Parent = part
 
 local boost = Instance.new("Part")
@@ -449,7 +430,6 @@ weld.C0 = CFrame.new(0,0.07,0.6) * CFrame.fromEulerAnglesXYZ(-0.5,0,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.4,0.5,0.4)
 mesh.Offset = Vector3.new(0,-0.3,0)
-mesh.Bevel = 0.4
 mesh.Parent = boost
 
 local boostz = Instance.new("Part")
@@ -472,7 +452,6 @@ weld.C0 = CFrame.new(0,0.07,0.6) * CFrame.fromEulerAnglesXYZ(-0.5,0,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.3,0.4,0.3)
 mesh.Offset = Vector3.new(0,-0.3,0)
-mesh.Bevel = 0.4
 mesh.Parent = boostz
 
 local w1 = Instance.new("Part")
@@ -493,7 +472,6 @@ weld.Part1 = w1
 weld.C0 = CFrame.new(0,0.1,-0.4) * CFrame.fromEulerAnglesXYZ(3.14/2,0,3.14/2)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.3,1.5,0.3)
-mesh.Bevel = 0.08
 mesh.Parent = w1
 
 local w2 = Instance.new("Part")
@@ -514,7 +492,6 @@ weld.Part1 = w2
 weld.C0 = CFrame.new(0,0.1,-0.4) * CFrame.fromEulerAnglesXYZ(3.14/2,0,3.14/2)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(0.15,1.55,0.15)
-mesh.Bevel = 0.05
 mesh.Parent = w2
 
 local part = Instance.new("Part")
@@ -535,7 +512,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(0,1.2,0) * CFrame.fromEulerAnglesXYZ(0,3.14/2/2,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(1.5,0.4,1.5)
-mesh.Bevel = 0.08
 mesh.Parent = part
 
 local part = Instance.new("Part")
@@ -556,7 +532,6 @@ weld.Part1 = part
 weld.C0 = CFrame.new(0,-1.2,0) * CFrame.fromEulerAnglesXYZ(0,3.14/2/2,0)
 local mesh = Instance.new("CylinderMesh")
 mesh.Scale = Vector3.new(1.5,0.4,1.5)
-mesh.Bevel = 0.08
 mesh.Parent = part
 
 boosta = false
