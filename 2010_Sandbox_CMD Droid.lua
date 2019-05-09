@@ -3,7 +3,7 @@ if vip ~= nil then
 char = vip.Character
 script.Parent = char
 else
-vip = game.Workspace
+vip = game.Workspace.CurrentCamera
 char = vip
 guard0 = false
 end
