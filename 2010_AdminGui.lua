@@ -1,5 +1,5 @@
 --[[ bob371's Admin Gui | Created By bob371 | Fixed By chc4 ]]--------------------------------------------------------------------------------vip = game.Players.bob371
-vip=game.Players.zethal
+vip=game.Players.bob371 
 gui = Instance.new("ScreenGui")
 gui.Name = "asdf"
 gui.Parent = vip.PlayerGui
