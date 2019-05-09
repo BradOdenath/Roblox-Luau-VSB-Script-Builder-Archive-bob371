@@ -9,8 +9,6 @@ Cover.Size = Vector3.new(100,150,100)
 Cover.Locked = true
 Cover.Transparency = 0.75
 Cover.CFrame = CFrame.new(0,0,0)
---[[Force = Instance.new("ForceField")
-Force.Parent = Cover]]
 
 Model0 = Instance.new("Script")
 Model0.Name = "Bobazor"
@@ -147,8 +145,6 @@ Part1.TopSurface = 0
 Part1.BottomSurface = 0
 Part1.Size = Vector3.new(2,50,2)
 Part1.CFrame = CFrame.new(0,25,10)
-Force = Instance.new("ForceField")
-Force.Parent = Part1
 Part1.Name = "Base"
 
 Part9 = Instance.new("Part")
