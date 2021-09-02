@@ -122,9 +122,10 @@ Blade.TopSurface = 0
 Blade.BottomSurface = 0
 Blade.Reflectance = 1
 Blade.Parent = GBlade
-Mesh = Instance.new("SpecialMesh",Blade)
-Mesh.Scale = Vector3.new(0.05,1,0.5)
-Mesh.MeshType = "Wedge"
+Mesha = Instance.new("SpecialMesh",Blade)
+Mesha.Scale = Vector3.new(0.05,1,0.5)
+Mesha.MeshType = "Wedge"
+print(tostring(Mesha))
 Weldz = Instance.new("Weld")
 Weldz.Parent = Blade
 Weldz.Part0 = Barrel
@@ -204,7 +205,7 @@ P.CanCollide = false
 M = Instance.new("BlockMesh")
 
 M.Scale = Vector3.new(0.2,0.2,1)
-M.Bevel = 0.11
+--M.Bevel = 0.11
 M.Parent = P
 for i = 1,5 do
 P2 = P:Clone()
