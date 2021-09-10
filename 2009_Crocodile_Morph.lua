@@ -1,6 +1,17 @@
 scale = 2
-player = game.Players.bob371
+player = 'LocalPlayer'
+if owner then player = owner else player = game.Players[vip] end
 z = player.Character 
+for i,v in pairs(z:GetChildren()) do 
+	if v.className == "Part" then 
+		v.Transparency = 1
+		pcall(function() v:FindFirstChildWhichIsA("Decal"):Remove() end)
+	elseif v:IsA("Accessory") then 
+		pcall(function() 
+			v:FindFirstChild("Handle").Transparency = 1 
+		end) 
+	end
+end
 for _,l in pairs (z:GetChildren()) do 
 if l.className == "Hat" then 
 l:Remove() 
