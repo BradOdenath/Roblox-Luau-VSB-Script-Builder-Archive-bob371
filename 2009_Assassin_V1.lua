@@ -1,9 +1,20 @@
-vip = game.Players["bob371"]
-char=  vip.Character
+vip = 'LocalPlayer'
+if owner then vip = owner else vip = game.Players[vip] end
+char = vip.Character
+for i,v in pairs(char:GetChildren()) do 
+	if v.className == "Part" then 
+		v.Transparency = 1
+		pcall(function() v:FindFirstChildWhichIsA("Decal"):Remove() end)
+	elseif v:IsA("Accessory") then 
+		pcall(function() 
+			v:FindFirstChild("Handle").Transparency = 1 
+		end) 
+	end
+end
 
---for i,v in pairs(char.Head:GetChildren()) do if v.className == "Decal" then v.Texture = "http://www.roblox.com/asset/?id=9801981" end end
+for i,v in pairs(char.Head:GetChildren()) do if v.className == "Decal" then v.Texture = "http://www.roblox.com/asset/?id=9801981" end end
 
---[[f = Instance.new("Decal")
+f = Instance.new("Decal")
 f.Texture = "http://www.roblox.com/asset/?id=9801981"
 f.Face = "Left"
 f.Parent = char.Head
@@ -11,7 +22,7 @@ f.Parent = char.Head
 f = Instance.new("Decal")
 f.Texture = "http://www.roblox.com/asset/?id=9801981"
 f.Face = "Right"
-f.Parent = char.Head]]
+f.Parent = char.Head
 
 function HatOn()
 for i,v in pairs(script.Parent:GetChildren()) do if v.className == "Hat" then v.Parent = char end end
@@ -118,7 +129,7 @@ part.Size = Vector3.new(1,1,1)
 part.Parent = char
 mesh = Instance.new("SpecialMesh")
 mesh.MeshType = "Brick"
-mesh.Scale = Vector3.new(1.05,0.4,1.05)
+mesh.Scale = Vector3.new(1.07,0.4,1.07)
 mesh.Parent = part
 weld = Instance.new("Weld") 
 weld.Parent = char["Left Leg"]
@@ -139,7 +150,7 @@ part.Size = Vector3.new(1,1,1)
 part.Parent = char
 mesh = Instance.new("SpecialMesh")
 mesh.MeshType = "Brick"
-mesh.Scale = Vector3.new(1.05,0.4,1.05)
+mesh.Scale = Vector3.new(1.07,0.4,1.07)
 mesh.Parent = part
 weld = Instance.new("Weld") 
 weld.Parent = char["Right Leg"]
@@ -606,7 +617,7 @@ BoxAA = false
 if BoxAAA == true then
 for i,v in pairs(char:GetChildren()) do
 if v.className == "Part" then
-if v.Name == "Part" then
+if v.Name == "HumanoidRootPart" then
 v.Transparency = 1
 else
 v.Transparency = 0
@@ -622,7 +633,7 @@ end
 if BoxAAA == false then
 for i,v in pairs(char:GetChildren()) do
 if v.className == "Part" then
-if v.Name == "Part" then
+if v.Name == "HumanoidRootPart" then
 v.Transparency = 0
 else
 v.Transparency = 1
