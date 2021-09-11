@@ -1,5 +1,16 @@
-vip = game.Players.bob371
+vip = 'LocalPlayer'
+if owner then vip = owner else vip = game.Players[vip] end
 char = vip.Character
+for i,v in pairs(char:GetChildren()) do 
+	if v.className == "Part" then 
+		v.Transparency = 1
+		pcall(function() v:FindFirstChildWhichIsA("Decal"):Remove() end)
+	elseif v:IsA("Accessory") then 
+		pcall(function() 
+			v:FindFirstChild("Handle").Transparency = 1 
+		end) 
+	end
+end
 zipper = false
 
 --pcall(function() char.Animate:Remove() end)
