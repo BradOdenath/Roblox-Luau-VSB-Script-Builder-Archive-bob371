@@ -1,12 +1,13 @@
 scale = 1
-seat = false
+seat = true
 chair = false
-player = game.Players.bob371
+player = game.Players.LocalPlayer
+if owner then player = owner end
 Xish = nil
 if chair == false then Xish = 4.5 else Xish = 0 end
 z = player.Character 
 for _,l in pairs (z:GetChildren()) do 
-if l.className == "Hat" then 
+if l.className == "Accessory" then 
 l:Remove() 
 end end 
 for _,i in pairs (z:GetChildren()) do 
@@ -142,7 +143,7 @@ w.Part1 = knife
 w.C0 = CFrame.new(0,-0.4,-4.5+Xish) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
 if chair == true then
-zknife = Instance.new("Part")
+zknife = Instance.new("Seat")
 zknife.formFactor = "Symmetric"
 zknife.Size = Vector3.new(2,1,2)
 zknife.BrickColor = BrickColor.new("Mid gray")
@@ -279,4 +280,5 @@ D = true
 end 
 end 
 
-if seat == true then zknife.Touched:connect(onTouched) end
+if seat == true then zknife.Touched:connect(onTouched) 
+end
