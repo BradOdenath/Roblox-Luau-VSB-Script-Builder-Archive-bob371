@@ -1,5 +1,7 @@
+--Epic Path
 Player = 'LocalPlayer'
-if owner then Player = owner else Player = game.Players[Player] end
+if owner then Player = owner else 
+Player = game.Players[Player] end
 Character = Player.Character
 
 Model = Instance.new("Model",Character)
