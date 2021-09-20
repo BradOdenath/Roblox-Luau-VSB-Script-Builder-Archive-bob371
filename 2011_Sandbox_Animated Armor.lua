@@ -1,7 +1,19 @@
 --[[_bob371's_Armor_(_Don't_Worry_About_It_)_]]--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Player = game.Players.bob371
+Player = 'LocalPlayer'
+if owner then Player = owner else 
+Player = game.Players[Player] end
 Character = Player.Character
+for i,v in pairs(Character:GetChildren()) do 
+	if v.className == "Part" then 
+		v.Transparency = 1
+		pcall(function() v:FindFirstChildWhichIsA("Decal"):Remove() end)
+	elseif v:IsA("Accessory") then 
+		pcall(function() 
+			v:FindFirstChild("Handle").Transparency = 1 
+		end) 
+	end
+end
 script.Parent = Character
 
 --[[ * Fire Can * ]]--
@@ -59,7 +71,7 @@ Head_B.BottomSurface = 0
 Head_B.Reflectance = 0.1
 Head_B.Parent = Armor
 Mesh_B = Instance.new("CylinderMesh",Head_B)
-Mesh_B.Bevel = 0.1
+pcall(function() Mesh_B.Bevel = 0.1 end)
 Weld_B = Instance.new("Weld")
 Weld_B.Parent = Head_B
 Weld_B.Part0 = Head_A
@@ -271,7 +283,7 @@ RArm_B.Reflectance = 0.1
 RArm_B.Transparency = 1
 RArm_B.Parent = Armor
 RAMesh_B = Instance.new("CylinderMesh",RArm_B)
-RAMesh_B.Bevel = 0.1
+pcall(function() Mesh_B.Bevel = 0.1 end)
 RAWeld_B = Instance.new("Weld")
 RAWeld_B.Parent = RArm_B
 RAWeld_B.Part0 = Character["Right Arm"]
