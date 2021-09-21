@@ -14,12 +14,13 @@
 
 -- Default Information
 
-Player = game.Players.bob371
+Player = 'LocalPlayer'
+if (owner) then Player = owner else Player = game.Players[Player] end
 
 op = {"bob371", "Alfederate", "DoogleFox", 
 		"TheNewScripter", "TheMaleScripter", "oni0n"}
 
-location = {-60,100,0} --y=0.6 for base
+location = {-60,100,0} --{401.45,-0.4,0} --y=0.6 for base
 
 tele = true
 base = false
@@ -348,9 +349,9 @@ end
 ------------------------------------------------------------
 
 function coslerp(a, b, x)
-	ft = x * math.pi
-	f = (1 - math.cos(ft)) * .5
-	return a*(1-f) + b*f
+	local ft = (x * math.pi)
+	local f = ((1 - math.cos(ft)) * .5)
+	return (a*(1-f) + b*f)
 end
 
 -- Animation @ping.
