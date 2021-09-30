@@ -1,7 +1,60 @@
 -- ring mesh: http://www.roblox.com/asset/?id=3270017
 
-Player = game.Players.bob371
-Character = Player.Character
+--[[
+	Framework: Roblox
+	Language: Lua
+	Project: Script/ HopperBin Events
+	Coders: supergod800
+]]--
+
+local Player = owner or game.Players.bob371
+local Character = Player.Character
+
+local Keys,downs,lastpressed={},{},{}
+local function isKeyDown(key) return downs[tostring(key)] or false end
+local function setKey(key,func) Keys[key]=func end
+local function timePassed(key)
+    local t = tick() return math.max(t - (lastpressed[key] or t),0)
+end
+
+local onKeyUp = function(key) 
+	Keyzdown[key] = false
+	if key == "u" or key == "j" then
+		for i = 1,2 do wait()
+			Character.RRobot.RMotor.BodyVelocity.velocity = Vector3.new(0,0,0)
+		end
+	end
+end 
+
+local function keyDown(plr,key)
+    key = tostring(key)
+    if isKeyDown(key) then 
+        downs[key]=false
+		onKeyUp(key)
+    else
+        downs[key],lastpressed[key]=true,tick()
+        if Keys[key] then Keys[key]()end
+    end
+end
+
+local mouse = {}
+local keysEvent = Instance.new("RemoteEvent",NLS(string.format([[
+    local keysEvent,mouse = script:FindFirstChildWhichIsA("RemoteEvent"),game.Players.LocalPlayer:GetMouse()
+    local mousedata = keysEvent:FindFirstChildWhichIsA("RemoteEvent")
+    mouse.KeyDown:connect(function(plr,key)  keysEvent:FireServer(plr,key) end)
+    mouse.KeyUp:connect(function(plr,key) keysEvent:FireServer(plr,key) end)
+    mouse.Button1Down:connect(function(plr,key) keysEvent:FireServer(plr,'MouseButton1Down') end)
+    mouse.Button1Up:connect(function(plr,key) keysEvent:FireServer(plr,'MouseButton1Down') end)
+    local runserv = game:GetService("RunService")
+    while runserv.Stepped:Wait() do
+        mousedata:FireServer(plr,{Hit = mouse.Hit,Target = mouse.Target})
+    end
+    ]],''),
+Player.PlayerGui))
+	
+local mouseEvent = Instance.new('RemoteEvent',keysEvent)
+mouseEvent.OnServerEvent:Connect(function(plr,data) mouse = data end)
+keysEvent.OnServerEvent:Connect(keyDown)
 
 function CreateRobot()
 coroutine.resume(coroutine.create(function()
@@ -19,6 +72,8 @@ n.Shape = "Ball"
 n.Size = Vector3.new(2,2,2)
 n.BrickColor = BrickColor.new("Really black")
 n.Name = "RMotor"
+n.TopSurface = 0
+n.BottomSurface = 0
 n.Parent = robot
 n.CFrame = Character.Torso.CFrame
 m = Instance.new("SpecialMesh")
@@ -43,6 +98,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(2,2,2)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -71,6 +128,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(2,2,2)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = wheel
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -92,6 +151,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(2,2,2)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = wheel
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -113,6 +174,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(2,2,2)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = wheel
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -134,6 +197,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(2,2,2)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = wheel
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -157,6 +222,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(2,2,2)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -179,6 +246,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(2,2,2)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -200,6 +269,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -221,6 +292,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -242,6 +315,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -263,6 +338,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -284,6 +361,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -305,6 +384,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -326,6 +407,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -347,6 +430,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -368,6 +453,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -389,6 +476,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -410,6 +499,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -431,6 +522,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -452,6 +545,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Really black")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -473,6 +568,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -517,6 +614,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -582,7 +681,7 @@ ddddddd.ResponseDialog = "Send bob371 a message asking for the cat script :D"
 ddddddd.Parent = dddddd
 ddddddd = Instance.new("DialogChoice")
 ddddddd.UserDialog = "A Puppy dog :)"
-ddddddd.ResponseDialog = "Sorry, you cannot have bob371's puppy dog script :P"
+ddddddd.ResponseDialog = "Send bob371 a message asking for the puppy dog script :P"
 ddddddd.Parent = dddddd
 ddddddd = Instance.new("DialogChoice")
 ddddddd.UserDialog = "A Bird :)"
@@ -631,6 +730,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Really black")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -654,6 +755,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -675,6 +778,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -698,6 +803,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -719,6 +826,8 @@ p.Shape = "Ball"
 p.Size = Vector3.new(1,1,1)
 p.BrickColor = BrickColor.new("Mid gray")
 p.Name = "Wheel"
+p.TopSurface = 0
+p.BottomSurface = 0
 p.Parent = robot
 p.CFrame = CFrame.new(0,2,0)
 m = Instance.new("SpecialMesh")
@@ -735,108 +844,60 @@ end
 
 -----------------------
 
-Keys = {
-e = false,
-r = false
+local forwardKey = 'u'
+local backwardKey = 'j'
+local leftKey = 'h'
+local rightKey = 'k'
+
+Keyzdown = {
+u = false,
+j = false,
+k = false,
+h = false
 }
 
-if script.Parent.className ~= "HopperBin" then 
-Hopper = Instance.new("HopperBin") 
-Hopper.Name = "Robot" 
-Hopper.Parent = Player.Backpack
-script.Parent = Hopper 
-end 
+setKey('f', CreateRobot())
 
-function Clicked(Mouse) 
-end 
+setKey(forwardKey, function()
+	Keyzdown[forwardKey] = true 
+	while Keyzdown[forwardKey] == true do wait(0.03) 
+		for i,v in pairs(wheel:GetChildren()) do
+			if v:findFirstChild("Weld") ~= nil then
+				if Keyzdown[forwardKey] ~= true then return end
+				v.Weld.C0 = v.Weld.C0 * CFrame.Angles(0,0,-math.pi/20)
+			end 
+		end
+		if Keyzdown[forwardKey] ~= true then return end
+		Character.RRobot.RMotor.BodyVelocity.velocity = (Character.RRobot.RMotor.BodyGyro.cframe * CFrame.Angles(0,math.pi/2,0)).lookVector * 20
+	end
+end)
 
-function UnClicked(Mouse) 
-end 
+setKey(backwardKey, function()	
+	Keyzdown[backwardKey] = true 
+	while Keyzdown[backwardKey] == true do wait(0.03) 	
+		for i,v in pairs(wheel:GetChildren()) do
+			if v:findFirstChild("Weld") ~= nil then
+				if Keyzdown[backwardKey] ~= true then return end
+				v.Weld.C0 = v.Weld.C0 * CFrame.Angles(0,0,math.pi/20)
+			end
+		end
+		if Keyzdown[backwardKey] ~= true then return end
+		Character.RRobot.RMotor.BodyVelocity.velocity = (Character.RRobot.RMotor.BodyGyro.cframe * CFrame.Angles(0,math.pi/2,0)).lookVector * -20
+	end 
+end)
 
-function onKeyDown(key) 
+setKey(leftKey, function()
+	Keyzdown[leftKey] = true 
+	while Keyzdown[leftKey] == true do wait(0.03) 
+		Character.RRobot.RMotor.BodyGyro.cframe = Character.RRobot.RMotor.CFrame * CFrame.fromEulerAnglesXYZ(0,0.314,0)
+		if Keyzdown[leftKey] ~= true then return end
+	end
+end)
 
-if key == "f" then
-CreateRobot()
-end
-
-if key == "u" then --Forward
-Keys[key] = true 
-while Keys[key] == true do wait(0.03) 
-
-for i,v in pairs(wheel:GetChildren()) do
-if v:findFirstChild("Weld") ~= nil then
-if Keys[key] ~= true then return end
-v.Weld.C0 = v.Weld.C0 * CFrame.Angles(0,0,-math.pi/20)
-else
-end
-end
-
-if Keys[key] ~= true then return end
-
-Character.RRobot.RMotor.BodyVelocity.velocity = (Character.RRobot.RMotor.BodyGyro.cframe * CFrame.Angles(0,math.pi/2,0)).lookVector * 20
-
-end 
-end 
-
-if key == "j" then --Backward
-Keys[key] = true 
-while Keys[key] == true do wait(0.03) 
-
-for i,v in pairs(wheel:GetChildren()) do
-if v:findFirstChild("Weld") ~= nil then
-if Keys[key] ~= true then return end
-v.Weld.C0 = v.Weld.C0 * CFrame.Angles(0,0,math.pi/20)
-else
-end
-end
-
-if Keys[key] ~= true then return end
-
-Character.RRobot.RMotor.BodyVelocity.velocity = (Character.RRobot.RMotor.BodyGyro.cframe * CFrame.Angles(0,math.pi/2,0)).lookVector * -20
-
-end 
-end 
-
-if key == "k" then --Forward
-Keys[key] = true 
-while Keys[key] == true do wait(0.03) 
-Character.RRobot.RMotor.BodyGyro.cframe = Character.RRobot.RMotor.CFrame * CFrame.fromEulerAnglesXYZ(0,-0.314,0)
-if Keys[key] ~= true then return end
-end 
-end 
-
-if key == "h" then --Forward
-Keys[key] = true 
-while Keys[key] == true do wait(0.03) 
-Character.RRobot.RMotor.BodyGyro.cframe = Character.RRobot.RMotor.CFrame * CFrame.fromEulerAnglesXYZ(0,0.314,0)
-if Keys[key] ~= true then return end
-end 
-end 
-
-end 
-
-
-function onKeyUp(key) 
-Keys[key] = false 
-if key == "u" or key == "j" then
-for i = 1,2 do wait()
-Character.RRobot.RMotor.BodyVelocity.velocity = Vector3.new(0,0,0)
-end
-end
-end 
-
-function Selected(Mouse) 
-Mouse.KeyDown:connect(onKeyDown) 
-Mouse.KeyUp:connect(onKeyUp) 
-Mouse.Button1Down:connect(function()Clicked(Mouse)end) 
-Mouse.Button1Up:connect(function()UnClicked(Mouse)end) 
-end 
-
-function Deselected(Mouse) 
-
-end 
-
-script.Parent.Selected:connect(Selected) 
-script.Parent.Deselected:connect(Deselected) 
-
------------------------------------------------
+setKey(rightKey, function()
+	Keyzdown[rightKey] = true 
+	while Keyzdown[rightKey] == true do wait(0.03) 
+		Character.RRobot.RMotor.BodyGyro.cframe = Character.RRobot.RMotor.CFrame * CFrame.fromEulerAnglesXYZ(0,-0.314,0)
+		if Keyzdown[rightKey] ~= true then return end
+	end 
+end)
