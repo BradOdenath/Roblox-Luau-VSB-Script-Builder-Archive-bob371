@@ -1,29 +1,116 @@
 --[[
+	Framework: Roblox
+	Language: Lua
+	Project: Spider Turtle
+	Coder-Credits: DoogleFox, supergod800, bob371
+]]--
 
-	Project compilation between myself and another user, DoogleFox.
+--[[
+
+	Project compilation between bob371 and another user, DoogleFox.
 	
 	Essentially a controllable,
 	four legged, hot air balloon, fire spitting, dog.
 
 ]]
 
+--script.Parent = nil
+--script:ClearAllChildren()
 
-script.Parent = nil
-script:ClearAllChildren()
+local movespeed = 40
 
-movespeed = 40
+local Player = 'LocalPlayer'
+if (owner) then Player = owner else Player = game.Players[Player] end
+local Character = Player.Character
 
-Player = game.Players.LocalPlayer
-Character = Player.Character
+
+local Keys,downs,lastpressed={},{},{}
+local function isKeyDown(key) return downs[tostring(key)] or false end
+
+local function _setKey(key,func) Keys[key]=func end
+local function setKey(key,func) 
+	if typeof(key) == 'table' then 
+		for i,v in pairs(key) do 
+			_setKey(v, func) 
+		end 
+	else 
+		_setKey(key, func) 
+	end
+end
+
+local function timePassed(key)
+    local t = tick() return math.max(t - (lastpressed[key] or t),0)
+end
+
+function onKeyUp(key)
+key = key:lower()
+if key == "u" then
+WalkW = false
+elseif key == "h" then
+WalkA = false
+elseif key == "j" then
+WalkS = false
+elseif key == "k" then
+WalkD = false
+end
+end
+
+Blah = true
+
+local function keyDown(plr,key)	
+	if Blah then
+		Blah = false
+		key = tostring(key)
+		print(key)
+		if isKeyDown(key) then 
+			downs[key]=false
+			print(#downs)
+			onKeyUp(key)
+		else
+			downs[key],lastpressed[key]=true,tick()
+			if Keys[key] then Keys[key]()end
+		end
+		Blah = true
+	end
+end
+
+local mouse = {}
+local keysEvent = Instance.new("RemoteEvent",NLS(string.format([[
+    local keysEvent,mouse = script:FindFirstChildWhichIsA("RemoteEvent"),game.Players.LocalPlayer:GetMouse()
+    local mousedata = keysEvent:FindFirstChildWhichIsA("RemoteEvent")
+    mouse.KeyDown:connect(function(plr,key)  keysEvent:FireServer(plr,key) end)
+    mouse.KeyUp:connect(function(plr,key) keysEvent:FireServer(plr,key) end)
+    mouse.Button1Down:connect(function(plr,key) keysEvent:FireServer(plr,'MouseButton1Down') end)
+    mouse.Button1Up:connect(function(plr,key) keysEvent:FireServer(plr,'MouseButton1Down') end)
+    local runserv = game:GetService("RunService")
+    while runserv.Stepped:Wait() do
+        mousedata:FireServer(plr,{Hit = mouse.Hit,Target = mouse.Target})
+    end
+    ]],''),
+Player.PlayerGui))
+	
+local mouseEvent = Instance.new('RemoteEvent',keysEvent)
+mouseEvent.OnServerEvent:Connect(function(plr,data) mouse = data end)
+keysEvent.OnServerEvent:Connect(keyDown)
 
 Character.Torso.CFrame = Character.Torso.CFrame + Vector3.new(0,20,0)
+
+EndBlah = true
+
+Mode = 0
+Walking = false
+Walk = false
+WalkA = false
+WalkD = false
+WalkS = false
+WalkW = false
 
 Sit = Character.Humanoid.Sit
 
 ArmLength = 5
 
 pcall(function() Character["£HoverCraft"]:Remove() end)
-pcall(function() Player.Backpack.BNS:Remove() end)
+--pcall(function() Player.Backpack.BNS:Remove() end)
 
 HoverCraft = Instance.new("Model")
 HoverCraft.Name = "£HoverCraft"
@@ -45,9 +132,9 @@ seatlight.Brightness = 0.5
 seatlight.Color = Color3.new(0.5,0.5,0.5)
 seatlight.Range = 30
 
-game.Workspace.CurrentCamera.CameraSubject = Seat
-Character.Humanoid.WalkSpeed = 0
-Character.Torso.CFrame = game.Workspace.Base.CFrame + CFrame.new(0,20,0)
+--game.Workspace.CurrentCamera.CameraSubject = Seat
+--Character.Humanoid.WalkSpeed = 0
+Character.Torso.CFrame = game.Workspace.Base.CFrame + Vector3.new(0,20,0)
 
 PartA = Instance.new("Part")
 PartA.Anchored = false
@@ -2660,17 +2747,6 @@ DriveVelocity.maxForce = Vector3.new(0,0,0)
 DriveVelocity.velocity = Vector3.new(0,0,0)
 end
 
-Blah = true
-EndBlah = true
-
-Mode = 0
-Walking = false
-Walk = false
-WalkA = false
-WalkD = false
-WalkS = false
-WalkW = false
-
 function SpiderWalkW()
 if not Walk then
 Walk = true
@@ -2999,7 +3075,7 @@ Firebawl2.Size = Firebawl2.Size - Vector3.new(0.2,0.2,0.2)
 Firebawl2.CFrame = catafirec
 wait()
 end
-Firebawl2:Destroy()
+pcall(function() Firebawl2:Destroy() end)
 end))
 end
 
@@ -3066,43 +3142,44 @@ Seats = false
 
 hatch = true
 
+--[[
 if script.Parent == nil or script.Parent.Name == Player.Name or script.Parent.Parent.Name == Player.Name then
 Hopper = Instance.new("HopperBin")
 Hopper.Name = "BNS"
 Hopper.Parent = Player.Backpack
 end
+]]
 
-function onKeyDown(key)
-if Blah == true then
-Blah = false
+--function onKeyDown(key)
+--if Blah == true then
+--Blah = false
 
-if key == "f" then
-OpenJaw()
-Shoot()
-CloseJaw()
-end
 
-if key == "x" then
-Cram()
-end
+setKey('f', function() 
+	OpenJaw()
+	Shoot()
+	CloseJaw()
+end)
 
-if key == "c" then
-DeCram()
-end
+setKey('x', function() Cram() end)
 
-if key == "1" or key == "z" then
-if Mode == 0 then
-if hatch then
-hatch = false
-HatchUp()
-elseif not hatch then
-hatch = true
-HatchDown()
-end
-end
-end
+setKey('c', function() DeCram() end)
 
-if key == "l" then
+setKey({'1','z'}, function()
+	if Mode == 0 then
+		if hatch then
+			hatch = false
+			HatchUp()
+		elseif not hatch then
+			hatch = true
+			HatchDown()
+		end
+	end
+end)
+
+
+setKey("l",
+function()
 if Seats == false then
 if HoverCraft:FindFirstChild("TempSeatA") or HoverCraft:FindFirstChild("TempSeatB") or HoverCraft:FindFirstChild("TempSeatC") then
 Seats = true
@@ -3114,13 +3191,14 @@ TempSeats()
 Seats = false
 end
 end
-end
+end)
 
-if string.byte(key) == 8 then
+--[[if string.byte(key) == 8 then
 Character.Torso.CFrame = Seat.CFrame*CFrame.new(0,2,0)
-end
+end]]
 
-if key == "/" then
+setKey("/",
+function()
 if Mode == 0 and not Walk then
 if not Jump then
 Jump = true
@@ -3136,102 +3214,104 @@ wait(0.7)
 Jump = false
 end
 end
-end
+end)
 
-if key == "p" and (not WalkW and not WalkA and not WalkS and not WalkD) and not Walk then
+setKey('p',
+function()
+	if (not WalkW and not WalkA and not WalkS and not WalkD) and not Walk then
+		if Mode == 0 then
+			Mode = 1
+			if not hatch then HatchDown() hatch = true end
+			LegsUp()
+			LegsUp()
+			MakeBall()
+		elseif Mode == 1 then
+			Mode = 0
+			DeleBall()
+			LegsDown()
+			LegsDown()
+		end
+	end
+end)
+
+--
+setKey('u',
+function()
 if Mode == 0 then
-Mode = 1
-if not hatch then HatchDown() hatch = true end
-LegsUp()
-LegsUp()
-MakeBall()
-elseif Mode == 1 then
-Mode = 0
-
-DeleBall()
-LegsDown()
-LegsDown()
-
-end
-
-end
-
-Sit = Character.Humanoid.Sit
-
-if Mode == 0 and Sit then
-
-if key == "w" then
 WalkW = true
 coroutine.resume(coroutine.create(function()
 SpiderWalkW()
 end))
 
-elseif key == "a" then
-WalkA = true
-coroutine.resume(coroutine.create(function()
-SpiderWalkA()
-end))
-
-elseif key == "s" then
-WalkS = true
-coroutine.resume(coroutine.create(function()
-SpiderWalkS()
-end))
-
-elseif key == "d" then
-WalkD = true
-coroutine.resume(coroutine.create(function()
-SpiderWalkD()
-end))
-end
-
-elseif Mode == 1 and Sit then
-
-if key == "w" then
+elseif Mode == 1 then
 WalkW = true
 coroutine.resume(coroutine.create(function()
 BFlyW()
 end))
 
-elseif key == "a" then
+end
+end)
+
+setKey('h',
+function()
+if Mode == 0 then
+WalkA = true
+coroutine.resume(coroutine.create(function()
+SpiderWalkA()
+end))
+
+elseif Mode == 1 then
 WalkA = true
 coroutine.resume(coroutine.create(function()
 BFlyA()
 end))
 
-elseif key == "s" then
+end
+end)
+
+setKey('j',
+function()
+if Mode == 0 then
+WalkS = true
+coroutine.resume(coroutine.create(function()
+SpiderWalkS()
+end))
+
+elseif Mode == 1 then
 WalkS = true
 coroutine.resume(coroutine.create(function()
 BFlyS()
 end))
 
-elseif key == "d" then
+end
+end)
+
+setKey('k',
+function()
+if Mode == 0 then
+WalkD = true
+coroutine.resume(coroutine.create(function()
+SpiderWalkD()
+end))
+
+elseif Mode == 1  then
 WalkD = true
 coroutine.resume(coroutine.create(function()
 BFlyD()
 end))
 
 end
+end)
 
-end
+--end
 
-Blah = true
-end
-end
+--end --efdeasfas
 
-function onKeyUp(key)
-key = key:lower()
-if key == "w" then
-WalkW = false
-elseif key == "a" then
-WalkA = false
-elseif key == "s" then
-WalkS = false
-elseif key == "d" then
-WalkD = false
-end
-end
+--Blah = true
+--end
+--end
 
+--[[
 function Selected(Mouse) 
 Mouse.Icon = "rbxasset://textures\\GunCursor.png"
 Mouse.KeyDown:connect(onKeyDown)
@@ -3240,3 +3320,4 @@ Mouse.Button1Down:connect(function()    onButton1Down(Mouse)    end)
 end 
 
 Hopper.Selected:connect(Selected)
+]]
