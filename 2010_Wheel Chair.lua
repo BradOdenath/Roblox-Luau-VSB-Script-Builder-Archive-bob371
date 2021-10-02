@@ -1,7 +1,9 @@
 who = "bob371"
 
+if owner then who = owner.Name end
+
 model = Instance.new("Model")
-model.Parent = game.Workspace[who]
+model.Parent = workspace
 
 script.Parent = model
 
