@@ -1,6 +1,6 @@
 line = 1
 
-vip = game.Players.bob371
+vip = owner or game.Players.bob371 or game.Players.LocalPlayer
 vip.Character = nil
 
 gui = Instance.new("ScreenGui")
@@ -251,7 +251,7 @@ basex.BackgroundTransparency = 1
 basex.Visible = true
 
 function onButton1Down()
-if basec.Text == "bobazor" then
+--if basec.Text == "bobazor" then
 basex.Visible = false
 basec.Visible = false
 bases.Visible = true
@@ -262,9 +262,9 @@ for i,v in pairs(hold:GetChildren()) do
 v:Remove()
 end
 Search()
-else
-basec.Text = "Wrong Password"
-end
+--else
+--basec.Text = "Wrong Password"
+--end
 end
 basex.MouseButton1Down:connect(onButton1Down)
 
