@@ -1,10 +1,60 @@
 --[[_bob371's_Old_Person_Cane_]]--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Player = game.Players.LocalPlayer
+Player = owner or game.Players.bob371 or game.Players.LocalPlayer
 Character = Player.Character
 script.Parent = Character
 
 Blah = true --[[ ]]
+local Keys,downs,lastpressed={},{},{}
+
+local function isKeyDown(key) return downs[tostring(key)] or false end
+
+
+local function _setKey(key,func) Keys[key]=func end
+local function setKey(key,func) 
+	if typeof(key) == 'table' then 
+		for i,v in pairs(key) do 
+			_setKey(v, func) 
+		end 
+	else 
+		_setKey(key, func) 
+	end
+end
+
+local function timePassed(key)
+    local t = tick() return math.max(t - (lastpressed[key] or t),0)
+end
+
+local function keyDown(plr,key)	
+	key = tostring(key)
+	print(key)
+	if isKeyDown(key) then 
+		downs[key]=false
+	else
+		downs[key],lastpressed[key]=true,tick()
+		if Keys[key] then Keys[key]()end
+	end
+end
+
+local mouse = {}
+local keysEvent = Instance.new("RemoteEvent",NLS(string.format([[
+    local keysEvent,mouse = script:FindFirstChildWhichIsA("RemoteEvent"),game.Players.LocalPlayer:GetMouse()
+    local mousedata = keysEvent:FindFirstChildWhichIsA("RemoteEvent")
+    mouse.KeyDown:connect(function(plr,key)  keysEvent:FireServer(plr,key) end)
+    mouse.KeyUp:connect(function(plr,key) keysEvent:FireServer(plr,key) end)
+    mouse.Button1Down:connect(function(plr,key) keysEvent:FireServer(plr,'MouseButton1Down') end)
+    mouse.Button1Up:connect(function(plr,key) keysEvent:FireServer(plr,'MouseButton1Down') end)
+    local runserv = game:GetService("RunService")
+    while runserv.Stepped:Wait() do
+        mousedata:FireServer(plr,{Hit = mouse.Hit,Target = mouse.Target})
+    end
+    ]],''),
+owner.PlayerGui))
+	
+local mouseEvent = Instance.new('RemoteEvent',keysEvent)
+mouseEvent.OnServerEvent:Connect(function(plr,data) mouse = data end)
+keysEvent.OnServerEvent:Connect(keyDown)
+
 
 pcall(function()
 Character.Humanoid.WalkSpeed = 2
@@ -206,14 +256,15 @@ end
 
 
 --if script.Parent.Name == Player.Name then
-Hopper = Instance.new("HopperBin")
-Hopper.Name = "Cane"
-Hopper.Parent = Player.Backpack
+--Hopper = Instance.new("HopperBin")
+--Hopper.Name = "Cane"
+--Hopper.Parent = Player.Backpack
 --end
 
 Blah = true
 
-function Clicked(Mouse)
+setKey({'f','MouseButton1Down'},
+function()
 if Blah == true then
 Blah = false
 
@@ -259,15 +310,11 @@ end
 Blah = true
 return
 end
-end
+end)
 
-function UnClicked(Mouse)
-end
 
-function onKeyDown(key)
---Knife Out
-
-if key == "q" then
+setKey('q',
+function()
 if Blah == true then
 Blah = false
 if KnifePos == true then
@@ -302,10 +349,11 @@ Blah = true
 return
 end
 end
-end
+end)
 
 --Reload
-if key == "r" then
+setKey('r',
+function()
 if Blah == true then
 Blah = false
 for i = 1,14 do wait()
@@ -328,21 +376,21 @@ ArmWeld.C0 = ArmWeld.C0 * CFrame.Angles(-0.1,0,0)
 end
 Blah = true
 end
-end
-end
+end)
 
-function Selected(Mouse) 
-	Mouse.Icon = "rbxasset://textures\\GunCursor.png"
-	Mouse.KeyDown:connect(onKeyDown)
-	Mouse.Button1Down:connect(function()Clicked(Mouse)end) 
-	Mouse.Button1Up:connect(function()UnClicked(Mouse)end)
+--[[
+function Selected(mouse) 
+	mouse.Icon = "rbxasset://textures\\GunCursor.png"
+	mouse.KeyDown:connect(onKeyDown)
+	mouse.Button1Down:connect(function()Clicked(mouse)end) 
+	mouse.Button1Up:connect(function()UnClicked(mouse)end)
 end 
 
-function Deselected(Mouse)
+function Deselected(mouse)
 end
 
 Hopper.Selected:connect(Selected)
 Hopper.Deselected:connect(Deselected) 
-
+]]
 Knife.Touched:connect(Touched)
 Pole.Touched:connect(Touched2)
