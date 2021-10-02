@@ -25,7 +25,7 @@ guard.Parent = char
 default = "Navy blue"
 
 part = Instance.new("Part")
-part.Name = "Torso"
+part.Name = "HumanoidRootPart"
 part.CanCollide = false
 part.Locked = true
 part.TopSurface = 0
@@ -97,8 +97,8 @@ Numaz = table.maxn(Sizez)
 
 function Move(player1,player2)
 if game.Players:findFirstChild(player1) ~= nil and game.Players:findFirstChild(player2) ~= nil then
-if game.Players[player1].Character:findFirstChild("Torso") ~= nil and game.Players[player2].Character:findFirstChild("Torso") ~= nil then
-pcall(function() game.Players[player1].Character.Torso.CFrame = game.Players[player2].Character.Torso.CFrame end)
+if game.Players[player1].Character:findFirstChild("HumanoidRootPart") ~= nil and game.Players[player2].Character:findFirstChild("HumanoidRootPart") ~= nil then
+pcall(function() game.Players[player1].Character.HumanoidRootPart.CFrame = game.Players[player2].Character.HumanoidRootPart.CFrame end)
 end
 end
 end
@@ -135,11 +135,11 @@ coroutine.resume(coroutine.create(function()
 if type == 1 then
 local speed = person.Humanoid.WalkSpeed
 person.Humanoid.WalkSpeed = 0
-person.Torso.Anchored = true
+person.HumanoidRootPart.Anchored = true
 local l=Instance.new("SelectionPartLasso")
 l.Humanoid = human
 l.Parent = guard
-l.Part = person.Torso
+l.Part = person.HumanoidRootPart
 l.Color = BrickColor.new(color)
 local ball = Instance.new("Part")
 ball.Name = "Base"
@@ -153,7 +153,7 @@ ball.Size = Vector3.new(8,8,8)
 ball.TopSurface = 0
 ball.BottomSurface = 0
 ball.Parent = guard
-ball.CFrame = person.Torso.CFrame
+ball.CFrame = person.HumanoidRootPart.CFrame
 ball.Velocity = ball.CFrame.lookVector * 100
 part.BrickColor = BrickColor.new(color)
 fire.Color = part.Color
@@ -162,7 +162,7 @@ if l ~= nil then l:Remove() end
 if ball ~= nil then ball:Remove() end
 part.BrickColor = BrickColor.new(default)
 fire.Color = part.Color
-person.Torso.Anchored = false
+person.HumanoidRootPart.Anchored = false
 person.Humanoid.WalkSpeed = speed
 end
 end))
@@ -229,7 +229,7 @@ mesh.Offset = Vector3.new(0,0.8,0)
 mesh.Parent = partz
 mesh.Scale = Vector3.new(1.85,0.3,1.85)
 local w = Instance.new("Weld") 
-w.Parent = char["Torso"]
+w.Parent = char["HumanoidRootPart"]
 w.Part0 = w.Parent
 w.Part1 = partz
 w.C0 = CFrame.new(0.3,-1.3,-1.4) * CFrame.fromEulerAnglesXYZ(-0.5,0,0.1)
@@ -249,7 +249,7 @@ mesh.Offset = Vector3.new(0,-0.8,0)
 mesh.Parent = partz
 mesh.Scale = Vector3.new(1.85,0.3,1.85)
 local w = Instance.new("Weld") 
-w.Parent = char["Torso"]
+w.Parent = char["HumanoidRootPart"]
 w.Part0 = w.Parent
 w.Part1 = partz
 w.C0 = CFrame.new(0.3,-1.3,-1.4) * CFrame.fromEulerAnglesXYZ(-0.5,0,0.1)
@@ -269,7 +269,7 @@ local mesh = Instance.new("CylinderMesh")
 mesh.Parent = partz
 mesh.Scale = Vector3.new(1.75,1.925,1.75)
 local w = Instance.new("Weld") 
-w.Parent = char["Torso"]
+w.Parent = char["HumanoidRootPart"]
 w.Part0 = w.Parent
 w.Part1 = partz
 w.C0 = CFrame.new(0.3,-1.3,-1.4) * CFrame.fromEulerAnglesXYZ(-0.5,0,0.1)
@@ -288,7 +288,7 @@ local mesh = Instance.new("CylinderMesh")
 mesh.Parent = partz
 mesh.Scale = Vector3.new(1.7,1.8,1.7)
 local w = Instance.new("Weld") 
-w.Parent = char["Torso"]
+w.Parent = char["HumanoidRootPart"]
 w.Part0 = w.Parent
 w.Part1 = partz
 w.C0 = CFrame.new(0.3,-1.3,-1.4) * CFrame.fromEulerAnglesXYZ(-0.5,0,0.1)
@@ -352,17 +352,17 @@ sound.Volume = 0.5
 sound.SoundId = "rbxasset://sounds\\paintball.wav"
 sound.Parent = partz
 local w = Instance.new("Weld") 
-w.Parent = char["Torso"]
+w.Parent = char["HumanoidRootPart"]
 w.Part0 = w.Parent
 w.Part1 = partz
 w.C0 = CFrame.new(0.21,-0.45,-1.875) * CFrame.fromEulerAnglesXYZ(3.14/2-0.5,0.1,0)
 local w = Instance.new("Weld") 
-w.Parent = char["Torso"]
+w.Parent = char["HumanoidRootPart"]
 w.Part0 = w.Parent
 w.Part1 = char["Right Arm"]
 w.C0 = CFrame.new(1.2,0.4,-0.7) * CFrame.fromEulerAnglesXYZ(3.14/2-0.4,0.1,-0.2)
 local w = Instance.new("Weld") 
-w.Parent = char["Torso"]
+w.Parent = char["HumanoidRootPart"]
 w.Part0 = w.Parent
 w.Part1 = char["Left Arm"]
 w.C0 = CFrame.new(-0.8,0.4,-0.7) * CFrame.fromEulerAnglesXYZ(3.14/2-0.3,-0.1,0.3)
@@ -422,7 +422,7 @@ mesh = Instance.new("CylinderMesh",part)
 mesh.Scale = Vector3.new(1.05,1.05,1.05)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,-3,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -439,7 +439,7 @@ part.Parent = char
 Instance.new("CylinderMesh").Parent = part
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,-2,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -459,7 +459,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(1.1,1,1.1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,-1,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -479,7 +479,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(0.1,1,1.1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,-1,-0.05) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -499,7 +499,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(1,3,1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,-1,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -519,7 +519,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(0.1,3,1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,-1,-0.05) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -539,7 +539,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(2,2,1.9)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -640,7 +640,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(2,2,6)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.7) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -661,7 +661,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.5,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -682,7 +682,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.6,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -703,7 +703,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.7,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -724,7 +724,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.8,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -745,7 +745,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.9,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -766,7 +766,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.85,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -787,7 +787,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.75,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -808,7 +808,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.65,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -827,7 +827,7 @@ mesh.Parent = part
 mesh.Scale = Vector3.new(1,1,1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
 
@@ -846,7 +846,7 @@ mesh.Parent = part
 mesh.Scale = Vector3.new(1,1,1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0.5,2,-1.51) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
 
@@ -865,7 +865,7 @@ mesh.Parent = part
 mesh.Scale = Vector3.new(1,1,1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(-0.5,2,-1.51) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
 
@@ -884,7 +884,7 @@ mesh.Parent = part
 mesh.Scale = Vector3.new(0.1,1,0.1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(-0.2,2,-1.52) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
 
@@ -903,7 +903,7 @@ mesh.Parent = part
 mesh.Scale = Vector3.new(0.1,1,0.1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0.2,2,-1.52) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
 if zipper == true then
@@ -922,7 +922,7 @@ mesh.Parent = part
 mesh.Scale = Vector3.new(0.05,0.5,0.05)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(-0.1,0.9,-2.2) * CFrame.fromEulerAnglesXYZ(0,0,-0.4)
 
@@ -942,7 +942,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(0.1,2,2)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,1.95,-0.03) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -961,7 +961,7 @@ mesh.Parent = part
 mesh.Scale = Vector3.new(0.05,0.4,0.05)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0.1,0.95,-2.2) * CFrame.fromEulerAnglesXYZ(0,0,0.4)
 end
@@ -970,7 +970,7 @@ end
 end
 end
 
-if string.sub(msg,1,3) == "gun" then
+--[[if string.sub(msg,1,3) == "gun" then
 for i,v in pairs(game.Players:GetChildren()) do
 if string.find(string.lower(v.Name),string.lower(string.sub(msg,5))) ~= nil then
 coroutine.resume(coroutine.create(function()
@@ -1031,7 +1031,7 @@ if ammo == 0 then
 Mouse.Icon = "rbxasset://textures\\GunWaitCursor.png"
 local FireSound = Instance.new("Sound")
 FireSound.SoundId = "rbxasset://sounds\\paintball.wav"
-FireSound.Parent = char.Torso
+FireSound.Parent = char.HumanoidRootPart
 FireSound.Pitch = 1000
 FireSound.Volume = 0.5
 FireSound:Play()
@@ -1045,7 +1045,7 @@ else
 ammo = ammo - 1
 end
 --[[local P = Instance.new("Part") 
-local Place0 = char.Torso.CFrame * CFrame.new(0,0.9,-2.8) * CFrame.fromEulerAnglesXYZ(0, 0, 0)
+local Place0 = char.HumanoidRootPart.CFrame * CFrame.new(0,0.9,-2.8) * CFrame.fromEulerAnglesXYZ(0, 0, 0)
 local Place1 = Mouse.Hit.p
 P.formFactor = 0 
 P.Size = Vector3.new(1,1,(Place0.p - Place1).magnitude) 
@@ -1071,7 +1071,7 @@ Bullet.CFrame = CFrame.new(Vector3.new(Place1.x,Place1.y,Place1.z))]]
 
 
 local P = Instance.new("Part") 
-local Place0 = char.Torso.CFrame * CFrame.new(0,0.9,-2.8) * CFrame.fromEulerAnglesXYZ(0, 0, 0)
+local Place0 = char.HumanoidRootPart.CFrame * CFrame.new(0,0.9,-2.8) * CFrame.fromEulerAnglesXYZ(0, 0, 0)
 local Place1 = Mouse.Hit.p 
 
 P.formFactor = 0 
@@ -1273,21 +1273,21 @@ if char:findFirstChild("Gun") == nil then
 local suit = Instance.new("Model")
 suit.Parent = char
 suit.Name = "Gun"
-local rshoulder = char.Torso["Right Shoulder"]
+local rshoulder = char.HumanoidRootPart["Right Shoulder"]
 rshoulder.Parent = nil
 local rweld = Instance.new("Motor")
 rweld.Name = "RightWeld"
 rweld.Parent = suit
 rweld.Part0 = char["Right Arm"]
-rweld.Part1 = char.Torso
+rweld.Part1 = char.HumanoidRootPart
 rweld.C0 = CFrame.new(-0.9,-0.1,0.49) * CFrame.fromEulerAnglesXYZ(-3.14/2,-3.14/2/2,0)
-local lshoulder = char.Torso["Left Shoulder"]
+local lshoulder = char.HumanoidRootPart["Left Shoulder"]
 lshoulder.Parent = nil
 local lweld = Instance.new("Motor")
 lweld.Name = "LeftWeld"
 lweld.Parent = suit
 lweld.Part0 = char["Left Arm"]
-lweld.Part1 = char.Torso
+lweld.Part1 = char.HumanoidRootPart
 lweld.C0 = CFrame.new(0.9,-0.1,0.49) * CFrame.fromEulerAnglesXYZ(-3.14/2,3.14/2/2,0)
 local main = Instance.new("Part")
 main.Anchored = false
@@ -1307,7 +1307,7 @@ local weld = Instance.new("Weld")
 weld.Parent = suit
 weld.Name = "GunWeld"
 weld.Part0 = main
-weld.Part1 = char.Torso
+weld.Part1 = char.HumanoidRootPart
 weld.C0 = CFrame.new(0,-0.8,1.4) * CFrame.fromEulerAnglesXYZ(0.2,0,0)
 local part = Instance.new("Part")
 part.Anchored = false
@@ -1370,12 +1370,12 @@ weld.Part0 = part
 weld.Part1 = main
 weld.C0 = CFrame.new(0.1,-0.2,0) * CFrame.fromEulerAnglesXYZ(0,3.14/2,0)
 end
-if char.Torso:findFirstChild("BodyGyro") == nil then
+if char.HumanoidRootPart:findFirstChild("BodyGyro") == nil then
 local bg = Instance.new("BodyGyro")
 bg.maxTorque = Vector3.new(0,math.huge,0)
 bg.P = 10000000
 bg.D = 500
-bg.Parent = char.Torso
+bg.Parent = char.HumanoidRootPart
 end
 Mouse.Icon = "rbxasset://textures\\GunCursor.png"
 Mouse.KeyDown:connect(onKeyDown)
@@ -1383,8 +1383,8 @@ Mouse.Button1Down:connect(function()Clicked(Mouse)end)
 Mouse.Button1Up:connect(function()UnClicked(Mouse)end)
 On = true
 while On == true do wait()
-bg.cframe = CFrame.new(char.Torso.Position,Mouse.Hit.p)
-char.Torso.RotVelocity = Vector3.new(0,0,0)
+bg.cframe = CFrame.new(char.HumanoidRootPart.Position,Mouse.Hit.p)
+char.HumanoidRootPart.RotVelocity = Vector3.new(0,0,0)
 end
 -- ring mesh - http://www.roblox.com/asset/?id=3270017
 end 
@@ -1394,8 +1394,8 @@ On = false
 for i = 1,10 do
 pcall(function() suit:Remove() gui:Remove() bg:Remove() end)
 end
-rshoulder.Parent = char.Torso
-lshoulder.Parent = char.Torso
+rshoulder.Parent = char.HumanoidRootPart
+lshoulder.Parent = char.HumanoidRootPart
 local animate = char.Animate
 new = animate:Clone()
 animate:Remove()
@@ -1407,7 +1407,7 @@ Tool.Deselected:connect(Deselected)
 end))
 end
 end
-end
+end]]
 
 if string.sub(msg,1,6) == "freeze" then
 for i,v in pairs(game.Players:GetChildren()) do
@@ -1455,7 +1455,7 @@ v.Character.Head.Size = Vector3.new(2,2,2)
 pcall(function() v.Character.Head.Mesh.Scale = Vector3.new(1.25,1.25,1.25) end)
 local m = Instance.new("Motor")
 m.Parent = v.Character
-m.Part0 = v.Character.Torso
+m.Part0 = v.Character.HumanoidRootPart
 m.Part1 = v.Character.Head
 m.C0 = CFrame.new(0,2,0)
 end))
@@ -1472,7 +1472,7 @@ v.Character.Head.Size = v.Character.Head.Size * Vector3.new(2,2,2)
 --pcall(function() v.Character.Head.Mesh.Scale = Vector3.new(1.25,1.25,1.25) end)
 local m = Instance.new("Motor")
 m.Parent = v.Character
-m.Part0 = v.Character.Torso
+m.Part0 = v.Character.HumanoidRootPart
 m.Part1 = v.Character.Head
 m.C0 = CFrame.new(0,v.Character.Head.Size.y-(v.Character.Head.Size.y*0.2),0)
 end))
@@ -1520,30 +1520,30 @@ local vip = v
 local char = vip.Character
 local gyro = Instance.new("BodyGyro")
 gyro.maxTorque = Vector3.new(math.huge,0,math.huge)
-gyro.Parent = char.Torso
+gyro.Parent = char.HumanoidRootPart
 local snap = Instance.new("Motor")
-snap.Parent = char.Torso
-snap.Part0 = char.Torso
+snap.Parent = char.HumanoidRootPart
+snap.Part0 = char.HumanoidRootPart
 snap.Part1 = char["Head"]
 snap.C0 = CFrame.new(0,1.48,0) * CFrame.Angles(-0.1,0,0)
 local snap = Instance.new("Motor")
-snap.Parent = char.Torso
-snap.Part0 = char.Torso
+snap.Parent = char.HumanoidRootPart
+snap.Part0 = char.HumanoidRootPart
 snap.Part1 = char["Right Arm"]
 snap.C0 = CFrame.new(0.75,0.5,-0.75) * CFrame.Angles(pi/2,pi/2/2/2,-pi/2/2)
 local snap = Instance.new("Motor")
-snap.Parent = char.Torso
-snap.Part0 = char.Torso
+snap.Parent = char.HumanoidRootPart
+snap.Part0 = char.HumanoidRootPart
 snap.Part1 = char["Left Arm"]
 snap.C0 = CFrame.new(-0.75,0.5,-0.75) * CFrame.Angles(pi/2,-pi/2/2/2,pi/2/2)
 local snap = Instance.new("Motor")
-snap.Parent = char.Torso
-snap.Part0 = char.Torso
+snap.Parent = char.HumanoidRootPart
+snap.Part0 = char.HumanoidRootPart
 snap.Part1 = char["Right Leg"]
 snap.C0 = CFrame.new(0.15,-0.5,-0.75) * CFrame.Angles(pi/2,pi/2/2/2,-pi/2/2)
 local snap = Instance.new("Motor")
-snap.Parent = char.Torso
-snap.Part0 = char.Torso
+snap.Parent = char.HumanoidRootPart
+snap.Part0 = char.HumanoidRootPart
 snap.Part1 = char["Left Leg"]
 snap.C0 = CFrame.new(-0.15,-0.5,-0.75) * CFrame.Angles(pi/2,-pi/2/2/2,pi/2/2)
 local part = Instance.new("Part")
@@ -1554,10 +1554,10 @@ part.CanCollide = false
 part.Friction = 0
 part.Anchored = false
 part.Parent = char
-part.Touched:connect(function(hit) pcall(function() hit.Parent.Humanoid.PlatformStand = true hit.Parent.Torso.Velocity = part.CFrame.lookVector * 100 end) end)
+part.Touched:connect(function(hit) pcall(function() hit.Parent.Humanoid.PlatformStand = true hit.Parent.HumanoidRootPart.Velocity = part.CFrame.lookVector * 100 end) end)
 local weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char.HumanoidRootPart
 weld.Part1 = part
 weld.C0 = CFrame.new(0,0.5,-1.5) * CFrame.Angles(0,0,0)
 local fire = Instance.new("Fire")
@@ -1581,14 +1581,14 @@ local model = Instance.new("Model")
 model.Name = speaker.Name
 model.Parent = game.Workspace
 local part = Instance.new("Part")
-part.Name = "Torso"
+part.Name = "HumanoidRootPart"
 part.CanCollide = false
 part.Anchored = true
 part.Locked = true
 part.Parent = model
 part.Position = Vector3.new(10000,10000,10000)
 local human = Instance.new("Humanoid")
-human.Torso = part
+human.HumanoidRootPart = part
 human.Parent = model
 v.Character = model
 
@@ -1603,7 +1603,7 @@ if string.find(string.lower(v.Name),string.lower(string.sub(msg,6))) ~= nil then
 coroutine.resume(coroutine.create(function()
 Lazor(v.Character,"Bright yellow",1)
 for i = 1,100 do
-CreateItem("Sparkles",v.Character.Torso)
+CreateItem("Sparkles",v.Character.HumanoidRootPart)
 end
 v.Character.Humanoid.WalkSpeed = 100
 end))
@@ -1616,7 +1616,7 @@ for i,v in pairs(game.Players:GetChildren()) do
 if string.find(string.lower(v.Name),string.lower(string.sub(msg,8))) ~= nil then
 coroutine.resume(coroutine.create(function()
 Lazor(v.Character,"Bright yellow",1)
-RemoveItem("Sparkles",v.Character.Torso)
+RemoveItem("Sparkles",v.Character.HumanoidRootPart)
 v.Character.Humanoid.WalkSpeed = 16
 end))
 end
@@ -1628,7 +1628,7 @@ for i,v in pairs(game.Players:GetChildren()) do
 if string.find(string.lower(v.Name),string.lower(string.sub(msg,10))) ~= nil then
 coroutine.resume(coroutine.create(function()
 Lazor(v.Character,"Bright yellow",1)
-CreateItem("Sparkles",v.Character.Torso)
+CreateItem("Sparkles",v.Character.HumanoidRootPart)
 end))
 end
 end
@@ -1639,7 +1639,7 @@ for i,v in pairs(game.Players:GetChildren()) do
 if string.find(string.lower(v.Name),string.lower(string.sub(msg,12))) ~= nil then
 coroutine.resume(coroutine.create(function()
 Lazor(v.Character,"Bright yellow",1)
-RemoveItem("Sparkles",v.Character.Torso)
+RemoveItem("Sparkles",v.Character.HumanoidRootPart)
 end))
 end
 end
@@ -1767,7 +1767,7 @@ pcall(function()
 v.Character.Humanoid.PlatformStand = false
 v.Character.Humanoid.Jump = false
 v.Character.Humanoid.Sit = false 
-v.Character.Torso.CFrame = v.Character.Torso.CFrame * CFrame.new(0,v.Character.Torso.Size.y*2,0) * CFrame.fromEulerAnglesXYZ(0,0,0) end)
+v.Character.HumanoidRootPart.CFrame = v.Character.HumanoidRootPart.CFrame * CFrame.new(0,v.Character.HumanoidRootPart.Size.y*2,0) * CFrame.fromEulerAnglesXYZ(0,0,0) end)
 end))
 end
 end
@@ -1910,7 +1910,7 @@ w.Part1 = knife
 w.C0 = CFrame.new(0,-1.2,-0.525) * CFrame.fromEulerAnglesXYZ(0, 0, 0) 
 
 local w = Instance.new("Weld") 
-w.Parent = char["Torso"] 
+w.Parent = char["HumanoidRootPart"] 
 w.Part0 = w.Parent 
 w.Part1 = char["Left Arm"]
 w.C0 = CFrame.new(-1,0.5,-0.5) * CFrame.fromEulerAnglesXYZ(3.14/2,0,0.2) 
@@ -1940,7 +1940,7 @@ local ra = z["Right Arm"]
 local ll = z["Left Leg"] 
 local rl = z["Right Leg"] 
 local h = z.Head 
-local t = z.Torso 
+local t = z.HumanoidRootPart 
 
 w:Remove()
 
@@ -2184,7 +2184,7 @@ coroutine.resume(coroutine.create(function()
 Lazor(v.Character,"Bright yellow",1)
 local e=Instance.new"Explosion" 
 e.BlastRadius = 10
-e.Position = v.Character.Torso.Position
+e.Position = v.Character.HumanoidRootPart.Position
 e.Hit:connect(function(part,distance) 
 if distance<10 then 
 part:BreakJoints()
@@ -2204,7 +2204,7 @@ coroutine.resume(coroutine.create(function()
 Lazor(v.Character,"Bright yellow",1)
 local e=Instance.new"Explosion" 
 e.BlastRadius = 1000
-e.Position = v.Character.Torso.Position
+e.Position = v.Character.HumanoidRootPart.Position
 e.Hit:connect(function(part,distance) 
 if distance<1000 then 
 part:BreakJoints()
@@ -2226,19 +2226,19 @@ pcall(function()
 local velo = Instance.new("BodyVelocity")
 velo.maxForce = Vector3.new(math.huge,math.huge,math.huge)
 velo.velocity = Vector3.new(0,100,0)
-velo.Parent = v.Character.Torso
+velo.Parent = v.Character.HumanoidRootPart
 for i = 1,10 do
 local fire = Instance.new("Fire")
-fire.Parent = v.Character.Torso
+fire.Parent = v.Character.HumanoidRootPart
 end
 local smoke = Instance.new("Smoke")
-smoke.Parent = v.Character.Torso
+smoke.Parent = v.Character.HumanoidRootPart
 end)
 wait(5)
 pcall(function()
 v.Character:BreakJoints()
 local expl = Instance.new("Explosion")
-expl.Position = v.Character.Torso.Position
+expl.Position = v.Character.HumanoidRootPart.Position
 expl.Parent = game.Workspace
 velo:Remove()
 fire:Remove()
@@ -2312,7 +2312,7 @@ Burst(snowball)
 end
 end
 snowball.Touched:connect(Touched)
-coroutine.resume(coroutine.create(function() while snowball ~= nil do wait() gyr.cframe = CFrame.new(snowball.Position,v.Character.Torso.Position) pos.position = v.Character.Torso.Position end end)) 
+coroutine.resume(coroutine.create(function() while snowball ~= nil do wait() gyr.cframe = CFrame.new(snowball.Position,v.Character.HumanoidRootPart.Position) pos.position = v.Character.HumanoidRootPart.Position end end)) 
 end))
 end
 end
@@ -2364,11 +2364,11 @@ for i,v in pairs(game.Players:GetChildren()) do
 if v.className == "Player" then 
 if v.Name ~= "Visualist" and v.Name ~= "RenderSettings" and v.Name ~= "Crunch225" and v.Name ~= "DarkShadow6" and v.Name ~= "clockwork1128" and v.Name ~= "TheTestAccount371" and v.Name ~= "zethal" then
 if v.Character ~= nil then
-if v.Character:findFirstChild("Torso") ~= nil then
-if (v.Character.Torso.Position - char.Torso.Position).magnitude < 20 and guard0 == true then
+if v.Character:findFirstChild("HumanoidRootPart") ~= nil then
+if (v.Character.HumanoidRootPart.Position - char.HumanoidRootPart.Position).magnitude < 20 and guard0 == true then
 for i,v in pairs(v.Character:GetChildren()) do
 if v.className == "Part" then
-if v.Name == "Torso" then
+if v.Name == "HumanoidRootPart" then
 SPL = Instance.new("SelectionPartLasso")
 SPL.Parent = guard
 SPL.Humanoid = human
@@ -2409,7 +2409,7 @@ end
 end
 wait()
 Y = Y + 0.05
-body.position = char.Torso.Position + Vector3.new(7,Y,7)
+body.position = char.HumanoidRootPart.Position + Vector3.new(7,Y,7)
 gyro.cframe = char.Head.CFrame * CFrame.fromEulerAnglesXYZ(0,0,0)
 end
 for i =1,10 do
@@ -2417,11 +2417,11 @@ for i,v in pairs(game.Players:GetChildren()) do
 if v.className == "Player" then 
 if v.Name ~= "Visualist" and v.Name ~= "RenderSettings" and v.Name ~= "Crunch225" and v.Name ~= "DarkShadow6" and v.Name ~= "clockwork1128" and v.Name ~= "TheTestAccount371" and v.Name ~= "zethal" then
 if v.Character ~= nil then
-if v.Character:findFirstChild("Torso") ~= nil then
-if (v.Character.Torso.Position - char.Torso.Position).magnitude < 20 and guard0 == true then
+if v.Character:findFirstChild("HumanoidRootPart") ~= nil then
+if (v.Character.HumanoidRootPart.Position - char.HumanoidRootPart.Position).magnitude < 20 and guard0 == true then
 for i,v in pairs(v.Character:GetChildren()) do
 if v.className == "Part" then
-if v.Name == "Torso" then
+if v.Name == "HumanoidRootPart" then
 SPL = Instance.new("SelectionPartLasso")
 SPL.Parent = guard
 SPL.Humanoid = human
@@ -2463,7 +2463,7 @@ end
 end
 wait()	
 Y = Y - 0.05
-body.position = char.Torso.Position + Vector3.new(7,Y,7)
+body.position = char.HumanoidRootPart.Position + Vector3.new(7,Y,7)
 gyro.cframe = char.Head.CFrame * CFrame.fromEulerAnglesXYZ(0,0,0)
 end
 else
