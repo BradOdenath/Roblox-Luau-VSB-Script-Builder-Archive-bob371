@@ -1,8 +1,69 @@
 --[[_bob371's_Soda_(_Don't_Worry_About_It_)_]]--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-Player = game.Players.LocalPlayer
+Player = 'LocalPlayer'
+if owner then Player = owner else Player = game.Players[Player] end
 Character = Player.Character
-script.Parent = Character
+--script.Parent = Character
+--[[
+	Framework: Roblox
+	Language: Lua
+	Project: Script/ HopperBin Events
+	Coders: supergod800, bob371
+]]--
+
+local Keys,downs,lastpressed={},{},{}
+
+local function isKeyDown(key) return downs[tostring(key)] or false end
+
+
+local function _setKey(key,func) Keys[key]=func end
+local function setKey(key,func) 
+	if typeof(key) == 'table' then 
+		for i,v in pairs(key) do 
+			_setKey(v, func) 
+		end 
+	else 
+		_setKey(key, func) 
+	end
+end
+
+local function timePassed(key)
+    local t = tick() return math.max(t - (lastpressed[key] or t),0)
+end
+
+local function keyDown(plr,key)	
+	if Blah == true then
+		Blah = false
+		key = tostring(key)
+		print(key)
+		if isKeyDown(key) then 
+			downs[key]=false
+		else
+			downs[key],lastpressed[key]=true,tick()
+			if Keys[key] then Keys[key]()end
+		end
+		Blah = true
+	end
+end
+
+local mouse = {}
+local keysEvent = Instance.new("RemoteEvent",NLS(string.format([[
+    local keysEvent,mouse = script:FindFirstChildWhichIsA("RemoteEvent"),game.Players.LocalPlayer:GetMouse()
+    local mousedata = keysEvent:FindFirstChildWhichIsA("RemoteEvent")
+    mouse.KeyDown:connect(function(plr,key)  keysEvent:FireServer(plr,key) end)
+    mouse.KeyUp:connect(function(plr,key) keysEvent:FireServer(plr,key) end)
+    mouse.Button1Down:connect(function(plr,key) keysEvent:FireServer(plr,'MouseButton1Down') end)
+    mouse.Button1Up:connect(function(plr,key) keysEvent:FireServer(plr,'MouseButton1Down') end)
+    local runserv = game:GetService("RunService")
+    while runserv.Stepped:Wait() do
+        mousedata:FireServer(plr,{Hit = mouse.Hit,Target = mouse.Target})
+    end
+    ]],''),
+Player.PlayerGui))
+	
+local mouseEvent = Instance.new('RemoteEvent',keysEvent)
+mouseEvent.OnServerEvent:Connect(function(plr,data) mouse = data end)
+keysEvent.OnServerEvent:Connect(keyDown)
+
 
 --[[ * Fire Can * ]]--
 
@@ -363,15 +424,16 @@ end
 
 --[[ * Tool * ]]--
 
-if script.Parent.Name == Player.Name then
+--[[if script.Parent.Name == Player.Name then
 Hopper = Instance.new("HopperBin")
 Hopper.Name = "Soda"
 Hopper.Parent = Player.Backpack
-end
+end]]
 
 Blah = true
 
-function Clicked(Mouse)
+setKey('MouseButton1Down',
+function()
 if Blah == true then
 Blah = false
 Drink()
@@ -379,13 +441,12 @@ SodaFunOn()
 Blah = true
 return
 end
-end
+end)
 
-function onKeyDown(key)
-if Blah == true then
-Blah = false
+--function onKeyDown(key)
 
-if key == "z" then
+setKey('z',
+function()
 if Hover ~= nil then
 if Hover.Size == Vector3.new(6,0.2,6) then
 for i = 1,24 do wait()
@@ -399,14 +460,16 @@ Hover.CFrame = Character.Torso.CFrame + Vector3.new(0,-3,0)
 end
 end
 end
-end
+end)
 
-if key == "r" then
+setKey('r', 
+function()
 SodaFunOff()
-end
+end)
 
+setKey('q',
+function()
 if SodaFun == false then
-if key == "q" then
 if CC == 1 then
 CC = table.maxn(CNum)
 else
@@ -421,17 +484,14 @@ CC = CC + 1
 end
 CColor(CNum[CC])
 end
-end
+end)
 
-if key == "f" then
+setKey('f',
+function()
 Sip()
 SodaFunOn()
-end
+end)
 
-Blah = true
-return
-end
-end
 
 function DeathCheck()
 if CC == 2 and SodaFun == true then
@@ -446,17 +506,5 @@ end
 end
 end
 
-function Selected(Mouse) 
-	Mouse.Icon = "rbxasset://textures\\GunCursor.png"
-	Mouse.KeyDown:connect(onKeyDown)
-	Mouse.Button1Down:connect(function()Clicked(Mouse)end) 
-	CName()
-end 
-
-function Deselected(Mouse)
-end
-
 Character.Humanoid.Died:connect(DeathCheck)
-Hopper.Selected:connect(Selected)
-Hopper.Deselected:connect(Deselected) 
 Fire.Touched:connect(Burner)
