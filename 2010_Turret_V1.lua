@@ -1,20 +1,83 @@
 who = "bob371"
 
-if script.Parent.className ~= "HopperBin" then
+--[[if script.Parent.className ~= "HopperBin" then
 Tool = Instance.new("HopperBin")
 Tool.Name = "Press F To Create Turret"
 Tool.Parent = game.Players[who].Backpack
 script.Parent = Tool
-end
+end]]
 
-vip = game.Players[who]
+vip = owner or game.Players[who] or game.Players.LocalPlayer
 char = vip.Character
 
 Turret = Instance.new("Part")
 
 On = false
 
-function Clicked(Mouse)
+--[[
+	Framework: Roblox
+	Language: Lua
+	Project: Script/ HopperBin Events
+	Coders: supergod800, bob371
+]]--
+
+local Keys,downs,lastpressed={},{},{}
+
+local function isKeyDown(key) return downs[tostring(key)] or false end
+
+
+local function _setKey(key,func) Keys[key]=func end
+local function setKey(key,func) 
+	if typeof(key) == 'table' then 
+		for i,v in pairs(key) do 
+			_setKey(v, func) 
+		end 
+	else 
+		_setKey(key, func) 
+	end
+end
+
+local function timePassed(key)
+    local t = tick() return math.max(t - (lastpressed[key] or t),0)
+end
+
+local function onKeyUp(key)
+	On = false
+end
+
+local function keyDown(plr,key)	
+	key = tostring(key)
+	print(key)
+	if isKeyDown(key) then 
+		downs[key]=false
+		onKeyUp(key)
+	else
+		downs[key],lastpressed[key]=true,tick()
+		if Keys[key] then Keys[key]()end
+	end
+end
+
+local mouse = {}
+local keysEvent = Instance.new("RemoteEvent",NLS(string.format([[
+    local keysEvent,mouse = script:FindFirstChildWhichIsA("RemoteEvent"),game.Players.LocalPlayer:GetMouse()
+    local mousedata = keysEvent:FindFirstChildWhichIsA("RemoteEvent")
+    mouse.KeyDown:connect(function(plr,key)  keysEvent:FireServer(plr,key) end)
+    mouse.KeyUp:connect(function(plr,key) keysEvent:FireServer(plr,key) end)
+    mouse.Button1Down:connect(function(plr,key) keysEvent:FireServer(plr,'MouseButton1Down') end)
+    mouse.Button1Up:connect(function(plr,key) keysEvent:FireServer(plr,'MouseButton1Down') end)
+    local runserv = game:GetService("RunService")
+    while runserv.Stepped:Wait() do
+        mousedata:FireServer(plr,{Hit = mouse.Hit,Target = mouse.Target})
+    end
+    ]],''),
+vip.PlayerGui))
+	
+local mouseEvent = Instance.new('RemoteEvent',keysEvent)
+mouseEvent.OnServerEvent:Connect(function(plr,data) mouse = data end)
+keysEvent.OnServerEvent:Connect(keyDown)
+
+setKey('MouseButton1Down',
+function()
 On = true
 BTurret = char:findFirstChild("BTurret")
 if BTurret ~= nil then
@@ -24,7 +87,7 @@ local P = Instance.new("Part")
 local M = Instance.new("BlockMesh")
 
 local Place0 = BTurret.CFrame
-local Place1 = Mouse.Hit.p 
+local Place1 = mouse.Hit.p 
 
 P.formFactor = 0 
 
@@ -40,7 +103,7 @@ P.Anchored = true
 
 P.CanCollide = false 
 M.Scale = Vector3.new(0.2,0.2,1)
-M.Bevel = 0.11
+pcall(function() M.Bevel = 0.11 end)
 M.Parent = P
 for i = 1,5 do
 P2 = P:Clone()
@@ -53,14 +116,13 @@ wait()
 pcall(function() P:remove() end)
 end
 end
-end 
+end)
 
-function UnClicked(Mouse)
-On = false
-end
 
-function onKeyDown(key,Mouse)
-if key == "q" then
+--function onKeyDown(key,mouse)
+
+setKey('q',
+function()
 pcall(function()
 for i,v in pairs(char:GetChildren()) do
 if v.Name == "BTurret" then
@@ -68,8 +130,10 @@ v:Remove()
 end
 end
 end)
-end
-if key == "f" then
+end)
+
+setKey('f',
+function()
 pcall(function()
 for i,v in pairs(char:GetChildren()) do
 if v.Name == "BTurret" then
@@ -90,18 +154,20 @@ Turret.CanCollide = true
 Turret.Material = "Ice"
 Turret.BrickColor = BrickColor.Black()
 Turret.Parent = char
-Turret.CFrame = CFrame.new(Mouse.Hit.p.x,Mouse.Hit.p.y+2.5,Mouse.Hit.p.z)
-end
-end
+Turret.CFrame = CFrame.new(mouse.Hit.p.x,mouse.Hit.p.y+2.5,mouse.Hit.p.z)
+end)
 
-function Selected(Mouse) 
-Mouse.KeyDown:connect(function(key) onKeyDown(key, Mouse) end) 
-Mouse.Button1Down:connect(function()Clicked(Mouse)end) 
-Mouse.Button1Up:connect(function()UnClicked(Mouse)end)
+--end
+--[[
+function Selected(mouse) 
+mouse.KeyDown:connect(function(key) onKeyDown(key, mouse) end) 
+mouse.Button1Down:connect(function()Clicked(mouse)end) 
+mouse.Button1Up:connect(function()UnClicked(mouse)end)
 end 
 
-function Deselected(Mouse)
+function Deselected(mouse)
 end
 
 script.Parent.Selected:connect(Selected)
 script.Parent.Deselected:connect(Deselected) 
+]]
