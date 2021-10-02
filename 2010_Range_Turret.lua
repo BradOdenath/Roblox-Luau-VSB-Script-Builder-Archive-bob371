@@ -1,4 +1,4 @@
-vip = game.Players.bob371
+vip = owner or game.Players.bob371 or game.Players.bob371
 char = vip.Character
 
 mode = "off"
