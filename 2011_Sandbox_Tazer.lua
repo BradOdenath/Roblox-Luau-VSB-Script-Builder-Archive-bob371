@@ -1,8 +1,63 @@
 --[[_Zap_Zap_:3_(_bob371's_Tazer_)_]]--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Player = game.Players.LocalPlayer
+Player = owner or game.Players.bob371 or game.Players.LocalPlayer
 Character = Player.Character
 script.Parent = Character
+--[[
+    Framework: Roblox
+    Language: Lua
+    Project: Script/ HopperBin Events
+    Coders: supergod800, bob371
+]]--
+
+local Keys,downs,lastpressed={},{},{}
+
+local function isKeyDown(key) return downs[tostring(key)] or false end
+
+
+local function _setKey(key,func) Keys[key]=func end
+local function setKey(key,func) 
+    if typeof(key) == 'table' then 
+        for i,v in pairs(key) do 
+            _setKey(v, func) 
+        end 
+    else 
+        _setKey(key, func) 
+    end
+end
+
+local function timePassed(key)
+    local t = tick() return math.max(t - (lastpressed[key] or t),0)
+end
+
+local function keyDown(plr,key)
+    key = tostring(key)
+    if isKeyDown(key) then 
+        downs[key]=false
+    else
+        downs[key],lastpressed[key]=true,tick()
+        if Keys[key] then Keys[key]()end
+    end
+end
+
+local mouse = {}
+local keysEvent = Instance.new("RemoteEvent",NLS(string.format([[
+    local keysEvent,mouse = script:FindFirstChildWhichIsA("RemoteEvent"),game.Players.LocalPlayer:GetMouse()
+    local mousedata = keysEvent:FindFirstChildWhichIsA("RemoteEvent")
+    mouse.KeyDown:connect(function(plr,key)  keysEvent:FireServer(plr,key) end)
+    mouse.KeyUp:connect(function(plr,key) keysEvent:FireServer(plr,key) end)
+    mouse.Button1Down:connect(function(plr,key) keysEvent:FireServer(plr,'MouseButton1Down') end)
+    mouse.Button1Up:connect(function(plr,key) keysEvent:FireServer(plr,'MouseButton1Down') end)
+    local runserv = game:GetService("RunService")
+    while runserv.Stepped:Wait() do
+        mousedata:FireServer(plr,{Hit = mouse.Hit,Target = mouse.Target})
+    end
+    ]],''),
+Player.PlayerGui))
+
+local mouseEvent = Instance.new('RemoteEvent',keysEvent)
+mouseEvent.OnServerEvent:Connect(function(plr,data) mouse = data end)
+keysEvent.OnServerEvent:Connect(keyDown)
 
 Character.Humanoid.MaxHealth = math.huge
 
@@ -50,7 +105,7 @@ TBody.TopSurface = 0
 TBody.BottomSurface = 0
 TBody.Parent = Staff
 MeshA = Instance.new("BlockMesh",TBody)
-MeshA.Bevel = 0.03
+pcall(function() MeshA.Bevel = 0.03 end)
 WeldA = Instance.new("Weld")
 WeldA.Parent = TBody
 WeldA.Part0 = Character["Right Arm"]
@@ -72,7 +127,7 @@ TBodyA.TopSurface = 0
 TBodyA.BottomSurface = 0
 TBodyA.Parent = Staff
 MeshA = Instance.new("BlockMesh",TBodyA)
-MeshA.Bevel = 0.03
+pcall(function() MeshA.Bevel = 0.03 end)
 WeldA = Instance.new("Weld")
 WeldA.Parent = TBodyA
 WeldA.Part0 = TBody
@@ -92,7 +147,7 @@ TBodyB.TopSurface = 0
 TBodyB.BottomSurface = 0
 TBodyB.Parent = Staff
 MeshB = Instance.new("BlockMesh",TBodyB)
-MeshB.Bevel = 0.03
+pcall(function() MeshB.Bevel = 0.03 end)
 WeldB = Instance.new("Weld")
 WeldB.Parent = TBodyB
 WeldB.Part0 = TBody
@@ -113,7 +168,7 @@ Taze.BottomSurface = 0
 Taze.Parent = Staff
 Taze.Reflectance = 1
 MeshB = Instance.new("BlockMesh",Taze)
-MeshB.Bevel = 0.03
+pcall(function() MeshB.Bevel = 0.03 end)
 WeldB = Instance.new("Weld")
 WeldB.Parent = Taze
 WeldB.Part0 = TBody
@@ -121,11 +176,11 @@ WeldB.Part1 = Taze
 WeldB.C0 = CFrame.new(0,0.5,0) * CFrame.Angles(0,0,0)
 if Taze:IsDescendantOf(Character) then print('yes') end
 
-if script.Parent.Name == Player.Name then
+--[[if script.Parent.Name == Player.Name then
 Hopper = Instance.new("HopperBin")
 Hopper.Name = "Tazer"
 Hopper.Parent = Player.Backpack
-end
+end]]
 
 Blah = true
 Relax = false
@@ -137,7 +192,7 @@ for i,v in pairs(hit.Parent:GetChildren()) do
 if v:IsA("Pants") or v:IsA("Shirt") or v:IsA("ShirtGraphic") or v:IsA("CharacterMesh") then
 v:Remove()
 end
-if v:IsA("Hat") then
+if v:IsA("Accessory") then
 pcall(function()
 v.Handle.Anchored = true
 v.Handle.Reflectance = 1
@@ -146,17 +201,18 @@ pcall(function()
 v.Handle.Mesh.TextureId = ""
 end)
 end
-if v:IsA("Part") then
+pcall(function() 
 v.Anchored = true
 v.Reflectance = 1
 v:BreakJoints()
-end
+end)
 end
 end
 end
 
 
-function Clicked(Mouse)
+setKey('MouseButton1Down',
+function()
 if Blah == true then
 Blah = false
 if Relax == true then
@@ -206,19 +262,15 @@ end
 end
 Blah = true
 end
-end
+end)
 
 VCZ = 0
 
-Keys = {}
 
 
-function onKeyDown(key,Mouse)
+setKey('p', function() 
 if Blah == true then
 Blah = false
-
-if key == "p" then
-
 if Relax == false then
 Relax = true
 for i = 1,15 do wait()
@@ -242,25 +294,19 @@ end
 ArmWeld.C0 = CFrame.new(1.5,0,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 ArmWeldR.C0 = CFrame.new(-1.5,0,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 end
-end
-
 Blah = true
-return
 end
-end
+end)
 
-function onKeyUp(key,Mouse)
-end
-
-function Selected(Mouse) 
-Mouse.Icon = "rbxasset://textures\\GunCursor.png"
-Mouse.KeyDown:connect(function(key) onKeyDown(key, Mouse) end) 
-Mouse.KeyUp:connect(function(key) onKeyUp(key, Mouse) end) 
-Mouse.Button1Down:connect(function()Clicked(Mouse)end) 
+--[[function Selected(mouse) 
+mouse.Icon = "rbxasset://textures\\GunCursor.png"
+mouse.KeyDown:connect(function(key) onKeyDown(key, mouse) end) 
+mouse.KeyUp:connect(function(key) onKeyUp(key, mouse) end) 
+mouse.Button1Down:connect(function()Clicked(mouse)end) 
 end 
 
-function Deselected(Mouse)
-end
+function Deselected(mouse)
+end]]
 
 function DeadGuy()
 --pcall(function() Character.Head.face:Remove() end)
@@ -289,6 +335,6 @@ end
 wait(0.1)
 end
 
-Hopper.Selected:connect(Selected)
-Hopper.Deselected:connect(Deselected) 
+--[[Hopper.Selected:connect(Selected)
+Hopper.Deselected:connect(Deselected) ]]
 Character.Humanoid.Died:connect(DeadGuy)
