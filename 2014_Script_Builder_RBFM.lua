@@ -67,19 +67,21 @@ local mouse = {}
 local keysEvent = Instance.new("RemoteEvent",NLS(string.format([[
     local keysEvent,mouse = script:FindFirstChildWhichIsA("RemoteEvent"),game.Players.LocalPlayer:GetMouse()
     local mousedata = keysEvent:FindFirstChildWhichIsA("RemoteEvent")
-	local camera = workspace.CurrentCamera
-	print(camera)
-	mouse:SetAttribute("Camera",camera)
+	--local camera = workspace.CurrentCamera
+	--print(camera)
+	--mouse:SetAttribute("Camera",camera)
     mouse.KeyDown:connect(function(plr,key)  keysEvent:FireServer(plr,key) end)
     mouse.KeyUp:connect(function(plr,key) keysEvent:FireServer(plr,key) end)
     mouse.Button1Down:connect(function(plr,key) keysEvent:FireServer(plr,'MouseButton1Down') end)
     mouse.Button1Up:connect(function(plr,key) keysEvent:FireServer(plr,'MouseButton1Down') end)
     
-	pcall(function() print(camera_object) end)
+	--pcall(function() print(camera_object) end)
 	
 	local runserv = game:GetService("RunService")
     while runserv.Stepped:Wait() do
-        mousedata:FireServer(plr,{Hit = mouse.Hit,Target = mouse.Target, Camera = camera})
+        mousedata:FireServer(plr,{Hit = mouse.Hit,Target = mouse.Target
+		--, Camera = camera
+		})
     end
     ]],''),
 Player.PlayerGui))
@@ -87,6 +89,17 @@ Player.PlayerGui))
 local mouseEvent = Instance.new('RemoteEvent',keysEvent)
 mouseEvent.OnServerEvent:Connect(function(plr,data) mouse = data end)
 keysEvent.OnServerEvent:Connect(keyDown)
+
+local lolMissle = function(_missle)
+	pcall(function()
+		local w = Instance.new("Weld")
+		w.Parent = Character.HumanoidRootPart
+		w.Part0 = w.Parent
+		w.Part1 = _missle
+		w.C1 = CFrame.new(0,2.5,0)
+		Character.Humanoid.Sit = true
+	end)
+end
 
 
 --[[ * Fire Handle * ]]--
@@ -382,6 +395,7 @@ wait(0.5)
 local P = Instance.new("Part")
 P.Anchored = true
 P.Locked = true
+P.CanCollide = false
 P.formFactor = "Custom"
 P.TopSurface = 0
 P.BottomSurface = 0
@@ -395,17 +409,24 @@ G.Parent = P
 local V = Instance.new("BodyVelocity")
 V.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
 V.Parent = P
-game.Workspace.CurrentCamera.CameraSubject = P
-game.Workspace.CurrentCamera.CameraType = "Attach"
+local status, response = pcall(function()
+	workspace.CurrentCamera.CameraSubject = P
+	workspace.CurrentCamera.CameraType = "Attach"
+end)
+lolMissle(P)
+print('ayo')
 wait(0.5)
 P.Anchored = false
 P.Touched:connect(function() pcall(function() 
+local ff = Instance.new("ForceField",Character)
 local e = Instance.new("Explosion")
 e.Position = P.Position
 e.BlastRadius = 100
 e.BlastPressure = 100000
 P.Parent = nil
 e.Parent = game.Workspace
+Character.Humanoid.Sit = false
+ff:Remove()
 end) end)
 coroutine.resume(coroutine.create(function()
 for i = 1,10 do wait()
@@ -413,7 +434,7 @@ BS.BackgroundTransparency = BS.BackgroundTransparency + 0.1
 end
 end))
 while P.Parent == Gun do wait()
-G.CFrame = CFrame.new(P.Position,Mouse.Hit.p)
+G.CFrame = CFrame.new(P.Position,mouse.Hit.p)
 V.Velocity = G.CFrame.lookVector * 200
 P.Touched:connect(function() pcall(function() 
 local e = Instance.new("Explosion")
@@ -422,6 +443,8 @@ e.BlastRadius = 100
 e.BlastPressure = 100000
 P.Parent = nil
 e.Parent = game.Workspace
+Character.Humanoid.Sit = false
+ff:Remove()
 end) end)
 end
 wait(1)
@@ -429,8 +452,10 @@ for i = 1,10 do wait()
 BS.BackgroundTransparency = BS.BackgroundTransparency - 0.1
 end
 wait(1)
-mouse.LolCurrentCamera.CameraSubject = Character.Head
-mouse.LolCurrentCamera.CameraType = "Follow"
+pcall(function()
+	workspace.CurrentCamera.CameraSubject = Character.Head
+	workspace.CurrenttCamera.CameraType = "Follow"
+end)
 for i = 1,10 do wait()
 BS.BackgroundTransparency = BS.BackgroundTransparency + 0.1
 end
