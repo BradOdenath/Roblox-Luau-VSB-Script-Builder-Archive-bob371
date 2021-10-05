@@ -107,11 +107,16 @@ function T(h)
 			
 			h.S.BG.MaxTorque = Vector3.new(0,0,0)
 			
-			wait(1)
+			wait(.3)
 			
 			h.S.BG.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
 			
-			h.S.BP.Position = Vector3.new(0,2,0)
+			wait(0.3)
+			
+			
+			h.S.BG.CFrame = CFrame.Angles(0,0,0)
+			
+			h.S.BP.Position = Vector3.new(0,1,0)
 		end)
 		pcall(function()
 			h.Parent.S.BP.Position = Vector3.new(0,60,0)
