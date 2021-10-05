@@ -128,11 +128,22 @@ end
 
 --[[ * Arm Weld * ]]--
 
+local ArmWeld, ArmWeldR
 ArmWeld = Instance.new("Weld") 
-
---[[ * Arm Weld * ]]--
-
 ArmWeldR = Instance.new("Weld") 
+
+function DeclareArmWelds()
+ArmWeld.Parent = Character["Torso"]
+ArmWeld.Part0 = ArmWeld.Parent
+ArmWeld.Part1 = Character["Right Arm"]
+ArmWeld.C0 = CFrame.new(1.5,0,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
+ArmWeldR.Parent = Character["Torso"]
+ArmWeldR.Part0 = ArmWeldR.Parent
+ArmWeldR.Part1 = Character["Left Arm"]
+ArmWeldR.C0 = CFrame.new(-1.5,0,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
+end
+
+DeclareArmWelds()
 
 --[[ * Neck Weld * ]]--
 
@@ -353,6 +364,26 @@ Hopper.Name = "Javlin"
 Hopper.Parent = Player.Backpack
 end]]
 
+function Weld(Part0, Part1, C0)
+	local w = Instance.new("Weld")
+	w.Parent = Part0
+	w.Part0 = Part0
+	w.Part1 = Part1
+	w.C0 = C0
+	return w
+end
+
+function Rocket(core)
+	local rocket = Instance.new("Model",core)
+	local p = Instance.new("Part")
+	p.Locked, p.Anchored, p.CanCollide = true, false, false
+	p.Size = Vector3.new(2,10,2)
+	p.Parent = rocket
+	local m = Instance.new("SpecialMesh",p)
+	local w = Weld(core, p, CFrame.Angles(math.pi/2,0,0))
+	
+end
+
 Blah = true
 EndBlah = true
 
@@ -370,12 +401,7 @@ ArmWeldR.C0 = ArmWeldR.C0 - Vector3.new(-0.1,0,0.06)
 WeldA.C0 = WeldA.C0 * CFrame.Angles(-0.1,0,-0.05)
 WeldA.C0 = WeldA.C0 - Vector3.new(0.05,-0.03,-0.05)
 end
-for i = 1,5 do wait()
-WeldH.C0 = WeldH.C0 * CFrame.Angles(0,-math.pi/10/2,0)
-ArmWeldR.C0 = ArmWeldR.C0 * CFrame.Angles(-math.pi/10/2/2,0,-0.1)
-ArmWeldR.C0 = ArmWeldR.C0 + Vector3.new(-0.1,0,0.06)
-end
-for i = 1,5 do wait()
+for i = 1,10 do wait()
 WeldH.C0 = WeldH.C0 * CFrame.Angles(0,-math.pi/10/2,0)
 ArmWeldR.C0 = ArmWeldR.C0 * CFrame.Angles(-math.pi/10/2/2,0,-0.1)
 ArmWeldR.C0 = ArmWeldR.C0 + Vector3.new(-0.1,0,0.06)
@@ -399,9 +425,11 @@ P.CanCollide = false
 P.formFactor = "Custom"
 P.TopSurface = 0
 P.BottomSurface = 0
+P.Transparency = 1
 P.Parent = Gun
-P.Size = Vector3.new(2,2,10)
+P.Size = Vector3.new(4,4,16)
 P.CFrame = CFrame.new(0,250,500)
+Rocket(P)
 local G = Instance.new("BodyGyro")
 G.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
 G.CFrame = P.CFrame
@@ -421,7 +449,7 @@ P.Touched:connect(function() pcall(function()
 local ff = Instance.new("ForceField",Character)
 local e = Instance.new("Explosion")
 e.Position = P.Position
-e.BlastRadius = 100
+e.BlastRadius = 5--100
 e.BlastPressure = 100000
 P.Parent = nil
 e.Parent = game.Workspace
@@ -439,7 +467,7 @@ V.Velocity = G.CFrame.lookVector * 200
 P.Touched:connect(function() pcall(function() 
 local e = Instance.new("Explosion")
 e.Position = P.Position
-e.BlastRadius = 100
+e.BlastRadius = 5--100
 e.BlastPressure = 100000
 P.Parent = nil
 e.Parent = game.Workspace
@@ -459,39 +487,37 @@ end)
 for i = 1,10 do wait()
 BS.BackgroundTransparency = BS.BackgroundTransparency + 0.1
 end
+WeldH.C0 = CFrame.new(-0.55,0,0) * CFrame.Angles(math.pi/2,math.pi/2,0)
+for i = 1,10 do wait()
+ArmWeld.C0 = ArmWeld.C0 - Vector3.new(-0.04,0.075,0.03)
+ArmWeld.C0 = ArmWeld.C0 * CFrame.Angles(-math.pi/10/2/2,0,0)
+WeldA.C0 = WeldA.C0 - Vector3.new(0.05,-0.03,-0.05)
+WeldA.C0 = WeldA.C0 * CFrame.Angles(-0.1,0,-0.05)
+ArmWeldR.C0 = ArmWeldR.C0 + Vector3.new(-0.12,-0.05,0.05)
+ArmWeldR.C0 = ArmWeldR.C0 * CFrame.Angles(-math.pi/10/2,0.05,-0.1)
+end
+ArmWeldR.C0 = CFrame.new(-1.5,0,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
+for i = 1,10 do wait()
+ArmWeldR.C0 = ArmWeldR.C0 - Vector3.new(-0.1,0,0.06)
+ArmWeldR.C0 = ArmWeldR.C0 * CFrame.Angles(math.pi/10/2/2,0,0.1)
+WeldH.C0 = WeldH.C0 * CFrame.Angles(0,math.pi/10/2,0)
+end
+for i = 1,10 do wait()
+ArmWeld.C0 = ArmWeld.C0 + Vector3.new(0,0,0.05)
+ArmWeld.C0 = ArmWeld.C0 * CFrame.Angles(-math.pi/10/2/2,0,0)
+ArmWeldR.C0 = ArmWeldR.C0 + Vector3.new(-0.1,0,0.06)
+ArmWeldR.C0 = ArmWeldR.C0 * CFrame.Angles(-math.pi/10/2/2,0,-0.1)
+WeldA.C0 = WeldA.C0 + Vector3.new(0.05,-0.03,-0.05)
+WeldA.C0 = WeldA.C0 * CFrame.Angles(0.1,0,0.05)
+end
+WeldA.C0 = CFrame.new(0,-1.1,-0.2) * CFrame.Angles(math.pi/2-0.2,0,0)
+WeldH.C0 = CFrame.new(-0.55,0,0) * CFrame.Angles(math.pi/2,math.pi/2,0)
+DeclareArmWelds()
 Character.Humanoid.WalkSpeed = 16
 Blah = true
 end
 end,
+function()
 emptyFunction(key, 'up')
+end
 )
-
-
-function Molecularelected()
-	--mouse.Icon = "rbxasset://textures\\GunCursor.png"
-	--mouse.KeyDown:connect(onKeyDown)
-	--mouse.Button1Down:connect(function()Clicked(mouse)end) 
-	while not Blah do wait() end
-	WeldH.C0 = CFrame.new(-0.55,0,0) * CFrame.Angles(math.pi/2,math.pi/2,0)
-	ArmWeld.Parent = Character["Torso"]
-	ArmWeld.Part0 = ArmWeld.Parent
-	ArmWeld.Part1 = Character["Right Arm"]
-	ArmWeld.C0 = CFrame.new(1.5,0,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
-	ArmWeldR.Parent = Character["Torso"]
-	ArmWeldR.Part0 = ArmWeldR.Parent
-	ArmWeldR.Part1 = Character["Left Arm"]
-	ArmWeldR.C0 = CFrame.new(-1.5,0,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
-end 
---[[
-function Deselected(mouse)
-end
-
-function Dead()
-end
-
-Hopper.Selected:connect(Selected)
-Hopper.Deselected:connect(Deselected) 
-Character.Humanoid.Died:connect(Dead)
-]]
-
-Molecularelected()
