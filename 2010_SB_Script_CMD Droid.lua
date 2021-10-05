@@ -1,4 +1,4 @@
-vip = game.Players:findFirstChild("bob371")
+vip = owner or game.Players:findFirstChild("bob371")
 if vip ~= nil then
 char = vip.Character
 script.Parent = char
