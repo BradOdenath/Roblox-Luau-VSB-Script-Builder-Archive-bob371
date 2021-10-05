@@ -1180,6 +1180,8 @@ setKey(key,
 				end
 				shooting = "Loaded"
 			end
+		else
+			print('v')
 		end
 	end,
 	function()
