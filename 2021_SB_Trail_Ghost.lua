@@ -2,7 +2,7 @@ local plr = 'LocalPlayer'
 if (owner) then plr = owner else plr = game.Players[plr] end
 local chr = plr.Character
 
-local ghost_parts = Instance.new("Model",plr.Character)
+local ghost_parts = Instance.new("Model",workspace)
 
 local e = 2.7182818
 
@@ -52,5 +52,7 @@ local GhostCharacter = function(character)
 end
 
 while true do wait(0.3)
-	GhostCharacter(chr)
+	for i,v in pairs(game.Players:GetChildren()) do
+		GhostCharacter(v)
+	end
 end
