@@ -119,7 +119,7 @@ keysEvent.OnServerEvent:Connect(keyDown)
 local M = Instance.new("Folder")
 
 local function AccessoryOff()
-for i,v in pairs(script.Parent:GetChildren()) do if v.className == "Accessory" then v.Parent = M end end
+for i,v in pairs(char:GetChildren()) do if v.className == "Accessory" then v.Parent = M end end
 pcall(function() char.Head.Transparency = 0 char.Head.face.Face = "Front" end)
 end
 

@@ -44,14 +44,30 @@ local Keys,downs,lastpressed={},{},{}
 local function isKeyDown(key) return downs[tostring(key)] or false end
 
 
-local function _setKey(key,func) Keys[key]=func end
-local function setKey(key,func) 
+local function emptyFunction(key, key_event) print("Empty Key Function: "..tostring(key)..key_event) end
+
+local function _setKey(key, func_keydown, func_keyup) 
+	
+	local ku, kd
+	
+	ku = func_keyup
+	
+	kd = func_keydown
+	
+	Keys[key]= {
+		up = ku, 
+		down = kd
+	} 
+	
+end
+
+local function setKey(key,func_keydown, func_keyup) 
 	if typeof(key) == 'table' then 
 		for i,v in pairs(key) do 
-			_setKey(v, func) 
+			_setKey(v, func_keydown, func_keyup)
 		end 
 	else 
-		_setKey(key, func) 
+		_setKey(key, func_keydown, func_keyup)
 	end
 end
 
@@ -59,69 +75,23 @@ local function timePassed(key)
     local t = tick() return math.max(t - (lastpressed[key] or t),0)
 end
 
-function onKeyUp(key)
-if key == "z" then
-if Flying == true and Keyz[key] == true then
-Keyz[key] = false
-if Veloc then Veloc:Remove() end
-for i = 1,10 do wait()
-ArmWeld.C0 = ArmWeld.C0 * CFrame.Angles(-math.pi/10/2,0,0)
-ArmWeld.C0 = ArmWeld.C0 - Vector3.new(0,0.075,0.05)
-WeldA.C0 = WeldA.C0 * CFrame.Angles(0,0,math.pi/10)
-end
-WeldA.C0 = CFrame.new(0,-1,-0) * CFrame.Angles(-math.pi/2,0,0)
-StaffOn = true
-Flying = false
-end
-end
-
-if key == "f" then
-if Lighter == true and Keyz[key] == true then
-Keyz[key] = false
-Lighter = false
-SpaB.Enabled = false
-Flying = true
-for i = 1,10 do wait()
-WeldB.C0 = WeldB.C0 + Vector3.new(0,0.1,0)
-MeshB.Scale = MeshB.Scale - Vector3.new(0.2,-0.-0.05,0.2)
-StickB.Reflectance = StickB.Reflectance - 0.1
-ArmWeld.C0 = ArmWeld.C0 * CFrame.Angles(-math.pi/10/2/2,0,0)
-ArmWeld.C0 = ArmWeld.C0 + Vector3.new(0,-0.05,0.025)
-WeldA.C0 = WeldA.C0 * CFrame.Angles(math.pi/10/2/2,0,0)
-end
-Flying = false
-wait()
-for i,v in pairs(Assassin:GetChildren()) do
-if v.BrickColor == BrickColor.new("Black") then
-v.BrickColor = BrickColor.new("White")
-end
-end
-wait(1)
-SpaB.Enabled = false
-end
-end
-
-if key == "q" or key == "e" then
-if PGyro ~= nil then PGyro:Remove() end
-end
-
-end
-
 local function keyDown(plr,key)	
 	key = tostring(key)
 	print(key)
 	if isKeyDown(key) then 
 		downs[key]=false
-		onKeyUp(key)
+		print('up')
+		if Keys[key] then pcall(function() Keys[key].up() end) end
 	else
 		downs[key],lastpressed[key]=true,tick()
-		if Keys[key] then Keys[key]()end
+		print('down')
+		if Keys[key] then pcall(function() Keys[key].down() end) end
 	end
 end
-
 local mouse = {}
 local keysEvent = Instance.new("RemoteEvent",NLS(string.format([[
     local keysEvent,mouse = script:FindFirstChildWhichIsA("RemoteEvent"),game.Players.LocalPlayer:GetMouse()
+    local mousedata = keysEvent:FindFirstChildWhichIsA("RemoteEvent")
     local mousedata = keysEvent:FindFirstChildWhichIsA("RemoteEvent")
     mouse.KeyDown:connect(function(plr,key)  keysEvent:FireServer(plr,key) end)
     mouse.KeyUp:connect(function(plr,key) keysEvent:FireServer(plr,key) end)
@@ -360,7 +330,7 @@ PA.Transparency = 1
 PA.Size = Vector3.new(0.1,0.1,0.1)
 PA.Parent = Lightning
 PA.CFrame = CFrame.new(BB.x,BB.y,BB.z)
-spark(StickB,PA)
+spark(StickA,PA)
 for i = 1,10 do wait()
 for i,v in pairs(Lightning:GetChildren()) do
 if v:IsA("Part") then
@@ -375,7 +345,6 @@ end
 end
 end))
 end
-
 --[[ * Tool * ]]--
 
 --[[if script.Parent.Name == Player.Name then
@@ -576,7 +545,7 @@ end)
 
 VCZ = 0
 
-Keys = {"z","f","c"}
+Keyz = {"z","f","c"}
 PGyro = nil
 Asin = false
 Kni = false
@@ -998,13 +967,24 @@ function()
 PGyro = Instance.new("BodyGyro",Character.HumanoidRootPart)
 PGyro.maxTorque = Vector3.new(math.huge,math.huge,math.huge)
 PGyro.cframe = Character.HumanoidRootPart.CFrame * CFrame.Angles(0,0,1)
-end)
+end,
+function()
+if PGyro ~= nil then PGyro:Remove() end
+
+end
+)
+
 setKey("q",
 function()
 PGyro = Instance.new("BodyGyro",Character.HumanoidRootPart)
 PGyro.maxTorque = Vector3.new(math.huge,math.huge,math.huge)
 PGyro.cframe = Character.HumanoidRootPart.CFrame * CFrame.Angles(0,0,-1)
-end)
+end,
+function()
+if PGyro ~= nil then PGyro:Remove() end
+
+end
+)
 
 setKey('k',
 function()
@@ -1532,12 +1512,15 @@ weld.C0 = CFrame.new(0.1,0.1,0) * CFrame.fromEulerAnglesXYZ(0,0,math.pi/2/2)
 weld.Parent.Transparency = 1
 
 end
+end,
+function()
+
 end)
 
 local key = 'f'
 setKey(key,function()
 if Lighter == false and StaffOn == true then
-Keys[key] = true
+Keyz[key] = true
 Lighter = true
 Flying = true
 for i = 1,10 do wait()
@@ -1563,6 +1546,32 @@ end
 wait()
 end
 end
+end,
+function()
+
+if Lighter == true and Keyz[key] == true then
+Keyz[key] = false
+Lighter = false
+SpaB.Enabled = false
+Flying = true
+for i = 1,10 do wait()
+WeldB.C0 = WeldB.C0 + Vector3.new(0,0.1,0)
+MeshB.Scale = MeshB.Scale - Vector3.new(0.2,-0.-0.05,0.2)
+StickB.Reflectance = StickB.Reflectance - 0.1
+ArmWeld.C0 = ArmWeld.C0 * CFrame.Angles(-math.pi/10/2/2,0,0)
+ArmWeld.C0 = ArmWeld.C0 + Vector3.new(0,-0.05,0.025)
+WeldA.C0 = WeldA.C0 * CFrame.Angles(math.pi/10/2/2,0,0)
+end
+Flying = false
+wait()
+for i,v in pairs(Assassin:GetChildren()) do
+if v.BrickColor == BrickColor.new("Black") then
+v.BrickColor = BrickColor.new("White")
+end
+end
+wait(1)
+SpaB.Enabled = false
+end
 end)
 
 setKey('l',
@@ -1587,6 +1596,8 @@ end
 wait(0.5)
 Character:BreakJoints()
 end
+end,
+function()
 end)
 
 local key = 'z'
@@ -1648,6 +1659,20 @@ for i = 1,10 do wait()
 WeldA.C0 = WeldA.C0 * CFrame.Angles(0,0,math.pi/10)
 end
 end
+end
+end,
+function()
+if Flying == true and Keyz[key] == true then
+Keyz[key] = false
+if Veloc then Veloc:Remove() end
+for i = 1,10 do wait()
+ArmWeld.C0 = ArmWeld.C0 * CFrame.Angles(-math.pi/10/2,0,0)
+ArmWeld.C0 = ArmWeld.C0 - Vector3.new(0,0.075,0.05)
+WeldA.C0 = WeldA.C0 * CFrame.Angles(0,0,math.pi/10)
+end
+WeldA.C0 = CFrame.new(0,-1,-0) * CFrame.Angles(-math.pi/2,0,0)
+StaffOn = true
+Flying = false
 end
 end)
 
@@ -1736,6 +1761,9 @@ end
 StaffOn = false
 end
 Flying = false
+end,
+function()
+
 end)
 
 setKey('v',
@@ -1886,6 +1914,9 @@ ArmWeld.C0 = ArmWeld.C0 - Vector3.new(0,-0.05,0.05)
 end
 end
 Flying = false
+end,
+function()
+
 end)
 
 --[[Blah = true
