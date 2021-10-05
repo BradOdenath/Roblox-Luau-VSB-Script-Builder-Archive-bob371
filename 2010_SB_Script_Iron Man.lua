@@ -1077,107 +1077,109 @@ setKey(key,
 local key = 'f'
 setKey(key,
 	function()
-		if shooting == "Loaded" and flying == "On" then
-			fire = true
-			printStatuses()
-			local P = Instance.new("Part") 
-			local Place0 = Torso.CFrame * CFrame.new(0,0.25,-0.5) * CFrame.fromEulerAnglesXYZ(0, 0, 0)
-			local Place1 = mouse.Hit.p 
-			P.formFactor = 0 
-			P.Size = Vector3.new(1,1,(Place0.p - Place1).magnitude) 
-			P.Name = "Laser" 
-			P.CFrame = CFrame.new((Place0.p + Place1)/2,Place0.p) 
-			P.Parent = game.Workspace 
-			P.BrickColor = BrickColor.new("Navy blue") 
-			P.BottomSurface, P.TopSurface = 0,0
-			P.Reflectance = 1
-			P.Anchored = true 
-			P.CanCollide = false
-			local e=Instance.new"Explosion" 
-			e.Hit:connect(function(part,distance) 
-			e.BlastPressure = 1e+006 
-			e.BlastRadius = 10
-				if distance<10 then 
-					part:BreakJoints()
-					part.Anchored = false
-					Instance.new("Fire").Parent = part
-				end 
-			end) 
-			e.Position = Place1
-			e.Parent=workspace
-			--char = game.Workspace.bob371
-			sound = Instance.new("Sound")
-			sound.Volume = 100
-			sound.Pitch = 1
-			sound.SoundId = "rbxasset://sounds\\Launching rocket.wav"
-			sound.Parent = Torso
-			sound:Play()
-			wait(0.1)
-			P:remove()
-			fire = false
-			for i = 1,5 do
-				shooting = "Reloading."
-				wait(0.5)
-				shooting = "Reloading.."
-				wait(0.5)
-				shooting = "Reloading..."
-				wait(0.5)
-			end
-			shooting = "Loaded"
-		elseif shooting == "Loaded" and flying == "Off" then
-			fire = true
-			local P = Instance.new("Part") 
-			local Place0 = char["Left Arm"].CFrame * CFrame.new(0,-1,0) * CFrame.fromEulerAnglesXYZ(0, 0, 0)
-			local Place1 = mouse.Hit.p 
-			P.formFactor = 0 
-			P.Size = Vector3.new(1,1,(Place0.p - Place1).magnitude) 
-			P.Name = "Laser" 
-			P.CFrame = CFrame.new((Place0.p + Place1)/2,Place0.p) 
-			P.Parent = game.Workspace 
-			P.BrickColor = BrickColor.new("Navy blue") 
-			P.Reflectance = 1
-			P.BottomSurface, P.TopSurface = 0, 0
-			P.Anchored = true 
-			P.CanCollide = false
-			P2 = P:Clone()
-			Place2 = char["Right Arm"].CFrame * CFrame.new(0,-1,0) * CFrame.fromEulerAnglesXYZ(0, 0, 0)
-			P2.CFrame = CFrame.new((Place2.p + Place1)/2,Place2.p) 
-			P2.Parent = game.Workspace
-			local e=Instance.new"Explosion" 
-			e.Hit:connect(function(part,distance) 
-			e.BlastPressure = 1e+006 
-			e.BlastRadius = 10
-				if distance<10 then 
-					part:BreakJoints()
-					part.Anchored = false
-					Instance.new("Fire").Parent = part
-				end 
-			end) 
-			e.Position = Place1
-			e.Parent=workspace
-			--char = game.Workspace.bob371
-			sound = Instance.new("Sound")
-			sound.Volume = 100
-			sound.Pitch = 1
-			sound.SoundId = "rbxasset://sounds\\Launching rocket.wav"
-			sound.Parent = Torso
-			sound:Play()
-			wait(0.1)
-			pcall(function()
-				P:remove()
-				P2:Remove()
-			end)
-			fire = false
-			for i = 1,5 do
-				shooting = "Reloading."
+		if mouse.Target ~= nil then
+			if shooting == "Loaded" and flying == "On" then
+				fire = true
 				printStatuses()
-				wait(0.5)
-				shooting = "Reloading.."
-				wait(0.5)
-				shooting = "Reloading..."
-				wait(0.5)
+				local P = Instance.new("Part") 
+				local Place0 = Torso.CFrame * CFrame.new(0,0.25,-0.5) * CFrame.fromEulerAnglesXYZ(0, 0, 0)
+				local Place1 = mouse.Hit.p 
+				P.formFactor = 0 
+				P.Size = Vector3.new(1,1,(Place0.p - Place1).magnitude) 
+				P.Name = "Laser" 
+				P.CFrame = CFrame.new((Place0.p + Place1)/2,Place0.p) 
+				P.Parent = game.Workspace 
+				P.BrickColor = BrickColor.new("Navy blue") 
+				P.BottomSurface, P.TopSurface = 0,0
+				P.Reflectance = 1
+				P.Anchored = true 
+				P.CanCollide = false
+				local e=Instance.new"Explosion" 
+				e.Hit:connect(function(part,distance) 
+				e.BlastPressure = 1e+006 
+				e.BlastRadius = 10
+					if distance<10 then 
+						part:BreakJoints()
+						part.Anchored = false
+						Instance.new("Fire").Parent = part
+					end 
+				end) 
+				e.Position = Place1
+				e.Parent=workspace
+				--char = game.Workspace.bob371
+				sound = Instance.new("Sound")
+				sound.Volume = 100
+				sound.Pitch = 1
+				sound.SoundId = "rbxasset://sounds\\Launching rocket.wav"
+				sound.Parent = Torso
+				sound:Play()
+				wait(0.1)
+				P:remove()
+				fire = false
+				for i = 1,5 do
+					shooting = "Reloading."
+					wait(0.5)
+					shooting = "Reloading.."
+					wait(0.5)
+					shooting = "Reloading..."
+					wait(0.5)
+				end
+				shooting = "Loaded"
+			elseif shooting == "Loaded" and flying == "Off" then
+				fire = true
+				local P = Instance.new("Part") 
+				local Place0 = char["Left Arm"].CFrame * CFrame.new(0,-1,0) * CFrame.fromEulerAnglesXYZ(0, 0, 0)
+				local Place1 = mouse.Hit.p 
+				P.formFactor = 0 
+				P.Size = Vector3.new(1,1,(Place0.p - Place1).magnitude) 
+				P.Name = "Laser" 
+				P.CFrame = CFrame.new((Place0.p + Place1)/2,Place0.p) 
+				P.Parent = game.Workspace 
+				P.BrickColor = BrickColor.new("Navy blue") 
+				P.Reflectance = 1
+				P.BottomSurface, P.TopSurface = 0, 0
+				P.Anchored = true 
+				P.CanCollide = false
+				P2 = P:Clone()
+				Place2 = char["Right Arm"].CFrame * CFrame.new(0,-1,0) * CFrame.fromEulerAnglesXYZ(0, 0, 0)
+				P2.CFrame = CFrame.new((Place2.p + Place1)/2,Place2.p) 
+				P2.Parent = game.Workspace
+				local e=Instance.new"Explosion" 
+				e.Hit:connect(function(part,distance) 
+				e.BlastPressure = 1e+006 
+				e.BlastRadius = 10
+					if distance<10 then 
+						part:BreakJoints()
+						part.Anchored = false
+						Instance.new("Fire").Parent = part
+					end 
+				end) 
+				e.Position = Place1
+				e.Parent=workspace
+				--char = game.Workspace.bob371
+				sound = Instance.new("Sound")
+				sound.Volume = 100
+				sound.Pitch = 1
+				sound.SoundId = "rbxasset://sounds\\Launching rocket.wav"
+				sound.Parent = Torso
+				sound:Play()
+				wait(0.1)
+				pcall(function()
+					P:remove()
+					P2:Remove()
+				end)
+				fire = false
+				for i = 1,5 do
+					shooting = "Reloading."
+					printStatuses()
+					wait(0.5)
+					shooting = "Reloading.."
+					wait(0.5)
+					shooting = "Reloading..."
+					wait(0.5)
+				end
+				shooting = "Loaded"
 			end
-			shooting = "Loaded"
 		end
 	end,
 	function()
