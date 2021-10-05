@@ -124,7 +124,7 @@ pcall(function() char.Head.Transparency = 0 char.Head.face.Face = "Front" end)
 end
 
 local function AccessoryOn()
-for i,v in pairs(M:GetChildren()) v.Parent = char end
+for i,v in pairs(M:GetChildren()) do v.Parent = char end
 pcall(function() char.Head.Transparency = 1 char.Head.face.Face = "Bottom" end)
 end
 
@@ -1259,9 +1259,6 @@ end
 script.Parent.Selected:connect(Selected)
 script.Parent.Deselected:connect(Deselected) 
 ]]
-
-wait()
-Molecularelected()
 
 --[[
 while true do
