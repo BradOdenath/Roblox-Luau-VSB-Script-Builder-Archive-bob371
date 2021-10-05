@@ -21,6 +21,7 @@ Places = {25,-25,50,-50,75,-75}
 local seat = Instance.new("VehicleSeat")
 seat.Size = Vector3.new(8,0.5,12)
 seat.Anchored = false
+seat.Name = 'S'
 seat.Locked = true
 seat.HeadsUpDisplay = false
 seat.CanCollide = true
@@ -28,11 +29,13 @@ seat.TopSurface = 0
 seat.BottomSurface = 0
 seat.Parent = model
 seat.CFrame = CFrame.new(Places[math.random(1,#Places)],40,Places[math.random(1,#Places)])
-pcall(function() seat.CFrame = Placements[i] end)
+--pcall(function() seat.CFrame = Placements[i] end)
 local gyro = Instance.new("BodyGyro")
+gyro.Name = 'BG'
 gyro.Parent = seat
 gyro.maxTorque = Vector3.new(math.huge,math.huge,math.huge)
 local posi = Instance.new("BodyPosition")
+posi.Name = 'BP'
 posi.maxForce = Vector3.new(0,math.huge,0)
 posi.Parent = seat
 posi.position = Vector3.new(0,1,0)
@@ -96,14 +99,37 @@ weld.Part0 = seat
 weld.Part1 = part
 weld.C0 = CFrame.new(0,0,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 function T(h)
---if h.Parent.Name == who then return end
-if h.Parent:findFirstChild("Torso") ~= nil then
-h.Parent.Torso.Velocity = part.CFrame.lookVector * 250
-end
-if h.Parent:findFirstChild("Humanoid") ~= nil then
-pcall(function() h.Parent.Humanoid.PlatformStand = true end)
-pcall(function() h.Parent.Humanoid.PlatformStand = false end)
-end
+	print(h.Name)
+	--if h.Parent.Name == who then return end
+	if h.Parent:FindFirstChild("S") ~= nil or h.Name == 'S' then
+		pcall(function()
+			h.S.BP.Position = Vector3.new(0,60,0)
+			
+			h.S.BG.MaxTorque = Vector3.new(0,0,0)
+			
+			wait(1)
+			
+			h.S.BG.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
+			
+			h.S.BP.Position = Vector3.new(0,2,0)
+		end)
+		pcall(function()
+			h.Parent.S.BP.Position = Vector3.new(0,60,0)
+			
+			h.Parent.S.BG.MaxTorque = Vector3.new(0,0,0)
+			
+			wait(1)
+			
+			h.Parent.S.BG.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
+			
+			h.Parent.S.BP.Position = Vector3.new(0,2,0)
+		end)
+	elseif h.Parent:findFirstChild("Torso") ~= nil then
+		h.Parent.Torso.Velocity = part.CFrame.lookVector * 250
+	elseif h.Parent:findFirstChild("Humanoid") ~= nil then
+		pcall(function() h.Parent.Humanoid.PlatformStand = true end)
+		pcall(function() h.Parent.Humanoid.PlatformStand = false end)
+	end
 end
 part.Touched:connect(T)
 
