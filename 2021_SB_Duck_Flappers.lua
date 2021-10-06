@@ -11,6 +11,9 @@ ColorABC = BrickColor.new("Medium stone grey")
 Flying = false
 Running = false
 
+local Torso
+if Character:FindFirstChild("Torso") ~= nil then Torso = Character:FindFirstChild("Torso") 
+elseif Character:FindFirstChild("UpperTorso") ~= nil then Torso = Character:FindFirstChild("UpperTorso") end
 pcall(function() Character.Wings:Remove() end)
 
 Wings = Instance.new("Model")
@@ -29,7 +32,7 @@ Boost.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
 --[[ * Neck Weld * ]]--
 
 Neck = Instance.new("Weld") 
-Neck.Parent = Character["Torso"]
+Neck.Parent = Torso
 Neck.Part0 = Neck.Parent
 Neck.Part1 = Character["Head"]
 Neck.C0 = CFrame.new(0,1.5,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
@@ -40,7 +43,7 @@ Body = Instance.new("Weld")
 Body.Parent = Character
 Body.Name = "Body"
 Body.Part0 = Character.HumanoidRootPart
-Body.Part1 = Character.Torso
+Body.Part1 = Torso
 --Body.C0 = Body.C0 * CFrame.Angles(-math.pi/2,0,0)
 
 Angles = {
@@ -213,7 +216,7 @@ Middle.Parent = Wings
 Mesh = Instance.new("CylinderMesh",Middle)
 MidWeld = Instance.new("Weld")
 MidWeld.Parent = Middle
-MidWeld.Part0 = Character["Torso"]
+MidWeld.Part0 = Torso
 MidWeld.Part1 = Middle
 MidWeld.C0 = CFrame.new(0,0,0.5) * CFrame.Angles(0,0,0)
 
@@ -391,8 +394,10 @@ end
 
 function Flap()
 for i = 1,3 do wait()
-Character.Torso["Right Shoulder"].DesiredAngle = math.pi
-Character.Torso["Left Shoulder"].DesiredAngle = -math.pi
+--Torso["RightShoulderRigAttachment"].DesiredAngle = math.pi
+--Torso["LeftShoulderRigAttachment"].DesiredAngle = -math.pi
+pcall(function() Character.Torso["Right Shoulder"].DesiredAngle = math.pi end)
+pcall(function() Character.Torso["Left Shoulder"].DesiredAngle = -math.pi end)
 WeldA.C0 = WeldA.C0 * CFrame.Angles(0,0.2,0)
 WeldB.C0 = WeldB.C0 * CFrame.Angles(0,-0.2,0)
 WeldC.C0 = WeldC.C0 * CFrame.Angles(0,0.4,0)
@@ -413,14 +418,18 @@ WeldA.C0 = WeldA.C0 + Vector3.new(0,0,0.2*2)
 WeldB.C0 = WeldB.C0 + Vector3.new(0,0,0.2*2)
 WeldC.C0 = WeldC.C0 - Vector3.new(0.025,0,-0.6)
 WeldD.C0 = WeldD.C0 - Vector3.new(-0.025,0,-0.6)
-Character.Torso["Right Shoulder"].DesiredAngle = math.pi
-Character.Torso["Left Shoulder"].DesiredAngle = -math.pi
+--Torso["RightShoulderRigAttachment"].DesiredAngle = math.pi
+--Torso["LeftShoulderRigAttachment"].DesiredAngle = -math.pi
+pcall(function() Character.Torso["Right Shoulder"].DesiredAngle = math.pi end)
+pcall(function() Character.Torso["Left Shoulder"].DesiredAngle = -math.pi end)
 end
 end
 
 function Jet()
-Character.Torso["Right Shoulder"].DesiredAngle = math.pi
-Character.Torso["Left Shoulder"].DesiredAngle = -math.pi
+--Torso["RightShoulderRigAttachment"].DesiredAngle = math.pi
+--Torso["LeftShoulderRigAttachment"].DesiredAngle = -math.pi
+pcall(function() Character.Torso["Right Shoulder"].DesiredAngle = math.pi end)
+pcall(function() Character.Torso["Left Shoulder"].DesiredAngle = -math.pi end)
 end
 
 
@@ -457,7 +466,7 @@ Swush.CFrame = CFrame.new(Character.HumanoidRootPart.Position,mouse.Hit.p)
 if mouse.Target then
 Boost.Parent = nil
 Juice.Parent = Character.HumanoidRootPart
-Juice.Position = mouse.Hit.p + Vector3.new(0,4,0)
+Juice.Position = mouse.Hit.p + Vector3.new(0,8,0)
 else
 Boost.Parent = Character.HumanoidRootPart
 Boost.Velocity = Swush.CFrame.lookVector * 100
