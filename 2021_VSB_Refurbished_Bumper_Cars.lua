@@ -14,7 +14,7 @@ model = Instance.new("Model")
 model.Name = "BC"
 model.Parent = game.Workspace
 
-script.Parent = model
+--script.Parent = model
 
 Places = {25,-25,50,-50,75,-75}
 
