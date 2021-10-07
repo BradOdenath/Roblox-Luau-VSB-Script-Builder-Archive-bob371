@@ -81,7 +81,7 @@ Animate = {
 			local increment = _c:Lerp(Angles.Stand,i/steps)
 			Body.C0 = increment
 		end
-		--Body.C0 = Angles.Stand
+		Body.C0 = Angles.Stand
 	end,
 	Run = function()
 		local _c
@@ -156,6 +156,7 @@ local function onKeyUp(key)
 		if isRunning() then
 			Animate.Run()
 		else
+			Animate.Run()
 			Animate.Stand()
 		end
 	end
