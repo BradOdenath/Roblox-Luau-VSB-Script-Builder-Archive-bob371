@@ -278,7 +278,7 @@ local ArmorCharacter = function(c)
 	end
 end
 
-local coreo, coreL, coreR
+local coreo, coreL, coreR, coreLL, coreRR
 
 --R6/R15
 local Head =	 		character:FindFirstChild("Head")
@@ -590,6 +590,37 @@ local SuitArmor = function(_c)
 		reflectance = 	(0.1)									--Reflectance
 	}
 	
+	local _right_leg_shoulder = {
+		name = 			('Rightleg_shoulder'),								--Name
+		size = 			(v3n(1,1,1)),							--Size
+		color = 		(COLOR_DEFAULT_PRIMARY),					--Color	
+		shape = 		("Ball"),								--Shape
+		reflectance = 	(0.1)									--Reflectance
+	}
+	
+	local _left_leg_shoulder = {
+		name = 			('Leftleg_shoulder'),								--Name
+		size = 			(v3n(1,1,1)),							--Size
+		color = 		(COLOR_DEFAULT_PRIMARY),					--Color	
+		shape = 		("Ball"),								--Shape
+		reflectance = 	(0.1)									--Reflectance
+	}
+	local _right_shoulder = {
+		name = 			('RightShoulder'),								--Name
+		size = 			(v3n(1,1,1)),							--Size
+		color = 		(COLOR_DEFAULT_PRIMARY),					--Color	
+		shape = 		("Ball"),								--Shape
+		reflectance = 	(0.1)									--Reflectance
+	}
+	
+	local _left_shoulder = {
+		name = 			('LeftShoulder'),								--Name
+		size = 			(v3n(1,1,1)),							--Size
+		color = 		(COLOR_DEFAULT_PRIMARY),					--Color	
+		shape = 		("Ball"),								--Shape
+		reflectance = 	(0.1)									--Reflectance
+	}
+	
 	
 	local _right_leg_pom = {
 		name = 			('RightPom'),								--Name
@@ -797,6 +828,10 @@ local SuitArmor = function(_c)
 		
 
 		pcall(function()
+			
+			_left_leg_shoulder = WeldMeshPart(WeldPart(
+				_left_leg_shoulder.name, _left_leg_shoulder.size, _left_leg_shoulder.color, _left_leg_shoulder.shape, _left_leg_shoulder.reflectance, RightLeg, (cfn(0, 0.8, 0))
+			), _left_leg_shoulder.mesh)
 		
 			_left_leg_band_upper = WeldMeshPart(WeldPart(
 				_left_leg_band_upper.name,							--Name
@@ -825,6 +860,11 @@ local SuitArmor = function(_c)
 		end)
 		
 		pcall(function()
+		
+			
+			_right_leg_shoulder = WeldMeshPart(WeldPart(
+				_right_leg_shoulder.name, _right_leg_shoulder.size, _right_leg_shoulder.color, _right_leg_shoulder.shape, _right_leg_shoulder.reflectance, RightLeg, (cfn(0, 0.8, 0))
+			), _right_leg_shoulder.mesh)
 		
 			_right_leg_band_upper = WeldMeshPart(WeldPart(
 				_right_leg_band_upper.name,							--Name
@@ -972,7 +1012,7 @@ local SuitArmor = function(_c)
 				(cfn(0,-0.4,0))),									--C0	
 				_right_arm_band_lower.mesh)							--Mesh	
 			
-			end)
+		end)
 		
 		pcall(function()
 		
@@ -991,8 +1031,11 @@ local SuitArmor = function(_c)
 			)
 		
 		end)
-			
+						
 		pcall(function()
+			_right_leg_shoulder = WeldMeshPart(WeldPart(
+				_right_leg_shoulder.name, _right_leg_shoulder.size, _right_leg_shoulder.color, _right_leg_shoulder.shape, _right_leg_shoulder.reflectance, RightUpperLeg, (cfn(0, 0.4, 0))
+			), _right_leg_shoulder.mesh)
 			
 			_right_leg_band_upper = WeldMeshPart(WeldPart(
 				_right_leg_band_upper.name,							--Name
@@ -1029,6 +1072,9 @@ local SuitArmor = function(_c)
 		end)
 		
 		pcall(function()
+			_left_leg_shoulder = WeldMeshPart(WeldPart(
+				_left_leg_shoulder.name, _left_leg_shoulder.size, _left_leg_shoulder.color, _left_leg_shoulder.shape, _left_leg_shoulder.reflectance, LeftUpperLeg, (cfn(0, 0.4, 0))
+			), _left_leg_shoulder.mesh)
 		
 			_left_leg_band_upper = WeldMeshPart(WeldPart(
 				_left_leg_band_upper.name,							--Name
@@ -1040,9 +1086,9 @@ local SuitArmor = function(_c)
 				(cfn(0,0,0))),									--C0	
 				_left_leg_band_upper.mesh)							--Mesh	
 			
-			end)
+		end)
 		
-		pcall(function()
+		--pcall(function()
 			
 			_left_leg_jet = WeldMeshPart(WeldPart(
 				_left_leg_jet.name,							--Name
@@ -1054,7 +1100,7 @@ local SuitArmor = function(_c)
 				(cfn(0,-0.2,0))),									--C0	
 				_left_leg_jet.mesh)							--Mesh	
 			
-			end)
+		--end)
 		
 		pcall(function()
 			
@@ -1075,6 +1121,8 @@ local SuitArmor = function(_c)
 	coreo = _core
 	coreL = _left_arm_jet
 	coreR = _right_arm_jet
+	coreLL = _left_leg_jet
+	coreRR = _right_leg_jet
 	
 	print(coreo, coreL, coreR)
 
@@ -1104,95 +1152,15 @@ local MainCharacter = function()
 	ClearSuit(_c)
 end
 
-local function liggamentize(limb, attached_to, liggament_type, liggament_name, liggament_c0, liggament_c1)
-	--Declare Variables
-	local liggament
-	--Smooth Blocks
-	limb.FrontSurface, limb.LeftSurface, 
-		limb.RightSurface, limb.BottomSurface, 
-		limb.BackSurface, limb.TopSurface = 0,0,0,0,0,0
-	--Moterize
-	liggament = Instance.new(liggament_type)
-	liggament.Parent = attached_to
-	liggament.Part0 = attached_to
-	liggament.Part1 = limb
-	if (liggament_type == 'Motor') then
-		liggament.MaxVelocity = 0.1
-	end
-	if (liggament_c0) then
-		liggament.C0 = liggament_c0
-	end
-	if (liggament_c1) then
-		liggament.C1 = liggament_c1
-	end
-	return liggament
-end
-
-
-local function configure_left_arm()
-	local la = char:FindFirstChild("Left Arm")
-	local lm = liggamentize(
-		la, 				--limb
-		Torso,				--attached_to	
-		"Motor",			--Type	
-		"Left Shoulder",	--Name	
-		CFrame.new(
-			-sizex - la.Size.x/2, 	--x
-			0,		--y
-			0					--z
-			) * CFrame.fromEulerAnglesXYZ(
-				0,					--x
-				pi/2,				--y	
-				0					--z
-			),
-		CFrame.new(
-			0,						--x
-			0,			--y/2
-			0						--z
-			) * CFrame.fromEulerAnglesXYZ(
-				0,					--x
-				-limb_skew,				--y
-				0					--z	
-			)
-		)
-end				
-
-local function configure_right_arm()
-	local ra = char:FindFirstChild("Right Arm")
-	local lm = liggamentize(
-		ra, 				--limb
-		Torso,				--attached_to	
-		"Motor",			--Type	
-		"Right Shoulder",	--Name	
-		CFrame.new(
-			sizex - ra.Size.x/2+1, 	--x
-			0,		--y
-			0			--z
-			) * CFrame.fromEulerAnglesXYZ(
-				0,					--x
-				pi/2,				--y	
-				0					--z
-			),
-		CFrame.new(
-			0,						--x
-			0,			--y/2
-			0						--z
-			) * CFrame.fromEulerAnglesXYZ(
-				0,					--x
-				limb_skew,				--y
-				0					--z
-			)
-		)
-end
-
 local LeftArmWeld, RightArmWeld = Instance.new("Weld"), Instance.new("Weld")
+
+local LeftLegWeld, RightLegWeld = Instance.new("Weld"), Instance.new("Weld")
 
 local weldArms = function()
 	if (isR15(character)) then
 		LeftArmWeld.Parent = UpperTorso
 		LeftArmWeld.Part1 = LeftUpperArm
 		LeftArmWeld.Part0 = UpperTorso
-		
 		RightArmWeld.Parent = UpperTorso
 		RightArmWeld.Part1 = RightUpperArm
 		RightArmWeld.Part0 = UpperTorso
@@ -1203,12 +1171,36 @@ local weldArms = function()
 		RightArmWeld.Parent = Torso
 		RightArmWeld.Part1 = RightArm
 		RightArmWeld.Part0 = Torso
+		
 	end
 end
 
 local deweldArms = function()
 	LeftArmWeld.Part1 = nil
 	RightArmWeld.Part1 = nil
+end
+
+local weldLegs = function()
+	if (isR15(character)) then
+		LeftLegWeld.Parent = LowerTorso
+		LeftLegWeld.Part1 = LeftUpperLeg
+		LeftLegWeld.Part0 = LowerTorso
+		RightLegWeld.Parent = LowerTorso
+		RightLegWeld.Part1 = RightUpperLeg
+		RightLegWeld.Part0 = LowerTorso
+	else
+		LeftLegWeld.Parent = Torso
+		LeftLegWeld.Part1 = LeftLeg
+		LeftLegWeld.Part0 = Torso
+		RightLegWeld.Parent = Torso
+		RightLegWeld.Part1 = RightLeg
+		RightLegWeld.Part0 = Torso
+	end
+end
+
+local deweldLegs = function()
+	LeftLegWeld.Part1 = nil
+	RightLegWeld.Part1 = nil
 end
 
 local pointArm = function(Arm, Weld, EndCf)
@@ -1242,6 +1234,37 @@ local pointArms = function()
 	pointArm("right", RightArmWeld, mouse.Hit)
 end
 
+local pointLeg = function(Leg, Weld, EndCf)
+	if (Leg:lower():match("right")) then
+		--print(Leg, Weld, EndCf)
+		Weld.C0 = cfn(0.5,-0.5,0)
+		Weld.C1 = cfa(math.rad(-90),0,0) * cfn(0,0,0.5)
+		if (isR15(character)) then
+			Weld.C1 = Weld.C1 * (cfn((LowerTorso.CFrame * cfn(0.5,-0.5,0)).p, EndCf.p) - (LowerTorso.CFrame * cfn(0.5,-0.5,0)).p):inverse()
+			Weld.C1 = Weld.C1 * (LowerTorso.CFrame - LowerTorso.CFrame.p)
+		else
+			Weld.C1 = Weld.C1 * (cfn((Torso.CFrame * cfn(0.5,-0.5,0)).p, EndCf.p) - (Torso.CFrame * cfn(0.5,-0.5,0)).p):inverse()
+			Weld.C1 = Weld.C1 * (Torso.CFrame - Torso.CFrame.p)
+		end
+	elseif (Leg:lower():match("left")) then
+		--print(Leg, Weld, EndCf)
+		Weld.C0 = cfn(-0.5,-0.5,0)
+		Weld.C1 = cfa(math.rad(-90),0,0) * cfn(0,0,0.5)
+		if (isR15(character)) then
+			Weld.C1 = Weld.C1 * (cfn((LowerTorso.CFrame * cfn(-0.5,0,0)).p, EndCf.p) - (LowerTorso.CFrame * cfn(-0.5,0,0)).p):inverse()
+			Weld.C1 = Weld.C1 * (LowerTorso.CFrame - LowerTorso.CFrame.p)
+		else
+			Weld.C1 = Weld.C1 * (cfn((Torso.CFrame * cfn(-0.5,0,0)).p, EndCf.p) - (Torso.CFrame * cfn(-0.5,0,0)).p):inverse()
+			Weld.C1 = Weld.C1 * (Torso.CFrame - Torso.CFrame.p)
+		end
+	end
+end
+
+local pointLegs = function()
+	pointLeg("Left", LeftLegWeld, mouse.Hit)
+	pointLeg("right", RightLegWeld, mouse.Hit)
+end
+
 --[[ * Juice * ]]--
 
 local Juice = Instance.new("BodyPosition")
@@ -1258,50 +1281,64 @@ local HumanoidRootPart = character:FindFirstChild("HumanoidRootPart")
 local suit = false
 local flying = false
 local holding = false
+local arm_point = false
+local leg_point = false
 
 local offset = Vector3.new(0,12,0)
 
 local laser = function(place0)
-	--print('laser'..tostring(place0))
-	if (mouse.Target ~= nil) then
-		local Place0 = place0.CFrame
-		local Place1 = mouse.Hit.p
-		local P = Instance.new("Part")
-		P.Size = Vector3.new(1,1,(Place0.p - Place1).magnitude)
-		P.Name = "Laser"
-		P.Reflectance = 1
-		P.Anchored = true
-		P.BottomSurface, P.TopSurface = 0, 0
-		P.CanCollide = false
-		P.CFrame = CFrame.new((Place0.p + Place1)/2,Place0.p)
-		P.Parent = workspace
-		local E = Instance.new("Explosion")
-		E.BlastRadius, E.BlastPressure = 10, 1e+006
-		E.Hit:Connect(function(part, distance)
-			if (distance < 10) then
-				part:BreakJoints()
-				part.Anchored = false
-				Instance.new("Fire",part)
-			end
-		end)
-		E.Position = Place1
-		E.Parent = workspace
-		local S = Instance.new("Sound")
-		S.Volume = 100
-		S.Pitch = 1
-		S.SoundId = "rbxasset://sounds\\Launching rocket.wav"
-		S.Parent = _core
-		S:Play()
-		wait(0.1)
-		P.Parent = nil
-		P:Remove()
-		coroutine.resume(coroutine.create(function()
-			wait(10)
-			S:Remove()
-			P.Transparency = 0.5
-		end))
-		
-	end
+	coroutine.resume(coroutine.create(function()
+		--print('laser'..tostring(place0))
+		if (mouse.Target ~= nil) then
+			local Place0 = place0.CFrame
+			local Place1 = mouse.Hit.p
+			local P = Instance.new("Part")
+			P.Size = Vector3.new(1,1,(Place0.p - Place1).magnitude)
+			P.Name = "Laser"
+			P.Reflectance = 1
+			P.Anchored = true
+			P.BottomSurface, P.TopSurface = 0, 0
+			P.CanCollide = false
+			P.CFrame = CFrame.new((Place0.p + Place1)/2,Place0.p)
+			P.Parent = workspace
+			coroutine.resume(coroutine.create(function()
+				pcall(function()
+					for i = 1,30 do wait()
+						Place0 = place0.CFrame
+						P.Size = Vector3.new(1,1,(Place0.p - Place1).magnitude)
+						P.CFrame = CFrame.new((Place0.p + Place1)/2,Place0.p)
+					end
+				end)
+				
+			end))
+			local E = Instance.new("Explosion")
+			E.BlastRadius, E.BlastPressure = 10, 1e+006
+			E.Hit:Connect(function(part, distance)
+				if (distance < 10) then
+					part:BreakJoints()
+					part.Anchored = false
+					Instance.new("Fire",part)
+				end
+			end)
+			E.Position = Place1
+			E.Parent = workspace
+			local S = Instance.new("Sound")
+			S.Volume = 100
+			S.Pitch = 1
+			S.SoundId = "rbxasset://sounds\\Launching rocket.wav"
+			S.Parent = _core
+			S:Play()
+			wait(0.1)
+			P.Parent = nil
+			P:Remove()
+			coroutine.resume(coroutine.create(function()
+				wait(10)
+				S:Remove()
+				P.Transparency = 0.5
+			end))
+			
+		end
+	end))
 end
 
 local whileFlying = function()
@@ -1318,8 +1355,8 @@ function()
 	if (flying) then
 		Swush.Parent = HumanoidRootPart
 		Juice.Parent = HumanoidRootPart
-		while (holding) do wait()
-			if (mouse.Target ~= nil) then
+		while ((holding) and (flying)) do wait()
+			if ((mouse.Target ~= nil) and (flying)) then
 				Boost.Parent = nil
 				Juice.Parent = HumanoidRootPart
 				Juice.Position = mouse.Hit.p + offset
@@ -1334,15 +1371,68 @@ function()
 		Boost.Parent = nil
 	else
 		weldArms()
+		arm_point = true
 		while (holding) do wait()
 			pointArms()
 		end
+		arm_point = false
 		deweldArms()
 	end
 end,
 function()
 	holding = false
 end)
+
+local bend_a = Instance.new("Weld")
+bend_a.Parent = HumanoidRootPart
+bend_a.Part0 = LowerTorso
+bend_a.C0 = CFrame.new(0,-0.5,0) * CFrame.Angles(math.pi/4,0,0)
+
+local bend_b = Instance.new("Weld")
+bend_b.Parent = HumanoidRootPart
+bend_b.Part0 = UpperTorso
+bend_b.C0 = CFrame.new(0,0.5,0) * CFrame.Angles(math.pi/4,0,0)
+
+setKey('g',
+	function()
+		if (flying and arm_point == false) then
+			weldArms()
+			weldLegs()
+			bend_a.C0 = CFrame.new(0,-0.5,0) * CFrame.Angles(math.pi/4,0,0)
+			bend_a.Part1 = HumanoidRootPart
+			--bend_b.Part1 = HumanoidRootPart
+			arm_point = true
+			leg_point = true
+			while (flying and leg_point) do wait()
+				pointArms()
+				pointLegs()
+			end
+			arm_point = false
+			leg_point = false
+			deweldArms()
+			deweldLegs()
+		end
+		if (holding) then
+			if (arm_point) then
+				weldLegs()
+				leg_point = true
+				bend_a.C0 = CFrame.new(0,-0.5,0) * CFrame.Angles(-math.pi/4,0,0)
+				bend_a.Part1 = HumanoidRootPart
+				--bend_b.Part1 = HumanoidRootPart
+				while (arm_point and leg_point) do wait()
+					pointLegs()
+				end
+				leg_point = false
+				deweldLegs()
+			end
+		end
+	end,
+	function()
+		leg_point = false
+		bend_a.Part1 = nil
+		bend_b.Part1 = nil
+	end
+)
 
 local switchFlying = function()
 	if flying then
@@ -1364,9 +1454,7 @@ end
 
 setKey('e',
 	function()
-		if (suit) then
-			switchFlying()
-		end
+		switchFlying()
 	end,
 	function()
 	
@@ -1377,11 +1465,27 @@ setKey('f',
 	function()
 		if (suit) then
 			if (flying) then
-				laser(coreo)
-			else
-				if (holding) then
+				if (arm_point) then
 					laser(coreL)
 					laser(coreR)
+				end
+				if (leg_point) then
+					laser(coreLL)
+					laser(coreRR)
+				end
+				if (arm_point and leg_point) or (arm_point == false and leg_point == false) then
+					laser(coreo)
+				end
+			else
+				if (holding) then
+					if (arm_point) then
+						laser(coreL)
+						laser(coreR)
+					end
+					if (leg_point) then
+						laser(coreLL)
+						laser(coreRR)
+					end
 				end
 			end
 		end
