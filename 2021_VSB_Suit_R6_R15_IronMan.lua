@@ -70,11 +70,19 @@ local function keyDown(plr,key)
 	if isKeyDown(key) then 
 		downs[key]=false
 		--print('up')
-		if Keys[key] then pcall(function() Keys[key].up() end) end
+		if Keys[key] then 
+			--pcall(function() 
+				Keys[key].up() 
+			--end) 
+		end
 	else
 		downs[key],lastpressed[key]=true,tick()
 		--print('down')
-		if Keys[key] then pcall(function() Keys[key].down() end) end
+		if Keys[key] then 
+			--pcall(function() 
+				Keys[key].down() 
+			--end) 
+		end
 	end
 end
 
@@ -228,7 +236,7 @@ end
 local WeldMeshPart = function(weld_part, mesh)
 	local _p = weld_part
 	local _m = mesh
-	_m.Parent = weld_part
+	_m.Parent = _p
 	return _p
 end
 
@@ -591,7 +599,7 @@ local SuitArmor = function(_c)
 	}
 	
 	local _right_leg_shoulder = {
-		name = 			('Rightleg_shoulder'),								--Name
+		name = 			('RightLegShoulder'),								--Name
 		size = 			(v3n(1,1,1)),							--Size
 		color = 		(COLOR_DEFAULT_PRIMARY),					--Color	
 		shape = 		("Ball"),								--Shape
@@ -599,22 +607,7 @@ local SuitArmor = function(_c)
 	}
 	
 	local _left_leg_shoulder = {
-		name = 			('Leftleg_shoulder'),								--Name
-		size = 			(v3n(1,1,1)),							--Size
-		color = 		(COLOR_DEFAULT_PRIMARY),					--Color	
-		shape = 		("Ball"),								--Shape
-		reflectance = 	(0.1)									--Reflectance
-	}
-	local _right_shoulder = {
-		name = 			('RightShoulder'),								--Name
-		size = 			(v3n(1,1,1)),							--Size
-		color = 		(COLOR_DEFAULT_PRIMARY),					--Color	
-		shape = 		("Ball"),								--Shape
-		reflectance = 	(0.1)									--Reflectance
-	}
-	
-	local _left_shoulder = {
-		name = 			('LeftShoulder'),								--Name
+		name = 			('LeftLegShoulder'),								--Name
 		size = 			(v3n(1,1,1)),							--Size
 		color = 		(COLOR_DEFAULT_PRIMARY),					--Color	
 		shape = 		("Ball"),								--Shape
@@ -768,9 +761,9 @@ local SuitArmor = function(_c)
 				(cfn(0,0.4,0))),									--C0	
 				_left_arm_band_upper.mesh)							--Mesh	
 			
-			_left_shoulder = WeldMeshPart(WeldPart(
+			_left_shoulder = WeldPart(
 				_left_shoulder.name, _left_shoulder.size, _left_shoulder.color, _left_shoulder.shape, _left_shoulder.reflectance, LeftArm, (cfn(0, 0.8, 0))
-			), _left_shoulder.mesh)
+			)
 		
 		end)
 				
@@ -808,9 +801,9 @@ local SuitArmor = function(_c)
 				(cfn(0,0.4,0))),									--C0	
 				_right_arm_band_upper.mesh)							--Mesh	
 			
-			_right_shoulder = WeldMeshPart(WeldPart(
+			_right_shoulder = WeldPart(
 				_right_shoulder.name, _right_shoulder.size, _right_shoulder.color, _right_shoulder.shape, _right_shoulder.reflectance, RightArm, (cfn(0, 0.8, 0))
-			), _right_shoulder.mesh)
+			)
 		
 		end)	
 			
@@ -827,11 +820,11 @@ local SuitArmor = function(_c)
 			--print(tostring(_right_arm_jet))
 		
 
-		pcall(function()
+		--pcall(function()
 			
-			_left_leg_shoulder = WeldMeshPart(WeldPart(
-				_left_leg_shoulder.name, _left_leg_shoulder.size, _left_leg_shoulder.color, _left_leg_shoulder.shape, _left_leg_shoulder.reflectance, RightLeg, (cfn(0, 0.8, 0))
-			), _left_leg_shoulder.mesh)
+			_left_leg_shoulder = WeldPart(
+				_left_leg_shoulder.name, _left_leg_shoulder.size, _left_leg_shoulder.color, _left_leg_shoulder.shape, _left_leg_shoulder.reflectance, LeftLeg, (cfn(0, 0.8, 0))
+			)
 		
 			_left_leg_band_upper = WeldMeshPart(WeldPart(
 				_left_leg_band_upper.name,							--Name
@@ -857,14 +850,13 @@ local SuitArmor = function(_c)
 				_left_leg_pom.name, _left_leg_pom.size, _left_leg_pom.color, _left_leg_pom.shape, _left_leg_pom.reflectance, LeftLeg, (cfn(-0.55, -0.5, 0))
 			), _left_leg_pom.mesh)
 		
-		end)
+		--end)
 		
-		pcall(function()
-		
+		--pcall(function()
 			
-			_right_leg_shoulder = WeldMeshPart(WeldPart(
+			_right_leg_shoulder = WeldPart(
 				_right_leg_shoulder.name, _right_leg_shoulder.size, _right_leg_shoulder.color, _right_leg_shoulder.shape, _right_leg_shoulder.reflectance, RightLeg, (cfn(0, 0.8, 0))
-			), _right_leg_shoulder.mesh)
+			)
 		
 			_right_leg_band_upper = WeldMeshPart(WeldPart(
 				_right_leg_band_upper.name,							--Name
@@ -890,7 +882,7 @@ local SuitArmor = function(_c)
 				_right_leg_pom.name, _right_leg_pom.size, _right_leg_pom.color, _right_leg_pom.shape, _right_leg_pom.reflectance, RightLeg, (cfn(0.55, -0.5, 0))
 			), _right_leg_pom.mesh)
 		
-		end)
+		--end)
 
 	else
 	
@@ -1012,7 +1004,7 @@ local SuitArmor = function(_c)
 				(cfn(0,-0.4,0))),									--C0	
 				_right_arm_band_lower.mesh)							--Mesh	
 			
-		end)
+			end)
 		
 		pcall(function()
 		
@@ -1031,11 +1023,11 @@ local SuitArmor = function(_c)
 			)
 		
 		end)
-						
+			
 		pcall(function()
-			_right_leg_shoulder = WeldMeshPart(WeldPart(
+			_right_leg_shoulder = WeldPart(
 				_right_leg_shoulder.name, _right_leg_shoulder.size, _right_leg_shoulder.color, _right_leg_shoulder.shape, _right_leg_shoulder.reflectance, RightUpperLeg, (cfn(0, 0.4, 0))
-			), _right_leg_shoulder.mesh)
+			)
 			
 			_right_leg_band_upper = WeldMeshPart(WeldPart(
 				_right_leg_band_upper.name,							--Name
@@ -1072,9 +1064,11 @@ local SuitArmor = function(_c)
 		end)
 		
 		pcall(function()
-			_left_leg_shoulder = WeldMeshPart(WeldPart(
+			
+			_left_leg_shoulder = WeldPart(
 				_left_leg_shoulder.name, _left_leg_shoulder.size, _left_leg_shoulder.color, _left_leg_shoulder.shape, _left_leg_shoulder.reflectance, LeftUpperLeg, (cfn(0, 0.4, 0))
-			), _left_leg_shoulder.mesh)
+			)
+		
 		
 			_left_leg_band_upper = WeldMeshPart(WeldPart(
 				_left_leg_band_upper.name,							--Name
@@ -1086,9 +1080,9 @@ local SuitArmor = function(_c)
 				(cfn(0,0,0))),									--C0	
 				_left_leg_band_upper.mesh)							--Mesh	
 			
-		end)
+			end)
 		
-		--pcall(function()
+		pcall(function()
 			
 			_left_leg_jet = WeldMeshPart(WeldPart(
 				_left_leg_jet.name,							--Name
@@ -1100,7 +1094,7 @@ local SuitArmor = function(_c)
 				(cfn(0,-0.2,0))),									--C0	
 				_left_leg_jet.mesh)							--Mesh	
 			
-		--end)
+			end)
 		
 		pcall(function()
 			
@@ -1164,7 +1158,7 @@ local weldArms = function()
 		RightArmWeld.Parent = UpperTorso
 		RightArmWeld.Part1 = RightUpperArm
 		RightArmWeld.Part0 = UpperTorso
-	else
+	else  
 		LeftArmWeld.Parent = Torso
 		LeftArmWeld.Part1 = LeftArm
 		LeftArmWeld.Part0 = Torso
@@ -1237,23 +1231,25 @@ end
 local pointLeg = function(Leg, Weld, EndCf)
 	if (Leg:lower():match("right")) then
 		--print(Leg, Weld, EndCf)
-		Weld.C0 = cfn(0.5,-0.5,0)
 		Weld.C1 = cfa(math.rad(-90),0,0) * cfn(0,0,0.5)
 		if (isR15(character)) then
+			Weld.C0 = cfn(0.5,-0.5,0)
 			Weld.C1 = Weld.C1 * (cfn((LowerTorso.CFrame * cfn(0.5,-0.5,0)).p, EndCf.p) - (LowerTorso.CFrame * cfn(0.5,-0.5,0)).p):inverse()
 			Weld.C1 = Weld.C1 * (LowerTorso.CFrame - LowerTorso.CFrame.p)
 		else
+			Weld.C0 = cfn(0.5,-1.5,0)
 			Weld.C1 = Weld.C1 * (cfn((Torso.CFrame * cfn(0.5,-0.5,0)).p, EndCf.p) - (Torso.CFrame * cfn(0.5,-0.5,0)).p):inverse()
 			Weld.C1 = Weld.C1 * (Torso.CFrame - Torso.CFrame.p)
 		end
 	elseif (Leg:lower():match("left")) then
 		--print(Leg, Weld, EndCf)
-		Weld.C0 = cfn(-0.5,-0.5,0)
 		Weld.C1 = cfa(math.rad(-90),0,0) * cfn(0,0,0.5)
 		if (isR15(character)) then
+			Weld.C0 = cfn(-0.5,-0.5,0)
 			Weld.C1 = Weld.C1 * (cfn((LowerTorso.CFrame * cfn(-0.5,0,0)).p, EndCf.p) - (LowerTorso.CFrame * cfn(-0.5,0,0)).p):inverse()
 			Weld.C1 = Weld.C1 * (LowerTorso.CFrame - LowerTorso.CFrame.p)
 		else
+			Weld.C0 = cfn(-0.5,-1.5,0)
 			Weld.C1 = Weld.C1 * (cfn((Torso.CFrame * cfn(-0.5,0,0)).p, EndCf.p) - (Torso.CFrame * cfn(-0.5,0,0)).p):inverse()
 			Weld.C1 = Weld.C1 * (Torso.CFrame - Torso.CFrame.p)
 		end
