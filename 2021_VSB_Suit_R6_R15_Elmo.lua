@@ -313,7 +313,7 @@ _MainCharacter = function(_c)
 end
 
 MainCharacter = function()
-	_MainCharacter()
+	_MainCharacter(character)
 end
 
 --[[MainCharacters = function()
