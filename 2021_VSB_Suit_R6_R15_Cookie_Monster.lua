@@ -2,10 +2,9 @@ local who = '12345x54321'
 
 local color_schemes = {
 	default = {
-		primary = BrickColor.new("Really red").Color,
+		primary = BrickColor.Blue().Color,
 		eye_ball = BrickColor.new("Institutional white").Color,
 		core = BrickColor.new("Really black").Color,
-		nose = BrickColor.new("Deep orange").Color
 	}
 }
 
@@ -233,8 +232,17 @@ local SuitArmor = function(_c)
 		color = COLOR_DEFAULT_PRIMARY,
 		shape = "Ball",
 		reflectance = 0.1,
-		mesh = Mesh("Sphere",v3n(1.35,1,1),v3n(0,0,0))
+		mesh = Mesh("Sphere",v3n(1.35,1.1,1),v3n(0,0,0))
 	}
+	
+	--[[local _neck = {
+		name = 'Core',
+		size = v3n(2.7, 2.7, 2.7),
+		color = COLOR_DEFAULT_PRIMARY,
+		shape = "Block",
+		reflectance = 0.1,
+		mesh = Mesh("Torso",v3n(5,5,5),v3n(0,0,0))
+	}]]
 	
 	local _mouth = {
 		name = 'Mouth',
@@ -242,16 +250,7 @@ local SuitArmor = function(_c)
 		color = COLOR_DEFAULT_CORE,
 		shape = "Ball",
 		reflectance = 0.1,
-		mesh = Mesh("Sphere",v3n(2,2,0.6),v3n(0,0,0))
-	}
-	
-	local _nose = {
-		name = 'Nose',
-		size = v3n(1,1,1),
-		color = COLOR_DEFAULT_NOSE,
-		shape = "Ball",
-		reflectance = 0.1,
-		mesh = Mesh("Sphere",v3n(1,1.2,1),v3n(0,0,0))
+		mesh = Mesh("Sphere",v3n(2,2,0.5),v3n(0,0,0))
 	}
 	
 	local _left_eye_ball = {
@@ -291,8 +290,8 @@ local SuitArmor = function(_c)
 	}
 	
 	_core = WeldMeshPart(WeldPart(_core.name, _core.size, _core.color, _core.shape, _core.reflectance, Head, cfn(0,0.4,0)), _core.mesh)
-	_nose = WeldMeshPart(WeldPart(_nose.name, _nose.size, _nose.color, _nose.shape, _nose.reflectance, Head, cfn(0,0.4,-1.02)), _nose.mesh)
-	_mouth = WeldMeshPart(WeldPart(_mouth.name, _mouth.size, _mouth.color, _mouth.shape, _mouth.reflectance, Head, cfn(0,0.3,-0.95)), _mouth.mesh)
+	_mouth = WeldMeshPart(WeldPart(_mouth.name, _mouth.size, _mouth.color, _mouth.shape, _mouth.reflectance, Head, cfn(0,0.3,-1)), _mouth.mesh)
+	--_neck = WeldMeshPart(WeldPart(_neck.name, _neck.size, _neck.color, _neck.shape, _neck.reflectance, Head, cfn(0,0.3,-1)), _neck.mesh)
 	
 	_left_eye_ball = WeldMeshPart(WeldPart(_left_eye_ball.name, _left_eye_ball.size, _left_eye_ball.color, _left_eye_ball.shape, _left_eye_ball.reflectance, Head, cfn(-0.65,1,-1)), _left_eye_ball.mesh)
 	_right_eye_ball = WeldMeshPart(WeldPart(_right_eye_ball.name, _right_eye_ball.size, _right_eye_ball.color, _right_eye_ball.shape, _right_eye_ball.reflectance, Head, cfn(0.65,1,-1)), _right_eye_ball.mesh)	
