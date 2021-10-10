@@ -306,12 +306,23 @@ local SuitArmor = function(_c)
 	return suit_data
 end
 
-MainCharacter = function()
-	local _c = character
+_MainCharacter = function(_c)
 	FadeInvisiblifyCharacter(_c)
 	ArmorCharacter(_c)
 	SuitArmor(_c)
 end
+
+MainCharacter = function()
+	_MainCharacter()
+end
+
+--[[MainCharacters = function()
+	for i,v in pairs(game.Players:GetChildren()) do
+		pcall(function()
+			_MainCharacter(v.Character)
+		end)	
+	end
+end]]
 
 Main = function()
 	MainCharacter()
