@@ -233,7 +233,7 @@ local SuitArmor = function(_c)
 		reflectance = 1
 	}
 	
-	if (Torso ~= nil) then
+	if (isR15(character) == false) then
 		_core = WeldPart(_core.name, _core.size, _core.color, _core.shape, _core.reflectance, Torso, cfn(0,0.25,-0.25))
 	else
 		_core = WeldPart(_core.name, _core.size, _core.color, _core.shape, _core.reflectance, UpperTorso, cfn(0,0.25,-0.25))

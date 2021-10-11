@@ -359,7 +359,25 @@ local ninja_suit = function(charz)
 			end
 		end
 	end
+		
+	local isR15 = function(_c)
+		if (_c:FindFirstChild("Torso") ~= nil) then
+			return false
+		else
+			return true
+		end
+	end
 
+	local headTagName = "Head"
+
+	local characterHeadMesh = function(part)
+		local _m = Instance.new("SpecialMesh")
+		if (isR15(character) == false) then
+			_m.Scale = v3n(1.15,1.15,1.15)
+		end
+		_m.Parent = part
+		return (headTagName.."Mesh"..part.Name)
+	end
 
 	local clear_suit = function()
 		pcall(function() chr.Suit:Remove() end)
@@ -375,14 +393,19 @@ local ninja_suit = function(charz)
 				p = prt('BodyArmor', color_schemes[color_scheme_index][2], "Plastic", f, f, 0.1, 0, v.Size, suit)
 				local cm = false
 				for j,w in pairs(v:GetChildren()) do
-					if w:IsA("SpecialMesh") then
-						m = w:Clone()
+					print(tostring(j),tostring(w))
+					print(v.Name, w.Name)?/s
+					local _a =w:FindFirstChildWhichIsA("SpecialMesh")
+					if (_a ~= nil)then
+						print(tostring(_a))
+						m = _a:Clone()
 						m.Parent = p
 						cm = true
 						break
 					end
 				end
-				if not cm then
+				if cm == false then
+					if v.Name == '' then
 					m = msh("BlockMesh", f,siz(1.005,1.005,1.01),p)
 				end
 				w = wld(v,p,f,cf(0,0,0))
@@ -903,4 +926,3 @@ end
 wait()
 game.Workspace:WaitForChild(plr.Name)
 ninja_suit(plr.Character) 
-

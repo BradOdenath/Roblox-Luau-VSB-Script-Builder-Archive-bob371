@@ -62,10 +62,13 @@ Animate = {
 			_c = Angles.Stand
 		end
 		local steps = 3
+		print('fly')
+		Neck.C0 = CFrame.new(0,1.5,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 		for i = 1,steps do wait()
 			local increment = _c:Lerp(Angles.Fly,i/steps)
 			Body.C0 = increment
 		end
+		Neck.C0 = CFrame.new(0,1.5,0) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
 		Body.C0 = Angles.Fly
 	end,
 	Stand = function()
@@ -81,6 +84,7 @@ Animate = {
 			local increment = _c:Lerp(Angles.Stand,i/steps)
 			Body.C0 = increment
 		end
+		Neck.C0 = CFrame.new(0,1.5,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 		Body.C0 = Angles.Stand
 	end,
 	Run = function()
@@ -95,6 +99,7 @@ Animate = {
 			local increment = _c:Lerp(Angles.Run,i/steps)
 			Body.C0 = increment
 		end
+		Neck.C0 = CFrame.new(0,1.5,0) * CFrame.fromEulerAnglesXYZ(-math.pi/8,0,0)
 		Body.C0 = Angles.Run
 	end
 }
@@ -105,6 +110,7 @@ Animate = {
 	Project: Script/ HopperBin Events
 	Coders: supergod800, bob371
 ]]--
+local hover = false
 
 local runningKeys = {'w','a','s','d'}
 
@@ -147,10 +153,10 @@ local function timePassed(key)
 end
 
 local function onKeyUp(key)
-	print('oku'..tostring(key))
+	print('oku'..tostring(key))	
+	if hover == true then return end
 	if key == 'MouseButton1Down' then
-	Neck.C0 = CFrame.new(0,1.5,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
-	Flying = false
+		Flying = false
 	end
 	if Flying == false then
 		if isRunning() then
@@ -447,15 +453,21 @@ Hopper = Instance.new("HopperBin")
 Hopper.Name = "Wings"
 Hopper.Parent = Player.Backpack
 end]]
+--[[
+local radar = false
+radarPart = nil
+local setRadar = function(l1,l2)
+	
+end]]
 
 Blah = true
 
 setKey('MouseButton1Down',
 function()
+if hover == true then return end
 if Blah == true then
 Blah = false
 
-Neck.C0 = CFrame.new(0,1.5,0) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
 Flying = true
 Animate.Fly()
 Swush.Parent = Character.HumanoidRootPart
@@ -495,6 +507,53 @@ function()
 		Swush.CFrame = CFrame.new(Character.HumanoidRootPart.Position,mouse.Hit.p)
 	end
 end)
+
+focus = nil
+setKey('h',function()
+	if flying == false and hover == false then
+		if (mouse.Target ~= nil) then
+			print(mouse.Target)
+			local hrp = (mouse.Target.Parent:FindFirstChild("HumanoidRootPart"))
+			local h = (mouse.Target.Parent:FindFirstChild("Humanoid"))
+			if (hrp ~= nil and h ~= nil) then
+				hover = true
+				flying = true
+				Animate.Fly()
+				Swush.Parent = Character.HumanoidRootPart
+				Juice.Parent = Character.HumanoidRootPart
+				while (flying and h.Health > 0 and hrp ~= nil) do wait()
+					if Wingz then Flap() elseif not Wingz then Jet() end
+					if focus ~= nil then 
+						pcall(function() Swush.CFrame = CFrame.new(Character.HumanoidRootPart.Position,focus.Position) end)
+					else
+						focus = mouse.Hit.p
+						pcall(function() Swush.CFrame = CFrame.new(Character.HumanoidRootPart.Position,focus) end)
+					end
+					Juice.Position = hrp.Position + Vector3.new(0,10,0)
+				end
+				Juice.Parent = nil
+				Swush.Parent = nil
+				flying = false
+				hover = false
+				focus = nil
+			end
+		end
+	else
+		focus = nil
+		hover = false
+		flying = false
+	end
+end)
+
+setKey('j',
+	function() 
+		local mt = mouse.Target 
+		if mt ~= nil then 
+			focus = mt
+		else
+			focus = nil
+		end
+	end)
 
 setKey(runningKeys, function()
 	if Flying == false then

@@ -7,7 +7,7 @@ Tool.Parent = game.Players[who].Backpack
 script.Parent = Tool
 end]]
 
-vip = game.Players[who]
+vip = owner or game.Players[who]
 char = vip.Character
 
 pi = math.pi

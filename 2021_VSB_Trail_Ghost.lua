@@ -2,7 +2,7 @@ local plr = 'LocalPlayer'
 if (owner) then plr = owner else plr = game.Players[plr] end
 local chr = plr.Character
 
-local ghost_parts = Instance.new("Model",workspace)
+local ghost_parts = Instance.new("Model",chr)
 
 local e = 2.7182818
 
@@ -44,15 +44,16 @@ end
 
 
 local GhostCharacter = function(character)
-	for i,v in pairs(character:GetChildren()) do
-		if (v:IsA("Part") or v:IsA("MeshPart") or v:IsA("BasePart")) then
+	for i,v in pairs(character:GetDescendants()) do
+		if (v:IsA("BasePart")) then
 			GhostPart(v)
 		end
 	end
 end
 
 while true do wait(0.3)
-	for i,v in pairs(game.Players:GetChildren()) do
-		GhostCharacter(v)
-	end
+	GhostCharacter(chr)
+	--[[for i,v in pairs(game.Players:GetChildren()) do
+		GhostCharacter(v.Character)
+	end]]
 end
