@@ -7,7 +7,7 @@ scale = 0.5
 player = game.Players.LocalPlayer
 if owner then player = owner end
 z = player.Character 
-for _,l in pairs (z:GetChildren()) do 
+--[[for _,l in pairs (z:GetChildren()) do 
 if l.className == "Hat" then 
 l.Parent = game.Lighting
 end end
@@ -26,7 +26,7 @@ end end
 for _,g in pairs (z.Torso:GetChildren()) do 
 if g.className == "Decal" then 
 g:Remove() 
-end end 
+end end ]]
 for _,j in pairs (z:GetChildren()) do 
 if j.className == "CharacterMesh" then 
 j:Remove() 
@@ -45,7 +45,7 @@ ra.Size = la.Size
 ll.Size = la.Size
 rl.Size = la.Size
 t.Size = Vector3.new(2,1,2)
-t.Transparency = 1
+--t.Transparency = 1
 h.Size = Vector3.new(1,1,1)
 
 for i = 1, #sizeup do 
@@ -69,7 +69,7 @@ ls.Name = "Left Shoulder"
 ls.Part0 = t 
 ls.Part1 = la 
 ls.MaxVelocity = 0.1 
-ls.C0 = CFrame.new(-sizex - la.Size.x/2+1,la.Size.y/4-1,-1) * CFrame.fromEulerAnglesXYZ(0,-3.14/2,0) 
+ls.C0 = CFrame.new(-sizex - la.Size.x/2+1,la.Size.y/4-1,-0.5) * CFrame.fromEulerAnglesXYZ(0,-3.14/2,0) 
 ls.C1 = CFrame.new(0,la.Size.y/4,0) * CFrame.fromEulerAnglesXYZ(0,3.14/2,0) 
 
 rs = Instance.new("Motor") 
@@ -78,7 +78,7 @@ rs.Name = "Right Shoulder"
 rs.Part0 = t 
 rs.Part1 = ra 
 rs.MaxVelocity = 0.1 
-rs.C0 = CFrame.new(sizex + ra.Size.x/2-1,ra.Size.y/4-1,-1) * CFrame.fromEulerAnglesXYZ(0,3.14/2,0) 
+rs.C0 = CFrame.new(sizex + ra.Size.x/2-1,ra.Size.y/4-1,-0.5) * CFrame.fromEulerAnglesXYZ(0,3.14/2,0) 
 rs.C1 = CFrame.new(0,ra.Size.y/4,0) * CFrame.fromEulerAnglesXYZ(0,3.14/2,0) 
 
 lh = Instance.new("Motor") 
@@ -87,7 +87,7 @@ lh.Name = "Left Hip"
 lh.Part0 = t 
 lh.Part1 = ll 
 lh.MaxVelocity = 0.1 
-lh.C0 = CFrame.new(sizex - ll.Size.x*1.5,-(ll.Size.y/4)*3,0) * CFrame.fromEulerAnglesXYZ(0,-3.14/2,0) 
+lh.C0 = CFrame.new(sizex - ll.Size.x*1.5,-(ll.Size.y/4)*3,0.5) * CFrame.fromEulerAnglesXYZ(0,-3.14/2,0) 
 lh.C1 = CFrame.new(0,ll.Size.y/4,0) * CFrame.fromEulerAnglesXYZ(0,3.14/2,0) 
 
 rh = Instance.new("Motor") 
@@ -96,7 +96,7 @@ rh.Name = "Right Hip"
 rh.Part0 = t 
 rh.Part1 = rl 
 rh.MaxVelocity = 0.1 
-rh.C0 = CFrame.new(sizex - rl.Size.x/2,-(ll.Size.y/4)*3,0) * CFrame.fromEulerAnglesXYZ(0,3.14/2,0) 
+rh.C0 = CFrame.new(sizex - rl.Size.x/2,-(ll.Size.y/4)*3,0.5) * CFrame.fromEulerAnglesXYZ(0,3.14/2,0) 
 rh.C1 = CFrame.new(0,rl.Size.y/4,0) * CFrame.fromEulerAnglesXYZ(0,3.14/2,0) 
 
 
@@ -105,7 +105,7 @@ n.Parent = t
 n.Name = "Neck" 
 n.Part0 = t 
 n.Part1 = h 
-n.C0 = CFrame.new(0,sizey + h.Size.y/2-0.5,-1) * CFrame.fromEulerAnglesXYZ(0,0,0) 
+n.C0 = CFrame.new(0,sizey + h.Size.y/2-0.5,-0.5) * CFrame.fromEulerAnglesXYZ(0,0,0) 
 
 a = z.Animate 
 a:Remove() 
@@ -368,26 +368,26 @@ mesh.Parent = partz
 
 -- Accesories
 
-partz = Instance.new("Part")
+--[[partz = Instance.new("Part")
 partz.Name = "TemporaryTorso"
 partz.CanCollide = false
 partz.Locked = true
 partz.Parent = z
 partz.BottomSurface = 0
 partz.formFactor = "Plate"
-partz.Size = Vector3.new(1,0.4,1)
+partz.Size = Vector3.new(1,0.4,1) --o
 partz.BrickColor = z.Torso.BrickColor
 partz.TopSurface, partz.BottomSurface = 0,0
 partz.Transparency = 0
 meshz = Instance.new("SpecialMesh")
 meshz.MeshType = "Brick"
-meshz.Scale = Vector3.new(2,2.5,2)
+meshz.Scale = Vector3.new(2,2.5,2) --ya
 meshz.Parent = partz
 w = Instance.new("Weld") 
 w.Parent = z["Torso"]
 w.Part0 = z["Torso"]
 w.Part1 = partz
-w.C0 = CFrame.new(0,0,-0.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
+w.C0 = CFrame.new(0,0,-0.5) * CFrame.fromEulerAnglesXYZ(0,0,0)]]
 
 parta = Instance.new("Part")
 parta.Name = "TemporaryTorso"
@@ -408,7 +408,7 @@ wz = Instance.new("Weld")
 wz.Parent = z["Torso"]
 wz.Part0 = z["Torso"]
 wz.Part1 = parta
-wz.C0 = CFrame.new(0,0.5,0.5) * CFrame.fromEulerAnglesXYZ(-1,0,0)
+wz.C0 = CFrame.new(0,0.5,1) * CFrame.fromEulerAnglesXYZ(-1,0,0)
 
 
 function Chat(msg)
@@ -501,12 +501,12 @@ z.Humanoid.WalkSpeed = 18
 
 coroutine.resume(coroutine.create(function()
 while true do wait()
-wz.C0 = CFrame.new(0.05,0.5,0.5) * CFrame.fromEulerAnglesXYZ(-1,0.05,0)
+wz.C0 = CFrame.new(0.05,0.5,1) * CFrame.fromEulerAnglesXYZ(-1,0.05,0)
 wait()
-wz.C0 = CFrame.new(0,0.5,0.5) * CFrame.fromEulerAnglesXYZ(-1,0,0)
+wz.C0 = CFrame.new(0,0.5,1) * CFrame.fromEulerAnglesXYZ(-1,0,0)
 wait()
-wz.C0 = CFrame.new(-0.05,0.5,0.5) * CFrame.fromEulerAnglesXYZ(-1,-0.05,0)
+wz.C0 = CFrame.new(-0.05,0.5,1) * CFrame.fromEulerAnglesXYZ(-1,-0.05,0)
 wait()
-wz.C0 = CFrame.new(0,0.5,0.5) * CFrame.fromEulerAnglesXYZ(-1,0,0)
+wz.C0 = CFrame.new(0,0.5,1) * CFrame.fromEulerAnglesXYZ(-1,0,0)
 end
 end))
