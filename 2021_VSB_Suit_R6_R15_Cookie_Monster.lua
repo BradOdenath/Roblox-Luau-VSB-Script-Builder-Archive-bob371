@@ -224,11 +224,13 @@ local LeftFoot = 		_c:FindFirstChild("LeftFoot")
 local RightHand = 		_c:FindFirstChild("RightHand")
 local LeftHand = 		_c:FindFirstChild("LeftHand")
 
+local Scaler = function(part) return part.Size.y end
+
 local _suitData = {}
 
 local _core = {
 	name = 'Core',
-	size = v3n(2.7, 2.7, 2.7),
+	size = v3n(2.7, 2.7, 2.7)*Scaler(Head),
 	color = COLOR_DEFAULT_PRIMARY,
 	shape = "Ball",
 	reflectance = 0.1,
@@ -246,7 +248,7 @@ local _core = {
 
 local _mouth = {
 	name = 'Mouth',
-	size = v3n(1,1,1),
+	size = v3n(1,1,1)*Scaler(Head),
 	color = COLOR_DEFAULT_CORE,
 	shape = "Ball",
 	reflectance = 0.1,
@@ -255,7 +257,7 @@ local _mouth = {
 
 local _left_eye_ball = {
 	name = 'Core',
-	size = v3n(1.5,1.5,1.5),
+	size = v3n(1.5,1.5,1.5)*Scaler(Head),
 	color = COLOR_DEFAULT_EYEBALL,
 	shape = "Ball",
 	reflectance = 0.1,
@@ -264,7 +266,7 @@ local _left_eye_ball = {
 
 local _right_eye_ball = {
 	name = 'Core',
-	size = v3n(1.5,1.5,1.5),
+	size = v3n(1.5,1.5,1.5)*Scaler(Head),
 	color = COLOR_DEFAULT_EYEBALL,
 	shape = "Ball",
 	reflectance = 0.1,
@@ -273,7 +275,7 @@ local _right_eye_ball = {
 
 local _left_eye_pupil = {
 	name = 'Core',
-	size = v3n(0.5,0.5,0.5),
+	size = v3n(0.5,0.5,0.5)*Scaler(Head),
 	color = COLOR_DEFAULT_CORE,
 	shape = "Ball",
 	reflectance = 0.1,
@@ -282,22 +284,26 @@ local _left_eye_pupil = {
 
 local _right_eye_pupil = {
 	name = 'Core',
-	size = v3n(0.5,0.5,0.5),
+	size = v3n(0.5,0.5,0.5)*Scaler(Head),
 	color = COLOR_DEFAULT_CORE,
 	shape = "Ball",
 	reflectance = 0.1,
 	mesh = Mesh("Sphere",v3n(1,1,1),v3n(0,0,0))
 }
 
-_core = WeldMeshPart(WeldPart(_core.name, _core.size, _core.color, _core.shape, _core.reflectance, Head, cfn(0,0.4,0)), _core.mesh)
-_mouth = WeldMeshPart(WeldPart(_mouth.name, _mouth.size, _mouth.color, _mouth.shape, _mouth.reflectance, Head, cfn(0,0.3,-1)), _mouth.mesh)
+_core = WeldMeshPart(WeldPart(_core.name, _core.size, _core.color, _core.shape, _core.reflectance, Head, cfn(0,0.4*Scaler(Head),0)), _core.mesh)
+_mouth = WeldMeshPart(WeldPart(_mouth.name, _mouth.size, _mouth.color, _mouth.shape, _mouth.reflectance, Head, cfn(0,0.3*Scaler(Head),-1*Scaler(Head))), _mouth.mesh)
 --_neck = WeldMeshPart(WeldPart(_neck.name, _neck.size, _neck.color, _neck.shape, _neck.reflectance, Head, cfn(0,0.3,-1)), _neck.mesh)
 
-_left_eye_ball = WeldMeshPart(WeldPart(_left_eye_ball.name, _left_eye_ball.size, _left_eye_ball.color, _left_eye_ball.shape, _left_eye_ball.reflectance, Head, cfn(-0.65,1,-1)), _left_eye_ball.mesh)
-_right_eye_ball = WeldMeshPart(WeldPart(_right_eye_ball.name, _right_eye_ball.size, _right_eye_ball.color, _right_eye_ball.shape, _right_eye_ball.reflectance, Head, cfn(0.65,1,-1)), _right_eye_ball.mesh)	
+_left_eye_ball = WeldMeshPart(WeldPart(_left_eye_ball.name, _left_eye_ball.size, _left_eye_ball.color, _left_eye_ball.shape, _left_eye_ball.reflectance, Head, cfn(-0.65*Scaler(Head),1*Scaler(Head),-1*Scaler(Head))), _left_eye_ball.mesh)
+_right_eye_ball = WeldMeshPart(WeldPart(_right_eye_ball.name, _right_eye_ball.size, _right_eye_ball.color, _right_eye_ball.shape, _right_eye_ball.reflectance, Head, cfn(0.65*Scaler(Head),1*Scaler(Head),-1*Scaler(Head))), _right_eye_ball.mesh)	
 
-_left_eye_pupil = WeldMeshPart(WeldPart(_left_eye_pupil.name, _left_eye_pupil.size, _left_eye_pupil.color, _left_eye_pupil.shape, _left_eye_pupil.reflectance, Head, cfn(-0.65,1,-1.7)), _left_eye_pupil.mesh)
-_right_eye_pupil = WeldMeshPart(WeldPart(_right_eye_pupil.name, _right_eye_pupil.size, _right_eye_pupil.color, _right_eye_pupil.shape, _right_eye_pupil.reflectance, Head, cfn(0.65,1,-1.7)), _right_eye_pupil.mesh)
+_left_eye_pupil = WeldMeshPart(WeldPart(_left_eye_pupil.name, _left_eye_pupil.size, _left_eye_pupil.color, _left_eye_pupil.shape, _left_eye_pupil.reflectance, Head, 
+	cfn(-0.65*Scaler(Head),1*Scaler(Head),-1.7*Scaler(Head))
+	), _left_eye_pupil.mesh)
+_right_eye_pupil = WeldMeshPart(WeldPart(_right_eye_pupil.name, _right_eye_pupil.size, _right_eye_pupil.color, _right_eye_pupil.shape, _right_eye_pupil.reflectance, Head, 
+	cfn(0.65*Scaler(Head),1*Scaler(Head),-1.7*Scaler(Head))
+	), _right_eye_pupil.mesh)
 
 table.insert(_suitData, _core)
 

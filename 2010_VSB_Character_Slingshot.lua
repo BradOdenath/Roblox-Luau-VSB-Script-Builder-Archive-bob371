@@ -141,8 +141,8 @@ hit.Parent.Humanoid.Sit = false
 hit.Parent.Humanoid.PlatformStand = true
 while script.Parent.Torso.Position.z > 90 do wait() end
 print(hit.Parent.Name.." Was Shot Off Of bob371's Slingshot XD")
-script.Parent.Torso:BreakJoints()
-for i = 1,100 do hit.Parent:BreakJoints() end
+--script.Parent.Torso:BreakJoints()
+--for i = 1,100 do hit.Parent:BreakJoints() end
 script.Parent.Torso.BodyPosition.position = Vector3.new(0,20,-5)
 hit.Parent.Humanoid.PlatformStand = false
 wait(5)
@@ -151,7 +151,7 @@ wait(5)
 BodyPosition.maxForce = Vector3.new(1e+005,1e+005,1e+005)
 wait(1)
 script.Parent.Torso.BodyPosition.position = Vector3.new(0,6,-5)
-script.Parent.Torso:BreakJoints()
+--script.Parent.Torso:BreakJoints()
 wait(0.5)
 script.Parent.Torso.BodyPosition.position = Vector3.new(0,3,-5)
 Yes()

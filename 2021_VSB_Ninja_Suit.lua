@@ -394,7 +394,7 @@ local ninja_suit = function(charz)
 				local cm = false
 				for j,w in pairs(v:GetChildren()) do
 					print(tostring(j),tostring(w))
-					print(v.Name, w.Name)?/s
+					print(v.Name, w.Name)
 					local _a =w:FindFirstChildWhichIsA("SpecialMesh")
 					if (_a ~= nil)then
 						print(tostring(_a))

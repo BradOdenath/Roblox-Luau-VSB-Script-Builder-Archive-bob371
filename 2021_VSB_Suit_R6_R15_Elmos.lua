@@ -1,89 +1,18 @@
 local who = '12345x54321'
 
 local color_schemes = {
-	elmo = {
+	default = {
 		primary = BrickColor.new("Really red").Color,
 		eye_ball = BrickColor.new("Institutional white").Color,
 		core = BrickColor.new("Really black").Color,
 		nose = BrickColor.new("Deep orange").Color
-	},
-	cookie_monster = {
-		primary = BrickColor.Blue().Color,
-		eye_ball = BrickColor.new("Institutional white").Color,
-		core = BrickColor.new("Really black").Color,
-	},
-	oscar_grouche = {
-		primary = BrickColor.Green().Color,
-		eye_ball = BrickColor.new("Institutional white").Color,
-		core = BrickColor.new("Really black").Color,
-		eye_brows = BrickColor.new("Burnt Sienna").Color,
-	},
-	ernie = {
-		primary = BrickColor.new("Bright orange").Color,
-		eye_ball = BrickColor.new("Institutional white").Color,
-		core = BrickColor.new("Really black").Color,
-		nose = BrickColor.Red().Color
-	},
-	bert = {
-		primary = BrickColor.Yellow().Color,
-		eye_ball = BrickColor.new("Institutional white").Color,
-		core = BrickColor.new("Really black").Color,
-		nose = BrickColor.new("Bright orange").Color
-	},
-	grover = {
-		primary = BrickColor.Blue().Color,
-		eye_ball = BrickColor.new("Institutional white").Color,
-		core = BrickColor.new("Really black").Color,
-		nose = BrickColor.new("Deep orange").Color
-	},
-	blue = {
-		primary = BrickColor.new("Bright bluish green").Color,
-		eye_ball = BrickColor.new("Institutional white").Color,
-		core = BrickColor.new("Really black").Color,
-		nose = BrickColor.new("Deep orange").Color
-	},
-	red = {
-		primary = BrickColor.new("Really red").Color,
-		eye_ball = BrickColor.new("Institutional white").Color,
-		core = BrickColor.new("Really black").Color,
-		nose = BrickColor.Yellow().Color
-	},
-	
-	
+	}
 }
 
-tableate = function(t)
-	local _t = {}
-	for i,v in pairs(t) do
-		table.insert(_t,v)
-	end
-	--print(#t,#_t)
-	return _t
-end
-
-iterator = 1
-iteration = function() 
-	
-	if iterator > #color_schemes then 
-		iterator = 1
-	end
-	local _z = table.foreachi(color_schemes,
-		function() 
-			local counter = 1 
-			for i,v in pairs(color_schemes) do 
-				print(i,v)
-				if counter == iterator then 
-					return v 
-				else 
-					counter = counter + 1 
-				end 
-			end 
-		end)
-	iterator = iterator + 1 
-	return _z 
-end
-
---COLOR_SCHEME = color_schemes.elmo
+COLOR_DEFAULT_PRIMARY = color_schemes.default.primary
+COLOR_DEFAULT_CORE = color_schemes.default.core
+COLOR_DEFAULT_EYEBALL = color_schemes.default.eye_ball
+COLOR_DEFAULT_NOSE = color_schemes.default.nose
 
 local player = owner or game.Players[who] or game.Players.LocalPlayer
 local character = player.Character
@@ -216,7 +145,7 @@ local ArmorPart = function(part)
 	local _p = WeldPart(
 		('Armor'..tostring(part)),
 		part.Size,
-		COLOR_SCHEME.primary,
+		COLOR_DEFAULT_PRIMARY,
 		"Block",
 		0.1,
 		part,
@@ -261,7 +190,6 @@ end
 
 
 local SuitArmor = function(_c)
-	local COLOR_SCHEME = iteration()
 	--R6/R15
 	local Head =	 		_c:FindFirstChild("Head")
 	
@@ -302,7 +230,7 @@ local SuitArmor = function(_c)
 	local _core = {
 		name = 'Core',
 		size = v3n(2.7, 2.7, 2.7),
-		color = COLOR_SCHEME.primary,
+		color = COLOR_DEFAULT_PRIMARY,
 		shape = "Ball",
 		reflectance = 0.1,
 		mesh = Mesh("Sphere",v3n(1.35,1,1),v3n(0,0,0))
@@ -311,28 +239,25 @@ local SuitArmor = function(_c)
 	local _mouth = {
 		name = 'Mouth',
 		size = v3n(1,1,1),
-		color = COLOR_SCHEME.core,
+		color = COLOR_DEFAULT_CORE,
 		shape = "Ball",
 		reflectance = 0.1,
 		mesh = Mesh("Sphere",v3n(2,2,0.6),v3n(0,0,0))
 	}
-
-	local _nose
-	if (COLOR_SCHEME.nose) then
-		_nose = {
-			name = 'Nose',
-			size = v3n(1,1,1),
-			color = COLOR_SCHEME.nose,
-			shape = "Ball",
-			reflectance = 0.1,
-			mesh = Mesh("Sphere",v3n(1,1.2,1),v3n(0,0,0))
-		}
-	end
+	
+	local _nose = {
+		name = 'Nose',
+		size = v3n(1,1,1),
+		color = COLOR_DEFAULT_NOSE,
+		shape = "Ball",
+		reflectance = 0.1,
+		mesh = Mesh("Sphere",v3n(1,1.2,1),v3n(0,0,0))
+	}
 	
 	local _left_eye_ball = {
 		name = 'Core',
 		size = v3n(1.5,1.5,1.5),
-		color = COLOR_SCHEME.eye_ball,
+		color = COLOR_DEFAULT_EYEBALL,
 		shape = "Ball",
 		reflectance = 0.1,
 		mesh = Mesh("Sphere",v3n(1,1,1),v3n(0,0,0))
@@ -341,53 +266,16 @@ local SuitArmor = function(_c)
 	local _right_eye_ball = {
 		name = 'Core',
 		size = v3n(1.5,1.5,1.5),
-		color = COLOR_SCHEME.eye_ball,
+		color = COLOR_DEFAULT_EYEBALL,
 		shape = "Ball",
 		reflectance = 0.1,
 		mesh = Mesh("Sphere",v3n(1,1,1),v3n(0,0,0))
 	}
 	
-	local _left_eye_brow, _right_eye_brow
-	if COLOR_SCHEME.eye_brows then
-		_left_eye_brow = {
-			name = 'Core',
-			size = v3n(1.5,1.5,1.5),
-			color = COLOR_SCHEME.eye_brows,
-			shape = "Ball",
-			reflectance = 0.1,
-			mesh = Mesh("Sphere",v3n(1,1,1),v3n(0,0,0))
-		}
-		
-		_right_eye_brow = {
-			name = 'Core',
-			size = v3n(1.5,1.5,1.5),
-			color = COLOR_SCHEME.eye_brows,
-			shape = "Ball",
-			reflectance = 0.1,
-			mesh = Mesh("Sphere",v3n(1,1,1),v3n(0,0,0))
-		}
-		_left_eye_lid = {
-			name = 'Core',
-			size = v3n(1.5,1.5,1.5),
-			color = COLOR_SCHEME.primary,
-			shape = "Ball",
-			reflectance = 0.1,
-			mesh = Mesh("Sphere",v3n(1,1,1),v3n(0,0,0))
-		}
-		
-		_right_eye_lid = {
-			name = 'Core',
-			size = v3n(1.5,1.5,1.5),
-			color = COLOR_SCHEME.primary,
-			shape = "Ball",
-			reflectance = 0.1,
-			mesh = Mesh("Sphere",v3n(1,1,1),v3n(0,0,0))
-		}
-	end
 	local _left_eye_pupil = {
 		name = 'Core',
 		size = v3n(0.5,0.5,0.5),
-		color = COLOR_SCHEME.core,
+		color = COLOR_DEFAULT_CORE,
 		shape = "Ball",
 		reflectance = 0.1,
 		mesh = Mesh("Sphere",v3n(1,1,1),v3n(0,0,0))
@@ -396,30 +284,19 @@ local SuitArmor = function(_c)
 	local _right_eye_pupil = {
 		name = 'Core',
 		size = v3n(0.5,0.5,0.5),
-		color = COLOR_SCHEME.core,
+		color = COLOR_DEFAULT_CORE,
 		shape = "Ball",
 		reflectance = 0.1,
 		mesh = Mesh("Sphere",v3n(1,1,1),v3n(0,0,0))
 	}
 	
 	_core = WeldMeshPart(WeldPart(_core.name, _core.size, _core.color, _core.shape, _core.reflectance, Head, cfn(0,0.4,0)), _core.mesh)
-	
-	if (COLOR_SCHEME.nose) then
-		_nose = WeldMeshPart(WeldPart(_nose.name, _nose.size, _nose.color, _nose.shape, _nose.reflectance, Head, cfn(0,0.4,-1.02)), _nose.mesh)
-	end
-	
+	_nose = WeldMeshPart(WeldPart(_nose.name, _nose.size, _nose.color, _nose.shape, _nose.reflectance, Head, cfn(0,0.4,-1.02)), _nose.mesh)
 	_mouth = WeldMeshPart(WeldPart(_mouth.name, _mouth.size, _mouth.color, _mouth.shape, _mouth.reflectance, Head, cfn(0,0.3,-0.95)), _mouth.mesh)
 	
 	_left_eye_ball = WeldMeshPart(WeldPart(_left_eye_ball.name, _left_eye_ball.size, _left_eye_ball.color, _left_eye_ball.shape, _left_eye_ball.reflectance, Head, cfn(-0.65,1,-1)), _left_eye_ball.mesh)
 	_right_eye_ball = WeldMeshPart(WeldPart(_right_eye_ball.name, _right_eye_ball.size, _right_eye_ball.color, _right_eye_ball.shape, _right_eye_ball.reflectance, Head, cfn(0.65,1,-1)), _right_eye_ball.mesh)	
 	
-	if COLOR_SCHEME.eye_brows then
-		_left_eye_brow = WeldMeshPart(WeldPart(_left_eye_brow.name, _left_eye_brow.size, _left_eye_brow.color, _left_eye_brow.shape, _left_eye_brow.reflectance, Head, cfn(-0.65,1.1,-0.97)), _left_eye_brow.mesh)
-		_right_eye_brow = WeldMeshPart(WeldPart(_right_eye_brow.name, _right_eye_brow.size, _right_eye_brow.color, _right_eye_brow.shape, _right_eye_brow.reflectance, Head, cfn(0.65,1.1,-0.97)), _right_eye_brow.mesh)	
-		_left_eye_lid = WeldMeshPart(WeldPart(_left_eye_lid.name, _left_eye_lid.size, _left_eye_lid.color, _left_eye_lid.shape, _left_eye_lid.reflectance, Head, cfn(-0.65,1.2,-0.95)), _left_eye_lid.mesh)
-		_right_eye_lid = WeldMeshPart(WeldPart(_right_eye_lid.name, _right_eye_lid.size, _right_eye_lid.color, _right_eye_lid.shape, _right_eye_lid.reflectance, Head, cfn(0.65,1.2,-0.95)), _right_eye_lid.mesh)
-	end
-
 	_left_eye_pupil = WeldMeshPart(WeldPart(_left_eye_pupil.name, _left_eye_pupil.size, _left_eye_pupil.color, _left_eye_pupil.shape, _left_eye_pupil.reflectance, Head, cfn(-0.65,1,-1.7)), _left_eye_pupil.mesh)
 	_right_eye_pupil = WeldMeshPart(WeldPart(_right_eye_pupil.name, _right_eye_pupil.size, _right_eye_pupil.color, _right_eye_pupil.shape, _right_eye_pupil.reflectance, Head, cfn(0.65,1,-1.7)), _right_eye_pupil.mesh)
 	
