@@ -81,5 +81,5 @@ keysEvent.OnServerEvent:Connect(keyDown)
 
 setKey({'q','e'}, 
 	function() for i,v in pairs(mouse) do print(i,v) end end, 
-	function() for i,v in pairs(currentcamera) do print(i,v) end end
+	--function() for i,v in pairs(currentcamera) do print(i,v) end end
 )
