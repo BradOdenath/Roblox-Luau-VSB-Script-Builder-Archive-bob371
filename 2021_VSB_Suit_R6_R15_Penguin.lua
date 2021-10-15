@@ -244,8 +244,6 @@ local SuitArmor = function(_c)
 	local LeftFoot = 		_c:FindFirstChild("LeftFoot")
 	local RightHand = 		_c:FindFirstChild("RightHand")
 	local LeftHand = 		_c:FindFirstChild("LeftHand")
-
-	local _suitData = {}
 	
 	local _core = {
 		name = 'Core',
@@ -336,14 +334,6 @@ local SuitArmor = function(_c)
 		mesh = Mesh("Sphere",v3n(1,0.6,0.6),v3n(0,0,0))
 	}
 	_right_foot = WeldMeshPart(WeldPart(_right_foot.name, _right_foot.size, _right_foot.color, _right_foot.shape, _right_foot.reflectance, HumanoidRootPart, cfn(0.4,-2.7,-0.6)),_right_foot.mesh)
-
-
-
-
-	if (isR15(character) == false) then
-	else
-	end
-	table.insert(_suitData, _core)
 	
 	
 	return suit_data
