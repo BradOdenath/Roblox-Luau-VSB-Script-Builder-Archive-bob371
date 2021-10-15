@@ -172,7 +172,7 @@ local ArmorPart = function(part)
 end
 
 FadeInvisiblifyCharacter = function(c)
-	for j = 0, 0.5, 0.1 do wait()
+	for j = 0, 1, 0.1 do wait()
 		set_transparency(c, j)
 	end
 end
