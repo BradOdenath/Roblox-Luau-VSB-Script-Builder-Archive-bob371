@@ -4,8 +4,7 @@
 -- mute 2
 
 scale = 0.5
-player = game.Players.LocalPlayer
-if owner then player = owner end
+player = owner or game.Players.LocalPlayer
 z = player.Character 
 --[[for _,l in pairs (z:GetChildren()) do 
 if l.className == "Hat" then 
@@ -106,6 +105,7 @@ n.Name = "Neck"
 n.Part0 = t 
 n.Part1 = h 
 n.C0 = CFrame.new(0,sizey + h.Size.y/2-0.5,-0.5) * CFrame.fromEulerAnglesXYZ(0,0,0) 
+
 
 a = z.Animate 
 a:Remove() 
@@ -389,7 +389,7 @@ w.Part0 = z["Torso"]
 w.Part1 = partz
 w.C0 = CFrame.new(0,0,-0.5) * CFrame.fromEulerAnglesXYZ(0,0,0)]]
 
-parta = Instance.new("Part")
+local parta = Instance.new("Part")
 parta.Name = "TemporaryTorso"
 parta.CanCollide = false
 parta.Locked = true
@@ -404,11 +404,12 @@ mesha = Instance.new("SpecialMesh")
 mesha.MeshType = "Brick"
 mesha.Scale = Vector3.new(0.5,1,1)
 mesha.Parent = parta
-wz = Instance.new("Weld") 
+local tailstanc = 1
+local wz = Instance.new("Weld") 
 wz.Parent = z["Torso"]
 wz.Part0 = z["Torso"]
 wz.Part1 = parta
-wz.C0 = CFrame.new(0,0.5,1) * CFrame.fromEulerAnglesXYZ(-1,0,0)
+wz.C0 = CFrame.new(0,0.5,tailstanc) * CFrame.fromEulerAnglesXYZ(-1,0,0)
 
 
 function Chat(msg)
@@ -501,12 +502,12 @@ z.Humanoid.WalkSpeed = 18
 
 coroutine.resume(coroutine.create(function()
 while true do wait()
-wz.C0 = CFrame.new(0.05,0.5,1) * CFrame.fromEulerAnglesXYZ(-1,0.05,0)
+wz.C0 = CFrame.new(0.05,0.5,tailstanc) * CFrame.fromEulerAnglesXYZ(-1,0.05,0)
 wait()
-wz.C0 = CFrame.new(0,0.5,1) * CFrame.fromEulerAnglesXYZ(-1,0,0)
+wz.C0 = CFrame.new(0,0.5,tailstanc) * CFrame.fromEulerAnglesXYZ(-1,0,0)
 wait()
-wz.C0 = CFrame.new(-0.05,0.5,1) * CFrame.fromEulerAnglesXYZ(-1,-0.05,0)
+wz.C0 = CFrame.new(-0.05,0.5,tailstanc) * CFrame.fromEulerAnglesXYZ(-1,-0.05,0)
 wait()
-wz.C0 = CFrame.new(0,0.5,1) * CFrame.fromEulerAnglesXYZ(-1,0,0)
+wz.C0 = CFrame.new(0,0.5,tailstanc) * CFrame.fromEulerAnglesXYZ(-1,0,0)
 end
 end))
