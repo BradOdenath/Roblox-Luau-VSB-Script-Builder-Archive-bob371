@@ -75,9 +75,10 @@ end
 populate_sbs(focus)
 color_sbs()
 
+--[[
 for i,v in pairs(workspace:GetDescendants()) do
 	if v:IsA("SelectionBox") then
 		v:Remove()
 		
 	end
-end
+end]]
