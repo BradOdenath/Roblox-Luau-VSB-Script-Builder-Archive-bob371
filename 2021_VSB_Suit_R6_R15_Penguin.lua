@@ -5,7 +5,7 @@ local color_schemes = {
 		primary = BrickColor.new("Really black").Color,
 		secondary = BrickColor.new("Bright yellow").Color,
 		core = BrickColor.new("White").Color
-	}
+	},
 }
 
 COLOR_DEFAULT_PRIMARY = color_schemes.default.primary
@@ -120,6 +120,16 @@ local visiblify = function(model)
 	end
 end
 
+local Weld = function(part0,part1,c0)
+	local _w = Instance.new("Weld")
+	_w.Parent = part1
+	_w.Part0 = part0
+	_w.Part1 = part1
+	_w.C0 = c0
+		
+	return _w
+end
+
 local WeldPart = function(name, size, color, shape, reflectance, part0, c0)
 	local _p = Instance.new("Part")
 	_p.Name = "WP_"..name
@@ -132,11 +142,7 @@ local WeldPart = function(name, size, color, shape, reflectance, part0, c0)
 	_p.Reflectance = reflectance
 	_p.Parent = part0
 	
-	local _w = Instance.new("Weld")
-	_w.Parent = _p
-	_w.Part0 = part0
-	_w.Part1 = _p
-	_w.C0 = c0
+	local _w = Weld(part0,_p,c0)
 	
 	return _p
 end
@@ -210,10 +216,13 @@ local SuitArmor = function(_c)
 
 	--R6/R15
 	local Head =	 		_c:FindFirstChild("Head")
+	Weld(Head,HumanoidRootPart,cfn(0,1,0))
+	
 	
 	--R6
 	local Torso = 			_c:FindFirstChild("Torso")
-	
+		Weld(Torso,HumanoidRootPart,cfn(0,1,0))
+
 	--R6
 	
 	--R15
@@ -222,8 +231,11 @@ local SuitArmor = function(_c)
 	
 	--R6
 	local LeftArm = 		_c:FindFirstChild("Left Arm")	
+	Weld(LeftArm,HumanoidRootPart,cfn(0,1,0))
+
 	local RightArm = 		_c:FindFirstChild("Right Arm")	
-	
+	Weld(RightArm,HumanoidRootPart,cfn(0,1,0))
+
 	--R15
 	local LeftLowerArm = 	_c:FindFirstChild("LeftLowerArm")
 	local RightLowerArm = 	_c:FindFirstChild("RightLowerArm")	
@@ -232,8 +244,11 @@ local SuitArmor = function(_c)
 	
 	--R6
 	local LeftLeg = 		_c:FindFirstChild("Left Leg")	
+	Weld(LeftLeg,HumanoidRootPart,cfn(0,1,0))
+
 	local RightLeg = 		_c:FindFirstChild("Right Leg")	
-	
+	Weld(RightLeg,HumanoidRootPart,cfn(0,1,0))
+
 	--R15
 	local LeftLowerLeg = 	_c:FindFirstChild("LeftLowerLeg")
 	local RightLowerLeg = 	_c:FindFirstChild("RightLowerLeg")	
