@@ -1,5 +1,10 @@
 local focus = owner.Character
 
+pcall(function()
+	local ff = Instance.new("ForceField",focus)
+	ff.Visible = false
+end)
+
 local MIN = 0
 local MAX = 255
 local STEP = 15

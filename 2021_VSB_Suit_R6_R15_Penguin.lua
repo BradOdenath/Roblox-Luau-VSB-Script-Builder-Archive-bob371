@@ -169,7 +169,7 @@ local ArmorPart = function(part)
 		('Armor'..tostring(part)),
 		part.Size,
 		COLOR_DEFAULT_PRIMARY,
-		"Block",
+		part.Shape,
 		0.1,
 		part,
 		cfn(0,0,0)
@@ -203,14 +203,22 @@ FadeInvisiblifyCharacter = function(c)
 end
 
 local ArmorCharacter = function(c)
-	invisiblify(c)
 	for i,v in pairs(c:GetChildren()) do
 		if (v:IsA("BasePart") and v.Name ~= "HumanoidRootPart") then
-			ArmorPart(v)
+			if v.Parent:IsA("BasePart") then
+				ArmorPart(v)
+			end
 		end
 	end
 end
 
+local Height = function(parts)
+	local height = 0
+	for i,v in pairs(parts) do
+		height = height + v.Size.y
+	end
+	return height
+end
 
 local SuitArmor = function(_c)
 	local HumanoidRootPart =_c:FindFirstChild("HumanoidRootPart")
@@ -222,26 +230,34 @@ local SuitArmor = function(_c)
 	
 	--R6
 	local Torso = 			_c:FindFirstChild("Torso")
-		Weld(Torso,HumanoidRootPart,cfn(0,1,0))
+	Weld(Torso,HumanoidRootPart,cfn(0,1,0))
 
 	--R6
 	
 	--R15
 	local UpperTorso = 		_c:FindFirstChild("UpperTorso")
+	Weld(UpperTorso,HumanoidRootPart,cfn(0,1,0))
 	local LowerTorso = 		_c:FindFirstChild("LowerTorso")
-	
+	Weld(LowerTorso,HumanoidRootPart,cfn(0,1,0))
+
 	--R6
 	local LeftArm = 		_c:FindFirstChild("Left Arm")	
-	Weld(LeftArm,HumanoidRootPart,cfn(0,1,0))
-
 	local RightArm = 		_c:FindFirstChild("Right Arm")	
-	Weld(RightArm,HumanoidRootPart,cfn(0,1,0))
 
 	--R15
 	local LeftLowerArm = 	_c:FindFirstChild("LeftLowerArm")
+	Weld(LeftLowerArm,HumanoidRootPart,cfn(0,1,0))
+
 	local RightLowerArm = 	_c:FindFirstChild("RightLowerArm")	
+	Weld(RightLowerArm,HumanoidRootPart,cfn(0,1,0))
+
+	
 	local LeftUpperArm = 	_c:FindFirstChild("LeftUpperArm")
+	Weld(LeftUpperArm,HumanoidRootPart,cfn(0,1,0))
+
+	
 	local RightUpperArm = 	_c:FindFirstChild("RightUpperArm")
+	Weld(RightUpperArm,HumanoidRootPart,cfn(0,1,0))
 	
 	--R6
 	local LeftLeg = 		_c:FindFirstChild("Left Leg")	
@@ -252,14 +268,31 @@ local SuitArmor = function(_c)
 
 	--R15
 	local LeftLowerLeg = 	_c:FindFirstChild("LeftLowerLeg")
+	Weld(LeftLowerLeg,HumanoidRootPart,cfn(0,1,0))
+
 	local RightLowerLeg = 	_c:FindFirstChild("RightLowerLeg")	
+	Weld(RightLowerLeg,HumanoidRootPart,cfn(0,1,0))
+
 	local LeftUpperLeg = 	_c:FindFirstChild("LeftUpperLeg")
+	Weld(LeftUpperLeg,HumanoidRootPart,cfn(0,1,0))
+
 	local RightUpperLeg = 	_c:FindFirstChild("RightUpperLeg")
+	Weld(RightUpperLeg,HumanoidRootPart,cfn(0,1,0))
 	
 	local RightFoot = 		_c:FindFirstChild("RightFoot")
+	Weld(RightFoot,HumanoidRootPart,cfn(0,1,0))
+
 	local LeftFoot = 		_c:FindFirstChild("LeftFoot")
+	Weld(LeftFoot,HumanoidRootPart,cfn(0,1,0))
+
 	local RightHand = 		_c:FindFirstChild("RightHand")
+	
 	local LeftHand = 		_c:FindFirstChild("LeftHand")
+	
+	local _height = 0.0
+	if (isR15(_c)) then
+		_height = 0.1
+	end
 	
 	local _core = {
 		name = 'Core',
@@ -268,7 +301,7 @@ local SuitArmor = function(_c)
 		shape = "Ball",
 		reflectance = 0
 	}
-	_core = WeldPart(_core.name, _core.size, _core.color, _core.shape, _core.reflectance, HumanoidRootPart, cfn(0,-2,0))
+	_core = WeldPart(_core.name, _core.size, _core.color, _core.shape, _core.reflectance, HumanoidRootPart, cfn(0,-2-_height,0))
 
 	local _head = {
 		name = 'Head',
@@ -277,7 +310,7 @@ local SuitArmor = function(_c)
 		shape = "Ball",
 		reflectance = 0
 	}
-	_head = WeldPart(_head.name, _head.size, _head.color, _head.shape, _head.reflectance, HumanoidRootPart, cfn(0,-1,0))
+	_head = WeldPart(_head.name, _head.size, _head.color, _head.shape, _head.reflectance, HumanoidRootPart, cfn(0,-1-_height,0))
 
 	local _beak = {
 		name = 'beak',
@@ -287,7 +320,7 @@ local SuitArmor = function(_c)
 		reflectance = 0,
 		mesh = Mesh("Sphere",v3n(4,1.2,2),v3n(0,0,0))
 	}
-	_beak = WeldMeshPart(WeldPart(_beak.name, _beak.size, _beak.color, _beak.shape, _beak.reflectance, HumanoidRootPart, cfn(0,-1.1,-1)),_beak.mesh)
+	_beak = WeldMeshPart(WeldPart(_beak.name, _beak.size, _beak.color, _beak.shape, _beak.reflectance, HumanoidRootPart, cfn(0,-1.1-_height,-1)),_beak.mesh)
 
 	local _left_eye = {
 		name = 'left_eye',
@@ -296,7 +329,7 @@ local SuitArmor = function(_c)
 		shape = "Ball",
 		reflectance = 0
 	}
-	_left_eye = WeldPart(_left_eye.name, _left_eye.size, _left_eye.color, _left_eye.shape, _left_eye.reflectance, HumanoidRootPart, cfn(-0.4,-0.5,-0.9))
+	_left_eye = WeldPart(_left_eye.name, _left_eye.size, _left_eye.color, _left_eye.shape, _left_eye.reflectance, HumanoidRootPart, cfn(-0.4,-0.5-_height,-0.9))
 
 	
 	local _right_eye = {
@@ -306,7 +339,7 @@ local SuitArmor = function(_c)
 		shape = "Ball",
 		reflectance = 0
 	}
-	_right_eye = WeldPart(_right_eye.name, _right_eye.size, _right_eye.color, _right_eye.shape, _right_eye.reflectance, HumanoidRootPart, cfn(0.4,-0.5,-0.9))
+	_right_eye = WeldPart(_right_eye.name, _right_eye.size, _right_eye.color, _right_eye.shape, _right_eye.reflectance, HumanoidRootPart, cfn(0.4,-0.5-_height,-0.9))
 
 
 	local _left_arm = {
@@ -317,7 +350,7 @@ local SuitArmor = function(_c)
 		reflectance = 0,
 		mesh = Mesh("Wedge",v3n(1,1.2,1),v3n(0,0,0))
 	}
-	_left_arm = WeldMeshPart(WeldPart(_left_arm.name, _left_arm.size, _left_arm.color, _left_arm.shape, _left_arm.reflectance, HumanoidRootPart, cfn(-1.3,-2,0)*cfe(0,math.pi/2,0)),_left_arm.mesh)
+	_left_arm = WeldMeshPart(WeldPart(_left_arm.name, _left_arm.size, _left_arm.color, _left_arm.shape, _left_arm.reflectance, HumanoidRootPart, cfn(-1.3,-2-_height,0)*cfe(0,math.pi/2,0)),_left_arm.mesh)
 
 	
 	local _right_arm = {
@@ -328,8 +361,13 @@ local SuitArmor = function(_c)
 		reflectance = 0,
 		mesh = Mesh("Wedge",v3n(1,1.2,1),v3n(0,0,0))
 	}
-	_right_arm = WeldMeshPart(WeldPart(_right_arm.name, _right_arm.size, _right_arm.color, _right_arm.shape, _right_arm.reflectance, HumanoidRootPart, cfn(1.3,-2,0)*cfe(0,-math.pi/2,0)),_right_arm.mesh)
+	_right_arm = WeldMeshPart(WeldPart(_right_arm.name, _right_arm.size, _right_arm.color, _right_arm.shape, _right_arm.reflectance, HumanoidRootPart, cfn(1.3,-2-_height,0)*cfe(0,-math.pi/2,0)),_right_arm.mesh)
 	
+	Weld(RightArm,_right_arm,cfn(0,-0.4,0)*cfa(0,0,math.pi/4))
+	Weld(LeftArm,_left_arm,cfn(0,-0.4,0)*cfa(0,0,-math.pi/4))
+	Weld(RightHand,_right_arm,cfn(0,0.4,0)*cfa(0,0,math.pi/4))
+	Weld(LeftHand,_left_arm,cfn(0,0.4,0)*cfa(0,0,-math.pi/4))
+
 	local _left_foot = {
 		name = 'left_foot',
 		size = v3n(1,1,1),
@@ -338,7 +376,7 @@ local SuitArmor = function(_c)
 		reflectance = 0,
 		mesh = Mesh("Sphere",v3n(1,0.6,0.6),v3n(0,0,0))
 	}
-	_left_foot = WeldMeshPart(WeldPart(_left_foot.name, _left_foot.size, _left_foot.color, _left_foot.shape, _left_foot.reflectance, HumanoidRootPart, cfn(-0.4,-2.7,-0.6)),_left_foot.mesh)
+	_left_foot = WeldMeshPart(WeldPart(_left_foot.name, _left_foot.size, _left_foot.color, _left_foot.shape, _left_foot.reflectance, HumanoidRootPart, cfn(-0.4,-2.7-_height,-0.6)),_left_foot.mesh)
 
 	
 	local _right_foot = {
@@ -349,7 +387,7 @@ local SuitArmor = function(_c)
 		reflectance = 0,
 		mesh = Mesh("Sphere",v3n(1,0.6,0.6),v3n(0,0,0))
 	}
-	_right_foot = WeldMeshPart(WeldPart(_right_foot.name, _right_foot.size, _right_foot.color, _right_foot.shape, _right_foot.reflectance, HumanoidRootPart, cfn(0.4,-2.7,-0.6)),_right_foot.mesh)
+	_right_foot = WeldMeshPart(WeldPart(_right_foot.name, _right_foot.size, _right_foot.color, _right_foot.shape, _right_foot.reflectance, HumanoidRootPart, cfn(0.4,-2.7-_height,-0.6)),_right_foot.mesh)
 	
 	
 	return suit_data
@@ -371,8 +409,8 @@ MainCharacter = function()
 	end)
 	FadeInvisiblifyCharacter(_c)
 	--migrateFace(_c)
-	--ArmorCharacter(_c)
 	SuitArmor(_c)
+	ArmorCharacter(_c)
 end
 
 Main = function()
