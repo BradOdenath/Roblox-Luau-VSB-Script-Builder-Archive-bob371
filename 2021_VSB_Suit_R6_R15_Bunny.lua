@@ -1,9 +1,9 @@
 --[[
 	Framework: Roblox
 	Language: Lua
-	Project: zipperipper's Roblox Bunny R6/R15 (2021)
+	Project: Zoshi's Roblox Bunny R6/R15 (2021)
 	Coders: bob371
-	Designers: zipperipper
+	Designers: Zoshi
 ]]
 
 local who = '12345x54321'
@@ -181,6 +181,7 @@ local WeldMeshPart = function(weld_part, mesh)
 	local _p = weld_part
 	local _m = mesh
 	_m.Parent = weld_part
+	return _p
 end
 
 local ArmorPart = function(part)

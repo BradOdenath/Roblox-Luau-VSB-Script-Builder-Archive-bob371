@@ -161,6 +161,7 @@ local WeldMeshPart = function(weld_part, mesh)
 	local _p = weld_part
 	local _m = mesh
 	_m.Parent = weld_part
+	return _p
 end
 
 local ArmorPart = function(part)
