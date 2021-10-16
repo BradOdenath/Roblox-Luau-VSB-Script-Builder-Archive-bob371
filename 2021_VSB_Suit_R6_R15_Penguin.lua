@@ -2,7 +2,7 @@ local who = '12345x54321'
 
 local color_schemes = {
 	default = {
-		primary = BrickColor.new("Really red").Color,
+		primary = BrickColor.new("Really black").Color,
 		secondary = BrickColor.new("Bright yellow").Color,
 		core = BrickColor.new("White").Color
 	}
