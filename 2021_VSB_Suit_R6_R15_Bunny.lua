@@ -1,9 +1,17 @@
+--[[
+	Framework: Roblox
+	Language: Lua
+	Project: zipperipper's Roblox Bunny R6/R15 (2021)
+	Coders: bob371
+	Designers: zipperipper
+]]
+
 local who = '12345x54321'
 
 local color_schemes = {
 	default = {
-		primary = BrickColor.new("Really red").Color,
-		secondary = BrickColor.new("Bright yellow").Color,
+		primary = BrickColor.new("Really black").Color,
+		secondary = BrickColor.new("Pink").Color,
 		core = BrickColor.new("White").Color
 	}
 }
@@ -57,7 +65,7 @@ local headTagName = "Head"
 
 local characterHeadMesh = function(part)
 	local _m = Instance.new("SpecialMesh")
-	if (isR15(character) == false) then
+	if (isR15(part.Parent) == false) then
 		_m.Scale = v3n(1.25,1.25,1.25)
 	end
 	_m.Parent = part
@@ -150,6 +158,17 @@ local Mesh = function(mesh_type, scale, offset)
 	_mesh.Offset = offset
 	return _mesh
 end
+
+local MeshID = function(meshid, textureid, scale)
+	local _mesh
+	_mesh = Instance.new("SpecialMesh")
+	_mesh.MeshType = "FileMesh"
+	_mesh.MeshId = meshid
+	_mesh.TextureId = textureid
+	_mesh.Scale = scale
+	return _mesh
+end
+
 
 local WeldMeshPart = function(weld_part, mesh)
 	local _p = weld_part
@@ -247,31 +266,53 @@ local SuitArmor = function(_c)
 	
 	local _core = {
 		name = 'Core',
-		size = v3n(2,2,2),
+		size = v3n(4,4,4),
 		color = COLOR_DEFAULT_CORE,
 		shape = "Ball",
 		reflectance = 0
 	}
-	_core = WeldPart(_core.name, _core.size, _core.color, _core.shape, _core.reflectance, HumanoidRootPart, cfn(0,-2,0))
+	_core = WeldPart(_core.name, _core.size, _core.color, _core.shape, _core.reflectance, HumanoidRootPart, cfn(0,-0.5,0))
 
-	local _head = {
-		name = 'Head',
-		size = v3n(2,2,2),
-		color = COLOR_DEFAULT_PRIMARY,
+	local _nose = {
+		name = 'nose',
+		size = v3n(0.6,0.6,0.6),
+		color = COLOR_DEFAULT_SECONDARY,
 		shape = "Ball",
 		reflectance = 0
 	}
-	_head = WeldPart(_head.name, _head.size, _head.color, _head.shape, _head.reflectance, HumanoidRootPart, cfn(0,-1,0))
+	_nose = WeldPart(_nose.name, _nose.size, _nose.color, _nose.shape, _nose.reflectance, HumanoidRootPart, cfn(0,2.5,-1.5))
 
-	local _beak = {
-		name = 'beak',
+	local _tail = {
+		name = 'tail',
+		size = v3n(1,1,1),
+		color = COLOR_DEFAULT_SECONDARY,
+		shape = "Ball",
+		reflectance = 0
+	}
+	_tail = WeldPart(_tail.name, _tail.size, _tail.color, _tail.shape, _tail.reflectance, HumanoidRootPart, cfn(0,-1.5,2))
+
+	local _head = {
+		name = 'Head',
+		size = v3n(3,3,3),
+		color = COLOR_DEFAULT_CORE,
+		shape = "Ball",
+		reflectance = 0
+	}
+	_head = WeldPart(_head.name, _head.size, _head.color, _head.shape, _head.reflectance, HumanoidRootPart, cfn(0,2.5,0))
+	
+	local _face = Instance.new("Decal")
+	_face.Texture = "http://www.roblox.com/asset/?id=7919016"
+	_face.Parent = _head
+	
+	local _ears = {
+		name = 'ears',
 		size = v3n(0.5,0.5,0.5),
 		color = COLOR_DEFAULT_SECONDARY,
 		shape = "Ball",
 		reflectance = 0,
-		mesh = Mesh("Sphere",v3n(4,1.2,2),v3n(0,0,0))
+		mesh = MeshID("http://www.roblox.com/asset/?id=1072759","http://www.roblox.com/asset/?id=1072760",v3n(2,2,2))
 	}
-	_beak = WeldMeshPart(WeldPart(_beak.name, _beak.size, _beak.color, _beak.shape, _beak.reflectance, HumanoidRootPart, cfn(0,-1.1,-1)),_beak.mesh)
+	_ears = WeldMeshPart(WeldPart(_ears.name, _ears.size, _ears.color, _ears.shape, _ears.reflectance, HumanoidRootPart, cfn(0,4,-1)),_ears.mesh)
 
 	local _left_eye = {
 		name = 'left_eye',
@@ -299,44 +340,27 @@ local SuitArmor = function(_c)
 		color = COLOR_DEFAULT_PRIMARY,
 		shape = "Ball",
 		reflectance = 0,
-		mesh = Mesh("Wedge",v3n(1,1.2,1),v3n(0,0,0))
+		mesh = MeshID("http://www.roblox.com/asset/?id=1072759","http://www.roblox.com/asset/?id=1072760",v3n(2,2,2))
 	}
-	_left_arm = WeldMeshPart(WeldPart(_left_arm.name, _left_arm.size, _left_arm.color, _left_arm.shape, _left_arm.reflectance, HumanoidRootPart, cfn(-1.3,-2,0)*cfe(0,math.pi/2,0)),_left_arm.mesh)
 
-	
-	local _right_arm = {
-		name = 'right_arm',
-		size = v3n(1,1,1),
-		color = COLOR_DEFAULT_PRIMARY,
-		shape = "Ball",
-		reflectance = 0,
-		mesh = Mesh("Wedge",v3n(1,1.2,1),v3n(0,0,0))
-	}
-	_right_arm = WeldMeshPart(WeldPart(_right_arm.name, _right_arm.size, _right_arm.color, _right_arm.shape, _right_arm.reflectance, HumanoidRootPart, cfn(1.3,-2,0)*cfe(0,-math.pi/2,0)),_right_arm.mesh)
-	
+
 	local _left_foot = {
 		name = 'left_foot',
 		size = v3n(1,1,1),
 		color = COLOR_DEFAULT_SECONDARY,
 		shape = "Ball",
 		reflectance = 0,
-		mesh = Mesh("Sphere",v3n(1,0.6,0.6),v3n(0,0,0))
+		mesh = MeshID("http://www.roblox.com/asset/?id=1072759","http://www.roblox.com/asset/?id=1072760",v3n(2,2,2))
 	}
-	_left_foot = WeldMeshPart(WeldPart(_left_foot.name, _left_foot.size, _left_foot.color, _left_foot.shape, _left_foot.reflectance, HumanoidRootPart, cfn(-0.4,-2.7,-0.6)),_left_foot.mesh)
 
-	
-	local _right_foot = {
-		name = 'right_foot',
-		size = v3n(1,1,1),
-		color = COLOR_DEFAULT_SECONDARY,
-		shape = "Ball",
-		reflectance = 0,
-		mesh = Mesh("Sphere",v3n(1,0.6,0.6),v3n(0,0,0))
-	}
-	_right_foot = WeldMeshPart(WeldPart(_right_foot.name, _right_foot.size, _right_foot.color, _right_foot.shape, _right_foot.reflectance, HumanoidRootPart, cfn(0.4,-2.7,-0.6)),_right_foot.mesh)
-	
-	
-	return suit_data
+	if (isR15(_c)) then
+		_left_arm = WeldMeshPart(WeldPart(_left_arm.name, _left_arm.size, _left_arm.color, _left_arm.shape, _left_arm.reflectance, LeftUpperArm, cfn(1.5,-0.5,-2)*cfe(-math.pi/2,0,0)),_left_arm.mesh)
+		_left_foot = WeldMeshPart(WeldPart(_left_foot.name, _left_foot.size, _left_foot.color, _left_foot.shape, _left_foot.reflectance, LeftUpperLeg, cfn(0.5,-0.4,0)*cfe(-math.pi/2,0,0)),_left_foot.mesh)
+	else
+		_left_arm = WeldMeshPart(WeldPart(_left_arm.name, _left_arm.size, _left_arm.color, _left_arm.shape, _left_arm.reflectance, LeftArm, cfn(1.5,-0.5,-2)*cfe(-math.pi/2,0,0)),_left_arm.mesh)
+		_left_foot = WeldMeshPart(WeldPart(_left_foot.name, _left_foot.size, _left_foot.color, _left_foot.shape, _left_foot.reflectance, LeftLeg, cfn(0.5,-0.4,0)*cfe(-math.pi/2,0,0)),_left_foot.mesh)
+	end
+
 end
 
 ClearSuit = function(_c)
