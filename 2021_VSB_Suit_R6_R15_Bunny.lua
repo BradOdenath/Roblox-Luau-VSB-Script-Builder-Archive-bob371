@@ -149,6 +149,13 @@ local WeldPart = function(name, size, color, shape, reflectance, part0, c0)
 	return _p
 end
 
+local Height = function(parts)
+	local height = 0
+	for i,v in pairs(parts) do
+		height = height + v.Size.y
+	end
+	return height
+end
 
 local Mesh = function(mesh_type, scale, offset)
 	local _mesh
@@ -264,6 +271,14 @@ local SuitArmor = function(_c)
 	local RightHand = 		_c:FindFirstChild("RightHand")
 	local LeftHand = 		_c:FindFirstChild("LeftHand")
 	
+	local _height 
+	if (isR15(_c)) then
+		_height = Height({LeftUpperLeg,LeftLowerLeg,LeftFoot})
+	else
+		_height = Height({LeftLeg})
+	end
+	_height = _height - 2.0
+	
 	local _core = {
 		name = 'Core',
 		size = v3n(4,4,4),
@@ -271,7 +286,7 @@ local SuitArmor = function(_c)
 		shape = "Ball",
 		reflectance = 0
 	}
-	_core = WeldPart(_core.name, _core.size, _core.color, _core.shape, _core.reflectance, HumanoidRootPart, cfn(0,-0.5,0))
+	_core = WeldPart(_core.name, _core.size, _core.color, _core.shape, _core.reflectance, HumanoidRootPart, cfn(0,_height-0.5,0))
 
 	local _nose = {
 		name = 'nose',
@@ -280,7 +295,7 @@ local SuitArmor = function(_c)
 		shape = "Ball",
 		reflectance = 0
 	}
-	_nose = WeldPart(_nose.name, _nose.size, _nose.color, _nose.shape, _nose.reflectance, HumanoidRootPart, cfn(0,2.5,-1.5))
+	_nose = WeldPart(_nose.name, _nose.size, _nose.color, _nose.shape, _nose.reflectance, HumanoidRootPart, cfn(0,_height+2.5,-1.5))
 
 	local _tail = {
 		name = 'tail',
@@ -289,7 +304,7 @@ local SuitArmor = function(_c)
 		shape = "Ball",
 		reflectance = 0
 	}
-	_tail = WeldPart(_tail.name, _tail.size, _tail.color, _tail.shape, _tail.reflectance, HumanoidRootPart, cfn(0,-1.5,2))
+	_tail = WeldPart(_tail.name, _tail.size, _tail.color, _tail.shape, _tail.reflectance, HumanoidRootPart, cfn(0,_height-1.5,2))
 
 	local _head = {
 		name = 'Head',
@@ -298,7 +313,7 @@ local SuitArmor = function(_c)
 		shape = "Ball",
 		reflectance = 0
 	}
-	_head = WeldPart(_head.name, _head.size, _head.color, _head.shape, _head.reflectance, HumanoidRootPart, cfn(0,2.5,0))
+	_head = WeldPart(_head.name, _head.size, _head.color, _head.shape, _head.reflectance, HumanoidRootPart, cfn(0,_height+2.5,0))
 	
 	local _face = Instance.new("Decal")
 	_face.Texture = "http://www.roblox.com/asset/?id=7919016"
@@ -312,7 +327,7 @@ local SuitArmor = function(_c)
 		reflectance = 0,
 		mesh = MeshID("http://www.roblox.com/asset/?id=1072759","http://www.roblox.com/asset/?id=1072760",v3n(2,2,2))
 	}
-	_ears = WeldMeshPart(WeldPart(_ears.name, _ears.size, _ears.color, _ears.shape, _ears.reflectance, HumanoidRootPart, cfn(0,4,-1)),_ears.mesh)
+	_ears = WeldMeshPart(WeldPart(_ears.name, _ears.size, _ears.color, _ears.shape, _ears.reflectance, HumanoidRootPart, cfn(0,_height+4,-1)),_ears.mesh)
 
 	local _left_eye = {
 		name = 'left_eye',
@@ -321,7 +336,7 @@ local SuitArmor = function(_c)
 		shape = "Ball",
 		reflectance = 0
 	}
-	_left_eye = WeldPart(_left_eye.name, _left_eye.size, _left_eye.color, _left_eye.shape, _left_eye.reflectance, HumanoidRootPart, cfn(-0.4,-0.5,-0.9))
+	_left_eye = WeldPart(_left_eye.name, _left_eye.size, _left_eye.color, _left_eye.shape, _left_eye.reflectance, HumanoidRootPart, cfn(-0.4,_height-0.5,-0.9))
 
 	
 	local _right_eye = {
@@ -331,7 +346,7 @@ local SuitArmor = function(_c)
 		shape = "Ball",
 		reflectance = 0
 	}
-	_right_eye = WeldPart(_right_eye.name, _right_eye.size, _right_eye.color, _right_eye.shape, _right_eye.reflectance, HumanoidRootPart, cfn(0.4,-0.5,-0.9))
+	_right_eye = WeldPart(_right_eye.name, _right_eye.size, _right_eye.color, _right_eye.shape, _right_eye.reflectance, HumanoidRootPart, cfn(0.4,_height-0.5,-0.9))
 
 
 	local _left_arm = {
@@ -354,11 +369,11 @@ local SuitArmor = function(_c)
 	}
 
 	if (isR15(_c)) then
-		_left_arm = WeldMeshPart(WeldPart(_left_arm.name, _left_arm.size, _left_arm.color, _left_arm.shape, _left_arm.reflectance, LeftUpperArm, cfn(1.5,-0.5,-2)*cfe(-math.pi/2,0,0)),_left_arm.mesh)
-		_left_foot = WeldMeshPart(WeldPart(_left_foot.name, _left_foot.size, _left_foot.color, _left_foot.shape, _left_foot.reflectance, LeftUpperLeg, cfn(0.5,-0.4,0)*cfe(-math.pi/2,0,0)),_left_foot.mesh)
+		_left_arm = WeldMeshPart(WeldPart(_left_arm.name, _left_arm.size, _left_arm.color, _left_arm.shape, _left_arm.reflectance, LeftUpperArm, cfn(1.5,_height-0.5,-2)*cfe(-math.pi/2,0,0)),_left_arm.mesh)
+		_left_foot = WeldMeshPart(WeldPart(_left_foot.name, _left_foot.size, _left_foot.color, _left_foot.shape, _left_foot.reflectance, LeftUpperLeg, cfn(0.5,_height-0.4,0)*cfe(-math.pi/2,0,0)),_left_foot.mesh)
 	else
-		_left_arm = WeldMeshPart(WeldPart(_left_arm.name, _left_arm.size, _left_arm.color, _left_arm.shape, _left_arm.reflectance, LeftArm, cfn(1.5,-0.5,-2)*cfe(-math.pi/2,0,0)),_left_arm.mesh)
-		_left_foot = WeldMeshPart(WeldPart(_left_foot.name, _left_foot.size, _left_foot.color, _left_foot.shape, _left_foot.reflectance, LeftLeg, cfn(0.5,-0.4,0)*cfe(-math.pi/2,0,0)),_left_foot.mesh)
+		_left_arm = WeldMeshPart(WeldPart(_left_arm.name, _left_arm.size, _left_arm.color, _left_arm.shape, _left_arm.reflectance, LeftArm, cfn(1.5,_height-0.5,-2)*cfe(-math.pi/2,0,0)),_left_arm.mesh)
+		_left_foot = WeldMeshPart(WeldPart(_left_foot.name, _left_foot.size, _left_foot.color, _left_foot.shape, _left_foot.reflectance, LeftLeg, cfn(0.5,_height-0.4,0)*cfe(-math.pi/2,0,0)),_left_foot.mesh)
 	end
 
 end
