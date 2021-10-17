@@ -4,13 +4,15 @@ local color_schemes = {
 	default = {
 		primary = BrickColor.new("Really black").Color,
 		secondary = BrickColor.new("Bright yellow").Color,
-		core = BrickColor.new("White").Color
+		core = BrickColor.new("White").Color,
+		suit = BrickColor.new("Really red").Color
 	},
 }
 
 COLOR_DEFAULT_PRIMARY = color_schemes.default.primary
 COLOR_DEFAULT_SECONDARY = color_schemes.default.secondary
 COLOR_DEFAULT_CORE = color_schemes.default.core
+COLOR_DEFAULT_SUIT = color_schemes.default.suit
 
 local player = owner or game.Players[who] or game.Players.LocalPlayer
 local character = player.Character
@@ -37,6 +39,31 @@ local migrateFace = function(_c)
 	end
 end]]
 
+local _printAdv = function(data)
+	if type(data) == "table" then
+		if (#data > 0) then	
+			for i,v in pairs(data) do
+				printAdv(v)
+			end
+		end
+	else
+		print(data)
+	end
+end
+
+local printAdv = function(data)
+	if data == nil then print(nil) end
+	if type(data) == "table" then
+		if (#data > 0) then	
+			for i,v in pairs(data) do
+				_printAdv(v)
+			end
+		end
+	else
+		print(data)
+	end
+end
+
 local isR15 = function(_c)
 	if (_c:FindFirstChild("Torso") ~= nil) then
 		return false
@@ -46,11 +73,27 @@ local isR15 = function(_c)
 end
 
 local isAMesh = function(entity)
-	local _is = (string.find(entity, 'Mesh') or (entity:IsA("CylinderMesh") or 
+	local _is = ((entity:IsA("CylinderMesh") or 
 			entity:IsA("BlockMesh") or 
 			entity:IsA("SpecialMesh")))
-	print("_is: "..tostring(_is))
+	--print("_is: "..tostring(_is))
 	return _is
+end
+
+local extractMeshToPoints = function(pointA, pointB)
+	for i,v in pairs(pointA:GetChildren()) do
+		if (isAMesh(v)) then
+			--print(i,v.className)
+			pcall(function()
+				local _ = v:Clone()
+				_.MeshType = v.MeshType
+				_.Parent = pointB
+				if (_.MeshType == Enum.MeshType.Wedge) then
+					_.Offset = _.Offset + Vector3.new(0,0.03,0)
+				end
+			end)	
+		end
+	end
 end
 
 local headTagName = "Head"
@@ -164,51 +207,107 @@ local WeldMeshPart = function(weld_part, mesh)
 	return _p
 end
 
+local findFirstArrayDataByNameTag = function(arr, tag)
+	for i,v in pairs(arr) do
+		if (string.find(string.lower(v.Name), string.lower(tag)) ~= nil) then
+			return v
+		end
+	end
+end
+
+local LArm, RArm, 
+	LCore, RCore,
+	MCore
+local ArmorAddons = function(_characterArmorData)
+	local _armorAddons = {}
+	
+	printAdv(_characterArmorData)
+	Core = findFirstArrayDataByNameTag(_characterArmorData, "Core")
+	LArm = findFirstArrayDataByNameTag(_characterArmorData, "Left_Arm")
+	RArm = findFirstArrayDataByNameTag(_characterArmorData, "Right_Arm")
+	
+	
+	print(LArm, RArm)
+		
+	local _core = {
+		name = 'Left_Arm_Core',
+		size = v3n(1,1,1) * 0.8,
+		color = COLOR_DEFAULT_CORE,
+		shape = "Ball",
+		reflectance = 1,
+		mesh = Mesh("Sphere",v3n(1,1,1),v3n(0,0,0))
+	}
+	_core = WeldMeshPart(WeldPart(_core.name, _core.size, _core.color, _core.shape, _core.reflectance, Core, cfn(0,0,-0.8)),_core.mesh)
+	table.insert(_armorAddons,_core)
+	MCore = _core
+		
+	local _left_arm_core = {
+		name = 'Left_Arm_Core',
+		size = v3n(1,1,1) * 0.8,
+		color = COLOR_DEFAULT_CORE,
+		shape = "Ball",
+		reflectance = 1,
+		mesh = Mesh("Sphere",v3n(1,1,1),v3n(0,0,0))
+	}
+	_left_arm_core = WeldMeshPart(WeldPart(_left_arm_core.name, _left_arm_core.size, _left_arm_core.color, _left_arm_core.shape, _left_arm_core.reflectance, LArm, cfn(0,-0.4,0)),_left_arm_core.mesh)
+	table.insert(_armorAddons,_left_arm_core)
+	LCore = _left_arm_core
+	
+	local _right_arm_core = {
+		name = 'Right_Arm_core',
+		size = v3n(1,1,1) * 0.8,
+		color = COLOR_DEFAULT_CORE,
+		shape = "Ball",
+		reflectance = 1,
+		mesh = Mesh("Sphere",v3n(1,1,1),v3n(0,0,0))
+	}
+	_right_arm_core = WeldMeshPart(WeldPart(_right_arm_core.name, _right_arm_core.size, _right_arm_core.color, _right_arm_core.shape, _right_arm_core.reflectance, RArm, cfn(0,-0.4,0)),_right_arm_core.mesh)
+	table.insert(_armorAddons,_right_arm_core)
+	RCore = _right_arm_core
+
+	print(_left_arm_core.Parent,_right_arm_core.Parent)
+	return _armorAddons
+end
+
+local ArmorModifiers = function(part)
+	if (string.find(part.Name, "Beak") ~= nil) or (string.find(part.Name, "Foot") ~= nil) then
+		part.Color = COLOR_DEFAULT_SECONDARY
+	elseif (string.find(part.Name, "Eye") ~= nil) then
+		part.Color = COLOR_DEFAULT_CORE
+		part.Reflectance = 1
+	end
+end
+
 local ArmorPart = function(part)
 	local _p = WeldPart(
 		('Armor'..tostring(part)),
-		part.Size,
-		COLOR_DEFAULT_PRIMARY,
+		part.Size * 1.1,
+		COLOR_DEFAULT_SUIT,
 		part.Shape,
 		0.1,
 		part,
 		cfn(0,0,0)
 	)
 	
+	ArmorModifiers(_p)
+	
 	pcall(function()
 		_p.MeshId = part.MeshId
 	end)
 	
-	pcall(function() 
-		for i,v in pairs(part:GetChildren()) do
-			if isAMesh(v) then
-				print('z')
-				local m = v:Clone()
-				m.Parent = _p
-			end
-		end
-	end)
+	extractMeshToPoints(part,_p)
 	
 	if (part.Name == "Head") then
 		characterHeadMesh(_p)
 	end
 	
+	print(part,_p)
 	return _p
 end
 
 FadeInvisiblifyCharacter = function(c)
 	for j = 0, 1, 0.1 do wait()
 		set_transparency(c, j)
-	end
-end
-
-local ArmorCharacter = function(c)
-	for i,v in pairs(c:GetChildren()) do
-		if (v:IsA("BasePart") and v.Name ~= "HumanoidRootPart") then
-			if v.Parent:IsA("BasePart") then
-				ArmorPart(v)
-			end
-		end
 	end
 end
 
@@ -220,7 +319,7 @@ local Height = function(parts)
 	return height
 end
 
-local SuitArmor = function(_c)
+local CharacterArmor = function(_c)
 	local HumanoidRootPart =_c:FindFirstChild("HumanoidRootPart")
 
 	--R6/R15
@@ -294,6 +393,8 @@ local SuitArmor = function(_c)
 		_height = 0.1
 	end
 	
+	local _characterArmor = {}
+	
 	local _core = {
 		name = 'Core',
 		size = v3n(2,2,2),
@@ -302,6 +403,7 @@ local SuitArmor = function(_c)
 		reflectance = 0
 	}
 	_core = WeldPart(_core.name, _core.size, _core.color, _core.shape, _core.reflectance, HumanoidRootPart, cfn(0,-2-_height,0))
+	table.insert(_characterArmor,_core)
 
 	local _head = {
 		name = 'Head',
@@ -311,9 +413,10 @@ local SuitArmor = function(_c)
 		reflectance = 0
 	}
 	_head = WeldPart(_head.name, _head.size, _head.color, _head.shape, _head.reflectance, HumanoidRootPart, cfn(0,-1-_height,0))
+	table.insert(_characterArmor,_head)
 
 	local _beak = {
-		name = 'beak',
+		name = 'Beak',
 		size = v3n(0.5,0.5,0.5),
 		color = COLOR_DEFAULT_SECONDARY,
 		shape = "Ball",
@@ -321,29 +424,30 @@ local SuitArmor = function(_c)
 		mesh = Mesh("Sphere",v3n(4,1.2,2),v3n(0,0,0))
 	}
 	_beak = WeldMeshPart(WeldPart(_beak.name, _beak.size, _beak.color, _beak.shape, _beak.reflectance, HumanoidRootPart, cfn(0,-1.1-_height,-1)),_beak.mesh)
+	table.insert(_characterArmor,_beak)
 
 	local _left_eye = {
-		name = 'left_eye',
+		name = 'Left_Eye',
 		size = v3n(0.3,0.3,0.3),
 		color = COLOR_DEFAULT_CORE,
 		shape = "Ball",
 		reflectance = 0
 	}
 	_left_eye = WeldPart(_left_eye.name, _left_eye.size, _left_eye.color, _left_eye.shape, _left_eye.reflectance, HumanoidRootPart, cfn(-0.4,-0.5-_height,-0.9))
-
+	table.insert(_characterArmor,_left_eye)
 	
 	local _right_eye = {
-		name = 'right_eye',
+		name = 'Right_Eye',
 		size = v3n(0.3,0.3,0.3),
 		color = COLOR_DEFAULT_CORE,
 		shape = "Ball",
 		reflectance = 0
 	}
 	_right_eye = WeldPart(_right_eye.name, _right_eye.size, _right_eye.color, _right_eye.shape, _right_eye.reflectance, HumanoidRootPart, cfn(0.4,-0.5-_height,-0.9))
-
+	table.insert(_characterArmor,_right_eye)
 
 	local _left_arm = {
-		name = 'left_arm',
+		name = 'Left_Arm',
 		size = v3n(1,1,1),
 		color = COLOR_DEFAULT_PRIMARY,
 		shape = "Ball",
@@ -351,10 +455,10 @@ local SuitArmor = function(_c)
 		mesh = Mesh("Wedge",v3n(1,1.2,1),v3n(0,0,0))
 	}
 	_left_arm = WeldMeshPart(WeldPart(_left_arm.name, _left_arm.size, _left_arm.color, _left_arm.shape, _left_arm.reflectance, HumanoidRootPart, cfn(-1.3,-2-_height,0)*cfe(0,math.pi/2,0)),_left_arm.mesh)
-
+	table.insert(_characterArmor,_left_arm)
 	
 	local _right_arm = {
-		name = 'right_arm',
+		name = 'Right_Arm',
 		size = v3n(1,1,1),
 		color = COLOR_DEFAULT_PRIMARY,
 		shape = "Ball",
@@ -362,6 +466,7 @@ local SuitArmor = function(_c)
 		mesh = Mesh("Wedge",v3n(1,1.2,1),v3n(0,0,0))
 	}
 	_right_arm = WeldMeshPart(WeldPart(_right_arm.name, _right_arm.size, _right_arm.color, _right_arm.shape, _right_arm.reflectance, HumanoidRootPart, cfn(1.3,-2-_height,0)*cfe(0,-math.pi/2,0)),_right_arm.mesh)
+	table.insert(_characterArmor,_right_arm)
 	
 	Weld(RightArm,_right_arm,cfn(0,-0.4,0)*cfa(0,0,math.pi/4))
 	Weld(LeftArm,_left_arm,cfn(0,-0.4,0)*cfa(0,0,-math.pi/4))
@@ -369,7 +474,7 @@ local SuitArmor = function(_c)
 	Weld(LeftHand,_left_arm,cfn(0,0.4,0)*cfa(0,0,-math.pi/4))
 
 	local _left_foot = {
-		name = 'left_foot',
+		name = 'Left_Foot',
 		size = v3n(1,1,1),
 		color = COLOR_DEFAULT_SECONDARY,
 		shape = "Ball",
@@ -377,10 +482,10 @@ local SuitArmor = function(_c)
 		mesh = Mesh("Sphere",v3n(1,0.6,0.6),v3n(0,0,0))
 	}
 	_left_foot = WeldMeshPart(WeldPart(_left_foot.name, _left_foot.size, _left_foot.color, _left_foot.shape, _left_foot.reflectance, HumanoidRootPart, cfn(-0.4,-2.7-_height,-0.6)),_left_foot.mesh)
-
+	table.insert(_characterArmor,_left_foot)
 	
 	local _right_foot = {
-		name = 'right_foot',
+		name = 'Right_Foot',
 		size = v3n(1,1,1),
 		color = COLOR_DEFAULT_SECONDARY,
 		shape = "Ball",
@@ -388,9 +493,26 @@ local SuitArmor = function(_c)
 		mesh = Mesh("Sphere",v3n(1,0.6,0.6),v3n(0,0,0))
 	}
 	_right_foot = WeldMeshPart(WeldPart(_right_foot.name, _right_foot.size, _right_foot.color, _right_foot.shape, _right_foot.reflectance, HumanoidRootPart, cfn(0.4,-2.7-_height,-0.6)),_right_foot.mesh)
+	table.insert(_characterArmor,_right_foot)
 	
+	print(#_characterArmor)
+	return _characterArmor
+end
+
+local ArmorSuit = function(_c,_characterArmorData)
+	for i,v in pairs(_c:GetDescendants()) do
+		if (v:IsA("BasePart") and v.Name ~= "HumanoidRootPart") then
+			if ((string.find(v.Name, "WP_") ~= nil) and (v.Transparency < 1)) then 
+				ArmorPart(v)
+			end
+		end
+	end
+	--pcall(function()
 	
-	return suit_data
+		printAdv(_characterArmorData)
+		ArmorAddons(_characterArmorData)
+	
+	--end)
 end
 
 ClearSuit = function(_c)
@@ -399,6 +521,7 @@ ClearSuit = function(_c)
 			pcall(function() v:Remove() end)
 		end
 	end
+	visiblify(_c)
 end
 
 MainCharacter = function()
@@ -409,8 +532,10 @@ MainCharacter = function()
 	end)
 	FadeInvisiblifyCharacter(_c)
 	--migrateFace(_c)
-	SuitArmor(_c)
-	ArmorCharacter(_c)
+	local _characterArmorData = CharacterArmor(_c)
+	--wait(10)
+	--ArmorSuit(_c, _characterArmorData)
+	--ClearSuit(_c)
 end
 
 Main = function()
