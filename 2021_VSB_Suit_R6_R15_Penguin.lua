@@ -24,9 +24,9 @@ local pi = math.pi
 --[[
 	Framework: Roblox
 	Language: Lua
-	Project: LuigiFan's Roblox Iron Man R6/R15 (2021)
+	Project: Penguin Iron Man R6/R15 (2021)
 	Coders: supergod800, bob371
-	Designers: LuigiFan
+	Designers: 
 ]]--
 
 local Keys,downs,lastpressed={},{},{}  --Shoutout to @supergod800
@@ -761,6 +761,7 @@ local laser = function(place0)
 			P.BottomSurface, P.TopSurface = 0, 0
 			P.CanCollide = false
 			P.CFrame = CFrame.new((Place0.p + Place1)/2,Place0.p)
+			wait()
 			P.Parent = workspace
 			coroutine.resume(coroutine.create(function()
 				pcall(function()
