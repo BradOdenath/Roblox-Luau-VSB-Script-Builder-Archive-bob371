@@ -55,12 +55,9 @@ local function keyDown(plr,key)
 end
 
 local mouse = {}
-local currentcamera = {}
 local keysEvent = Instance.new("RemoteEvent",NLS(string.format([[
     local keysEvent,mouse = script:FindFirstChildWhichIsA("RemoteEvent"),game.Players.LocalPlayer:GetMouse()
-    local mousedata
-				--, cameradata 
-		= keysEvent:FindFirstChildWhichIsA("RemoteEvent"), keysEvent:FindFirstChildWhichIsA("RemoteEvent")
+    local mousedata	= keysEvent:FindFirstChildWhichIsA("RemoteEvent")
     mouse.KeyDown:connect(function(plr,key)  keysEvent:FireServer(plr,key) end)
     mouse.KeyUp:connect(function(plr,key) keysEvent:FireServer(plr,key) end)
     mouse.Button1Down:connect(function(plr,key) keysEvent:FireServer(plr,'MouseButton1Down') end)
@@ -68,18 +65,15 @@ local keysEvent = Instance.new("RemoteEvent",NLS(string.format([[
     local runserv = game:GetService("RunService")
     while runserv.Stepped:Wait() do
         mousedata:FireServer(plr,{Hit = mouse.Hit,Target = mouse.Target, TargetSurface = mouse.TargetSurface})
-		--cameradata:FireServer(plr,{Cam = workspace.CurrentCamera})
     end
     ]],''),
 owner.PlayerGui))
 	
 local mouseEvent = Instance.new('RemoteEvent',keysEvent)
---local cameraEvent = Instance.new('RemoteEvent',keysEvent)
 mouseEvent.OnServerEvent:Connect(function(plr,data) mouse = data end)
---cameraEvent.onServerEvent:Connect(function(plr,data) currentcamera = data end)
 keysEvent.OnServerEvent:Connect(keyDown)
 
 setKey({'q','e'}, 
 	function() for i,v in pairs(mouse) do print(i,v) end end, 
-	--function() for i,v in pairs(currentcamera) do print(i,v) end end
+	function() for i,v in pairs(mouse) do print(i,v) end end
 )
