@@ -1,16 +1,12 @@
 vip = 'LocalPlayer'
 if owner then vip = owner else vip = game.Players[vip] end
 char = vip.Character
-for i,v in pairs(char:GetChildren()) do 
-	if v.className == "Part" then 
-		v.Transparency = 1
-		pcall(function() v:FindFirstChildWhichIsA("Decal"):Remove() end)
-	elseif v:IsA("Accessory") then 
-		pcall(function() 
-			v:FindFirstChild("Handle").Transparency = 1 
-		end) 
-	end
-end
+for i,v in pairs(char:GetChildren()) do if v:IsA("BasePart") then 
+	v.Transparency = 1
+	pcall(function() v:FindFirstChildWhichIsA("Decal"):Remove() end)
+elseif v:IsA("Accessory") then 
+	pcall(function() v:FindFirstChild("Handle").Transparency = 1 end) 
+end end
 zipper = false
 
 --pcall(function() char.Animate:Remove() end)
@@ -26,10 +22,11 @@ part.TopSurface = 0
 part.BottomSurface = 0
 part.Parent = char
 mesh = Instance.new("CylinderMesh",part)
-mesh.Scale = Vector3.new(1.05,1.05,1.05)
+mesh.Scale = Vector3.new(1.05,3.15,1.05)
+mesh.Offset = Vector3.new(0,-0.525,0)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,-3,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -46,7 +43,7 @@ part.Parent = char
 Instance.new("CylinderMesh").Parent = part
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,-2,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -66,7 +63,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(1.1,1,1.1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,-1,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -86,7 +83,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(0.1,1,1.1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,-1,-0.05) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -106,7 +103,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(1,3,1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,-1,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -126,7 +123,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(0.1,3,1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,-1,-0.05) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -146,7 +143,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(2,2,1.9)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -166,7 +163,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(1,2,1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char["Left Arm"]
+weld.Part0 = char:FindFirstChild("Left Arm") or char:FindFirstChild("LeftHand")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,0,0) * CFrame.fromEulerAnglesXYZ(0.1,0,0)
 
@@ -186,7 +183,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(1,1,1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char["Left Arm"]
+weld.Part0 = char:FindFirstChild("Left Arm") or char:FindFirstChild("LeftHand")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,-1,0) * CFrame.fromEulerAnglesXYZ(0.1,0,0)
 
@@ -206,7 +203,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(1,2,1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char["Right Arm"]
+weld.Part0 = char:FindFirstChild("Right Arm") or char:FindFirstChild("RightHand")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,0,0) * CFrame.fromEulerAnglesXYZ(-0.1,0,0)
 
@@ -226,7 +223,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(1,1,1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char["Right Arm"]
+weld.Part0 = char:FindFirstChild("Right Arm") or char:FindFirstChild("RightHand")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,-1,0) * CFrame.fromEulerAnglesXYZ(-0.1,0,0)
 
@@ -247,7 +244,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(2,2,6)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.7) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -268,7 +265,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.5,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -289,7 +286,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.6,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -310,7 +307,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.7,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -331,7 +328,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.8,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -352,7 +349,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.9,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -373,7 +370,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.85,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -394,7 +391,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.75,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -415,7 +412,7 @@ mesh.MeshId = "http://www.roblox.com/asset/?id=3270017"
 mesh.Scale = Vector3.new(1.65,2,7)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -434,7 +431,7 @@ mesh.Parent = part
 mesh.Scale = Vector3.new(1,1,1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,2,-1.5) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
 
@@ -453,7 +450,7 @@ mesh.Parent = part
 mesh.Scale = Vector3.new(1,1,1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0.5,2,-1.51) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
 
@@ -472,7 +469,7 @@ mesh.Parent = part
 mesh.Scale = Vector3.new(1,1,1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(-0.5,2,-1.51) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
 
@@ -491,7 +488,7 @@ mesh.Parent = part
 mesh.Scale = Vector3.new(0.1,1,0.1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(-0.2,2,-1.52) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
 
@@ -510,7 +507,7 @@ mesh.Parent = part
 mesh.Scale = Vector3.new(0.1,1,0.1)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0.2,2,-1.52) * CFrame.fromEulerAnglesXYZ(math.pi/2,0,0)
 if zipper == true then
@@ -529,7 +526,7 @@ mesh.Parent = part
 mesh.Scale = Vector3.new(0.05,0.5,0.05)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(-0.1,0.9,-2.2) * CFrame.fromEulerAnglesXYZ(0,0,-0.4)
 
@@ -549,7 +546,7 @@ mesh.MeshType = "Sphere"
 mesh.Scale = Vector3.new(0.1,2,2)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0,1.95,-0.03) * CFrame.fromEulerAnglesXYZ(0,0,0)
 
@@ -568,7 +565,7 @@ mesh.Parent = part
 mesh.Scale = Vector3.new(0.05,0.4,0.05)
 weld = Instance.new("Weld")
 weld.Parent = part
-weld.Part0 = char.Torso
+weld.Part0 = char:FindFirstChild("Torso") or char:FindFirstChild("LowerTorso")
 weld.Part1 = part
 weld.C0 = CFrame.new(0.1,0.95,-2.2) * CFrame.fromEulerAnglesXYZ(0,0,0.4)
 end
