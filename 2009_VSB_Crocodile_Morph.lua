@@ -1,5 +1,5 @@
 scale = 2
-vip = script:FindFirstChild("PlayerName").Value
+vip = owner.Name
 player = game.Players[vip]
 z = player.Character 
 for i,v in pairs(z:GetChildren()) do 
