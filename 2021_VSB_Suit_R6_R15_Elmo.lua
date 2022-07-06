@@ -1,4 +1,4 @@
-local who = '12345x54321'
+local who = owner.Name --'12345x54321'
 
 local color_schemes = {
 	default = {
