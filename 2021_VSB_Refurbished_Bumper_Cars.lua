@@ -115,7 +115,7 @@ for i = 1,game.Players.MaxPlayers do wait()
 	weld.Part1 = part
 	weld.C0 = CFrame.new(0,0,0) * CFrame.fromEulerAnglesXYZ(0,0,0)
 	local function T(h)
-		print(h.Name)
+		--print(h.Name)
 		--if h.Parent.Name == who then return end
 		if h.Parent:FindFirstChild("S") ~= nil or h.Name == 'S' then
 			pcall(function()
