@@ -102,7 +102,7 @@ function CreateBase()
 	base.CFrame = Pos(0,0.3,0)
 	
 	if tele then
-		Player.Character.Torso.CFrame = base.CFrame + Vector3.new(80,5,34)
+		Player.Character.HumanoidRootPart.CFrame = base.CFrame + Vector3.new(80,5,34)
 	end
 	
 	Part("BaseA","Dark green","Grass",20.07,0.2,40,house).CFrame = Pos(60,0.3,30)
