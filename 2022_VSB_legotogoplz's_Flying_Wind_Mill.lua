@@ -3433,15 +3433,6 @@ main = function()
 	for i,v in pairs(partData) do
 		part(v.name, v.transparency, v.canCollide, v.size, v.brickColor, v.cframe, model, v.decalFace, v.decalTexture, v.cylinderMeshScale, v.cylinderMeshOffset, v.blockMeshScale, v.blockMeshOffset, v.specialMeshScale, v.specialMeshType, v.specialMeshId)
 	end
-	while true do wait()
-		for i,v in pairs(model:GetChildren()) do
-			if v.Name == "DiscoFloor" then
-				pcall(function() 
-					v.Color = Color3.fromRGB(math.random(1,255),math.random(1,255),math.random(1,255))
-				end)
-			end
-		end
-	end
 end
 
 main()
