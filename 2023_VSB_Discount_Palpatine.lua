@@ -4,7 +4,6 @@ local who = 'bob371' --Note: owner gets called first if it exists (VSB functiona
 	Language: Lua
 	Project: Script/ HopperBin Events
 	Coders: supergod800, bob371
-	Designers: LuigiFan
 ]]--
 RunService = game:GetService("RunService")
 waitz = function() RunService.Stepped:Wait() end
