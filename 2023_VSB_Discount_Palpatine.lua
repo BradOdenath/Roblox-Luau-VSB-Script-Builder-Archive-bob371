@@ -4,6 +4,7 @@ local who = 'bob371' --Note: owner gets called first if it exists (VSB functiona
 	Language: Lua
 	Project: Script/ HopperBin Events
 	Coders: supergod800, bob371
+	Designers: LuigiFan
 ]]--
 RunService = game:GetService("RunService")
 waitz = function() RunService.Stepped:Wait() end
@@ -54,7 +55,13 @@ player.PlayerGui))
 local mouseEvent = Instance.new('RemoteEvent',keysEvent)
 mouseEvent.OnServerEvent:Connect(function(plr,data) mouse = data end)
 keysEvent.OnServerEvent:Connect(keyDown)
-local isR15 = function(_c) return ((_c:FindFirstChild("Torso") ~= nil) and false or true) end
+isR15 = function(_c)
+	if (_c:FindFirstChild("Torso") ~= nil) then
+		return false
+	else
+		return true
+	end
+end
 local isAMesh = function(entity)
 	local _is = (string.find(entity, 'Mesh') or 
 			(entity:IsA("CylinderMesh") or 
@@ -434,7 +441,7 @@ electrocute = function()
 				end
 			end))
 		end
-		entity:BreakJoints()
+		--entity:BreakJoints()
 		for i,v in pairs(entity:GetDescendants()) do
 			coroutine.resume(coroutine.create(function()
 				if (v:IsA("BasePart")) then
