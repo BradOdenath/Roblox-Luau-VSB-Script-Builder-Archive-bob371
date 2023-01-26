@@ -407,10 +407,10 @@ PA.Size = Vector3.new(0.1,0.1,0.1)
 PA.Parent = Lightning
 PA.CFrame = CFrame.new(BB.x,BB.y,BB.z)
 spark(StickA,PA)
-for i = 1,4 do waitz()
+for i = 1,10 do waitz()
 for i,v in pairs(Lightning:GetChildren()) do
 if v:IsA("Part") then
-v.Transparency = v.Transparency + 0.25
+v.Transparency = v.Transparency + 0.1
 end
 end
 end
@@ -441,7 +441,7 @@ electrocute = function()
 				end
 			end))
 		end
-		--entity:BreakJoints()
+		entity:BreakJoints()
 		for i,v in pairs(entity:GetDescendants()) do
 			coroutine.resume(coroutine.create(function()
 				if (v:IsA("BasePart")) then
