@@ -1,3 +1,5 @@
+rapid_color_change_disco_floor = false
+
 dataPosition = Vector3.new(1372,-323.5,-2008)
 partData = {
 	{name = "Brick",transparency = "0",canCollide = "true",size = Vector3.new(3, 2, 3),brickColor = BrickColor.new("Dark stone grey"),cframe = CFrame.fromMatrix(Vector3.new(dataPosition.X + -1561.30126953125,dataPosition.Y + 324.8409118652344,dataPosition.Z + 1798.693359375),Vector3.new(0, 0, 1),Vector3.new(0, 1, 0),Vector3.new(-1, 0, 0))
@@ -3120,12 +3122,14 @@ main = function()
 	for i,v in pairs(partData) do
 		part(v.name, v.transparency, v.canCollide, v.size, v.brickColor, v.cframe, model, v.decalFace, v.decalTexture, v.cylinderMeshScale, v.cylinderMeshOffset, v.blockMeshScale, v.blockMeshOffset, v.specialMeshScale, v.specialMeshType)
 	end
-	while true do wait()
-		for i,v in pairs(model:GetChildren()) do
-			if v.Name == "DiscoFloor" then
-				pcall(function() 
-					v.Color = Color3.fromRGB(math.random(1,255),math.random(1,255),math.random(1,255))
-				end)
+	if (rapid_color_change_disco_floor) then
+		while true do wait()
+			for i,v in pairs(model:GetChildren()) do
+				if v.Name == "DiscoFloor" then
+					pcall(function() 
+						v.Color = Color3.fromRGB(math.random(1,255),math.random(1,255),math.random(1,255))
+					end)
+				end
 			end
 		end
 	end
