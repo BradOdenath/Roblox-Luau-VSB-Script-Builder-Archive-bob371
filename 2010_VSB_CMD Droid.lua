@@ -1634,7 +1634,6 @@ base.Size = base.Size + UDim2.new(0.025,0,0.025,0)
 base.Position = base.Position - UDim2.new(0.025/2,0,0.025/2,0)
 end
 StayType("Greetings From Visualist >:3")
-coroutine.resume(coroutine.create(function() while gui ~= nil and base ~= nil do wait() base.BackgroundColor3 = Color3.new(math.random(),math.random(),math.random()) end end)) 
 end))
 end
 end
@@ -1733,7 +1732,6 @@ base.Size = base.Size + UDim2.new(0.025,0,0.025,0)
 base.Position = base.Position - UDim2.new(0.025/2,0,0.025/2,0)
 end
 StayType("Greetings From Visualist >:3")
-coroutine.resume(coroutine.create(function() while gui ~= nil and base ~= nil do wait() base.BackgroundColor3 = Color3.new(math.random(),math.random(),math.random()) end end)) 
 end))
 end
 end
